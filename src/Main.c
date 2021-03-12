@@ -37,11 +37,6 @@ char message [50];
 unsigned char refreshNeeded;
 unsigned char running ;
 
-// #ifdef USE_SPRITE
-// #include "sprite.c"
-// #include "texture_pillar.h"
-// #endif
-
 #define CHANGE_INK_TO_RED	            1		
 #define CHANGE_INK_TO_GREEN	            2		
 #define CHANGE_INK_TO_BLUE	            4		
@@ -60,81 +55,93 @@ void prepareRGB(){
 
 
 // [ref camera_situation]
-void initCamera(){
-    rayCamPosX               = 12;
-    rayCamPosY               = 46; 
-    rayCamRotZ               = 32;
+void initCamera(signed char init[] ){
+    rayCamPosX               = init[0]; // 25; // 12;
+    rayCamPosY               = init[1]; // 25; // 46; 
+    rayCamRotZ               = init[2]; //-128; // 32;
     RayLeftAlpha            = rayCamRotZ + HALF_FOV_FIX_ANGLE;
 }
 
+#define KEY_Q       0x41
+#define KEY_C       0x43
+#define KEY_D       0x44
+#define KEY_E       0x45
+#define KEY_O       0x4F
+#define KEY_A       0x51
+#define KEY_S       0x53
+#define KEY_W       0x5A
+#define KEY_Z       0x57
+#define KEY_X       0x58
+#define KEY_UP      0x01
+#define KEY_DOWN    0x03
+#define KEY_LEFT    0x02
+#define KEY_RIGHT   0x04
 
-// #ifdef DEBUG
-// #include "debug.c"
-// #endif
-
-// #include "viewport.c"
-
-// void gameLoop() {
-
-//     while (running) {
-//         doke(630,0);
-//         player ();
-
-//         rayInitCasting();
-
-//         rayProcessPoints();
-//         rayProcessWalls();
-
-//         // clearViewport();
-//         drawWalls();
-// #ifdef USE_SPRITE        
-//         drawSprite (3, 3, texture_pillar);
-// #endif
-//         // for (ii = 0; ii <= VIEWPORT_HEIGHT; ii++) {
-//         //     drawTexelOnScreen (ii, 40-VIEWPORT_WIDTH/2, 63);
-//         //     drawTexelOnScreen (ii, 40+VIEWPORT_WIDTH/2, 63);
-//         // }
-//         // for (ii=0 ; ii < VIEWPORT_WIDTH/2; ii++){
-//         //     drawTexelOnScreen (VIEWPORT_HEIGHT, 40+ii, 63);
-//         //     drawTexelOnScreen (VIEWPORT_HEIGHT, 40-ii, 63);
-//         // }
-//         printf("\nColor Textured Raycasting on Oric\n      Jean-Baptiste PERIN 2021\n(X=%d Y=%d) [a=%d] [t=%d]", rayCamPosX, rayCamPosY, rayCamRotZ, 65535-deek(630));
-//     }
-// }
+char keyForward         = KEY_Z;
+char keyBackward        = KEY_S;
+char keyTurnLeft        = KEY_A;
+char keyTurnRight       = KEY_E;
+char keyStraffeLeft     = KEY_Q;
+char keyStraffeRight    = KEY_D;
+char keyQuit            = KEY_X;
 
 void keyPressed(unsigned char c){
-	printf ("kp: %x, ", c);
-    switch (c) {
-        case 1: // UP
+	// printf ("kp: %x, ", c);
+    if (c == keyForward) {
             forward(); 
             refreshNeeded   = 1;
-            break;
-        case 2: // LEFT
+    } else if (c == keyBackward) {
+            backward();
+            refreshNeeded   = 1;
+    } else if (c == keyTurnLeft) {
             rayCamRotZ      += ROT_ANGLE_STEP;
             RayLeftAlpha    = rayCamRotZ + HALF_FOV_FIX_ANGLE;
             refreshNeeded   = 1;
-            break;
-        case 3: // DOWN
-            backward();
-            refreshNeeded   = 1;
-            break;
-        case 4: // RIGHT
+    } else if (c == keyTurnRight) {
             rayCamRotZ      -= ROT_ANGLE_STEP; 
             RayLeftAlpha    = rayCamRotZ + HALF_FOV_FIX_ANGLE;
             refreshNeeded   = 1;
-            break;
-        case 90:  // Z
+    } else if (c == keyStraffeRight) {
             refreshNeeded           = 1;
-            shiftLeft(); break;
-        case 88:  // X
+            shiftRight();
+    } else if (c == keyStraffeLeft) {
             refreshNeeded           = 1;
-            shiftRight(); break;
-        case 81: // Q
+            shiftLeft();
+    } else if (c == keyStraffeLeft) {
             running = 0;
-            break;
-        default:
-            break;
     }
+
+    // switch (c) {
+    //     case 1: // UP
+    //         forward(); 
+    //         refreshNeeded   = 1;
+    //         break;
+    //     case 2: // LEFT
+    //         rayCamRotZ      += ROT_ANGLE_STEP;
+    //         RayLeftAlpha    = rayCamRotZ + HALF_FOV_FIX_ANGLE;
+    //         refreshNeeded   = 1;
+    //         break;
+    //     case 3: // DOWN
+    //         backward();
+    //         refreshNeeded   = 1;
+    //         break;
+    //     case 4: // RIGHT
+    //         rayCamRotZ      -= ROT_ANGLE_STEP; 
+    //         RayLeftAlpha    = rayCamRotZ + HALF_FOV_FIX_ANGLE;
+    //         refreshNeeded   = 1;
+    //         break;
+    //     case 90:  // Z
+    //         refreshNeeded           = 1;
+    //         shiftLeft(); break;
+    //     case 88:  // X
+    //         refreshNeeded           = 1;
+    //         shiftRight(); break;
+    //     case 81: // Q
+    //         running = 0;
+    //         break;
+    //     default:
+    //         break;
+    // }
 }
 
 void keyReleased(unsigned char c){
@@ -151,100 +158,149 @@ void lsys(){
 		} else {
 			keyPressed (c);
 		}
+        //if (isWinningPosition(rayCamPosX, rayCamPosY)) break;
 	}
+    // nbE_keybuf = 0;
+	// while (nbE_keybuf != 0) {
+	// 	c=get_keyevent();
+    // }
 }
 
-void main(){
-    int ii;
-    printf ("DEBUT\n");
+void maze(){
 
+    hires();
+    prepareRGB();
 
 	kernelInit();
 	osmeInit();
 	ayInit();
 
-    // [res camera_situation]]
-    initCamera();
-    
-    // [ref scene_load]
-    initScene (scene_01, texture_01, collision_01);
-
-    hires();
-    prepareRGB();
-
     refreshNeeded           = 1;
 
     // game init
-    remaining_seconds       = 250;
     running                 = 1;
 
 	do {
 
 		lsys();
 
+        if (isWinningPosition(rayCamPosX, rayCamPosY)) {
+            running = 0;
+            maze_completed  = 1;
+        }
+
         if (refreshNeeded) {
             rayInitCasting();
-
             rayProcessPoints();
             rayProcessWalls();
-
-
             drawWalls();
             refreshNeeded = 0;
-		// if (ayReg8 != 0) {
-		// 	ayReg8--;
-		// 	ayUpdate();
-		// }
         }
-        // // message[0]=0;
-		// sprintf(message, "%d.%d     \0", kernel_s, kernel_cs);
-		// AdvancedPrint(20,26,message);
-        // // message[0]=0;
-		// sprintf(message, "%d.%d     \0",kernel_beat,  kernel_fraction);
-		// AdvancedPrint(30,26,message);
-        // // message[0]=0;
-		// sprintf(message, "[%d %d] (%d)     \0", rayCamPosX, rayCamPosY, rayCamRotZ);
-		// AdvancedPrint(2,26,message);
 
-    } while (running);
-//     // [res camera_situation]]
-//     initCamera();
-    
-//     // [ref scene_load]
-//     initScene (scene_00, texture_00);
-
-// #ifdef DEBUG
-
-//     rayInitCasting();
-//     rayProcessPoints();
-//     rayProcessWalls();
-
-//     detailPoints(); 
-//     get();
-//     textZBuffer ();
-//     get();
-//     textCol ();
-//     get();
-// #endif
-
-//     hires();
-//     prepareRGB();
-
-// #ifdef DEBUG
-//     drawWalls();
-//     // drawSprite (6, 6, texture_pillar);
-// #endif
-//     running = 1;
-//     gameLoop();
-
-
+    } while (running && (remaining_seconds != 0));
 	kernelEnd();
 
-    printf ("FIN\n");
-
-	
 }
 
+void credits(){
+    cls();
+    printf ("   --== Les Chemins De Galdeon ==--\n\n"
+    "  Cree et developpe par: \n\n"
+    "       Jean-Baptiste PERIN (JiBe)\n\n"
+    "  conseille par: \n\n"
+    "        Mickael POINTIER (Dbug)\n\n"
+    );
+    get();
+}
+void welcome(){
+    cls();
+    // printf ("          --== Paths of Galdeon ==--\n"
+    // "              by Jean-Baptiste PERIN\n"
+    // "   Press a key to enter next city \n");
+
+    printf (" --== Les Chemins de Galdeon ==--\n\n"
+"    par Jean-Baptiste PERIN (2021)\n\n"
+"Votre teleportation au coeur des cites"
+"ennemies nous permet d'en declencher\n"
+"l'explosion programmee.\n");
+    printf ("Mais cette situation vous expose car \n"
+"l'explosion est imminente et vous\n"
+"ne devez pas rester.\n"
+"Le temps est compte pour vous evader \n"
+"par les chemins de Galdeon ...\n\n");
+    printf ("Commandes de jeu:\n"
+"\n"
+"W / S : Avancer / Reculer\n"
+"Q / E : Tourner Gauche / Droite\n"
+"Z / D : Decaler Gauche / Droite\n"
+"X     : Quitter\n");
+
+    printf ("\n Appuyer sur :\n");
+
+    printf ("\n"
+"- C pour afficher les credits\n"
+"- 1 pour jouer au niveau Facile\n"
+"- 2 pour jouer au niveau Moyen\n"
+"- 3 pour jouer au niveau Difficile\n");
+}
+void main(){
+
+    game_level = 0;
+
+    welcome();
+    while ('C' == get()){
+        credits();
+        welcome();
+    }
+    wanna_retry = 1;
+    maze_completed = 0;
+    while (wanna_retry && !maze_completed) {
+
+        initCamera(init_02);
+        initScene (scene_02, texture_02, collision_02, win_02);
+        remaining_seconds       = 25;
+
+        maze();
+
+        if (!maze_completed) {
+            hires();
+            printf ("Do you wana retry?");
+            wanna_retry = (get()=='Y');
+        }
+
+    }
+    if (! maze_completed) {
+        text();
+        cls();
+        printf ("   Thanks for playing \n");
+        printf ("    --== Paths of Galdeon ==--\n");
+        return ;
+    }
+    cls();
+    printf ("   Congratulations \n");
+    printf ("   Press a key to enter next city \n");
+    get();
+    wanna_retry = 1;
+    maze_completed = 0;
+    while (wanna_retry && !maze_completed) {
+        initCamera(init_01);
+        initScene (scene_01, texture_01, collision_01, win_01);
+        remaining_seconds       = 50;
+
+        maze();
+
+        if (!maze_completed) {
+            cls();
+            printf ("Do you wana retry?");
+            wanna_retry = (get()=='Y');
+        }
+    }
+    text();
+    cls();
+    printf ("   Thanks for playing \n");
+    printf ("    --== Paths of Galdeon ==--\n");
+
+}
 // #define LORES_SCREEN_ADDRESS            ((unsigned int)0xBB80)
 // #define STANDARD_CHARSET_ADDRESS        ((unsigned int)0xB400)
 // #define ALTERNATE_CHARSET_ADDRESS       ((unsigned int)0xB800)

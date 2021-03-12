@@ -55,23 +55,32 @@ void forward() {
     signed int X, Y;
     X = rayCamPosX; Y = rayCamPosY;
     if (-112 >= rayCamRotZ) {
-        rayCamPosX--;
+        // rayCamPosX--;
+        asm("dec _rayCamPosX;");
     } else if ((-112 < rayCamRotZ) && (-80 >= rayCamRotZ)) {
-        rayCamPosX--; rayCamPosY--;
+        // rayCamPosX--; rayCamPosY--;
+        asm("dec _rayCamPosX;dec _rayCamPosY;");
     } else if ((-80 < rayCamRotZ) && (-48 >= rayCamRotZ)) {
-        rayCamPosY--;
+        // rayCamPosY--;
+        asm("dec _rayCamPosY;");
     } else if ((-48 < rayCamRotZ) && (-16 >= rayCamRotZ)) {
-        rayCamPosX++; rayCamPosY--;
+        // rayCamPosX++; rayCamPosY--;
+        asm("inc _rayCamPosX;dec _rayCamPosY;");
     } else if ((-16 < rayCamRotZ) && (16 >= rayCamRotZ)) {
-        rayCamPosX++;
+        // rayCamPosX++;
+        asm("inc _rayCamPosX;");
     } else if ((16 < rayCamRotZ) && (48 >= rayCamRotZ)) {
-        rayCamPosX++; rayCamPosY++;
+        // rayCamPosX++; rayCamPosY++;
+        asm("inc _rayCamPosX;inc _rayCamPosY;");
     } else if ((48 < rayCamRotZ) && (80 >= rayCamRotZ)) {
-        rayCamPosY++;
+        // rayCamPosY++;
+        asm("inc _rayCamPosY;");
     } else if ((80 < rayCamRotZ) && (112 >= rayCamRotZ)) {
-        rayCamPosX--; rayCamPosY++;
+        // rayCamPosX--; rayCamPosY++;
+        asm("dec _rayCamPosX;inc _rayCamPosY;");
     } else {
-        rayCamPosX--;
+        // rayCamPosX--;
+        asm("dec _rayCamPosX;");
     }
     if (!isAllowedPosition(rayCamPosX, rayCamPosY)) {
         rayCamPosX = X; rayCamPosY = Y;
@@ -81,23 +90,32 @@ void backward() {
     signed int X, Y;
     X = rayCamPosX; Y = rayCamPosY;
     if (-112 >= rayCamRotZ) {
-        rayCamPosX++;
+        // rayCamPosX++;
+        asm("inc _rayCamPosX;")
     } else if ((-112 < rayCamRotZ) && (-80 >= rayCamRotZ)) {
-        rayCamPosX++; rayCamPosY++;
+        // rayCamPosX++; rayCamPosY++;
+        asm("inc _rayCamPosX;inc _rayCamPosY;")
     } else if ((-80 < rayCamRotZ) && (-48 >= rayCamRotZ)) {
-        rayCamPosY++;
+        // rayCamPosY++;
+        asm("inc _rayCamPosY;");
     } else if ((-48 < rayCamRotZ) && (-16 >= rayCamRotZ)) {
-        rayCamPosX--; rayCamPosY++;
+        // rayCamPosX--; rayCamPosY++;
+        asm("dec _rayCamPosX;inc _rayCamPosY;");
     } else if ((-16 < rayCamRotZ) && (16 >= rayCamRotZ)) {
-        rayCamPosX--;
+        // rayCamPosX--;
+        asm("dec _rayCamPosX;");
     } else if ((16 < rayCamRotZ) && (48 >= rayCamRotZ)) {
-        rayCamPosX--; rayCamPosY--;
+        // rayCamPosX--; rayCamPosY--;
+        asm("dec _rayCamPosX;dec _rayCamPosY;");
     } else if ((48 < rayCamRotZ) && (80 >= rayCamRotZ)) {
-        rayCamPosY--;
+        // rayCamPosY--;
+        asm("dec _rayCamPosY;");
     } else if ((80 < rayCamRotZ) && (112 >= rayCamRotZ)) {
-        rayCamPosX++; rayCamPosY--;
+        // rayCamPosX++; rayCamPosY--;
+        asm("inc _rayCamPosX;dec _rayCamPosY;");
     } else {
-        rayCamPosX++;
+        // rayCamPosX++;
+        asm("inc _rayCamPosX;");
     }
     if (!isAllowedPosition(rayCamPosX, rayCamPosY)) {
         rayCamPosX = X; rayCamPosY = Y;
@@ -107,23 +125,32 @@ void shiftLeft() {
     signed int X, Y;
     X = rayCamPosX; Y = rayCamPosY;
     if (-112 >= rayCamRotZ) {
-        rayCamPosY--;
+        // rayCamPosY--;
+        asm("dec _rayCamPosY;");
     } else if ((-112 < rayCamRotZ) && (-80 >= rayCamRotZ)) {
-        rayCamPosX++; rayCamPosY--;
+        // rayCamPosX++; rayCamPosY--;
+        asm("inc _rayCamPosX;dec _rayCamPosY;");
     } else if ((-80 < rayCamRotZ) && (-48 >= rayCamRotZ)) {
-        rayCamPosX--;
+        // rayCamPosX--;
+        asm("dec _rayCamPosX;");
     } else if ((-48 < rayCamRotZ) && (-16 >= rayCamRotZ)) {
-        rayCamPosX++; rayCamPosY++;
+        // rayCamPosX++; rayCamPosY++;
+        asm("inc _rayCamPosX;inc _rayCamPosY;");
     } else if ((-16 < rayCamRotZ) && (16 >= rayCamRotZ)) {
-        rayCamPosY++;
+        // rayCamPosY++;
+        asm("inc _rayCamPosY;");
     } else if ((16 < rayCamRotZ) && (48 >= rayCamRotZ)) {
-        rayCamPosX--; rayCamPosY++;
+        // rayCamPosX--; rayCamPosY++;
+        asm("dec _rayCamPosX;inc _rayCamPosY;");
     } else if ((48 < rayCamRotZ) && (80 >= rayCamRotZ)) {
-        rayCamPosX--;
+        // rayCamPosX--;
+        asm("dec _rayCamPosX;");
     } else if ((80 < rayCamRotZ) && (112 >= rayCamRotZ)) {
-        rayCamPosX--; rayCamPosY--;
+        // rayCamPosX--; rayCamPosY--;
+        asm("dec _rayCamPosX;dec _rayCamPosY;");
     } else {
-        rayCamPosY--;
+        // rayCamPosY--;
+        asm("dec _rayCamPosY;");
     }
     if (!isAllowedPosition(rayCamPosX, rayCamPosY)) {
         rayCamPosX = X; rayCamPosY = Y;
@@ -134,23 +161,32 @@ void shiftRight() {
     X = rayCamPosX;
     Y = rayCamPosY;
     if (-112 >= rayCamRotZ) {
-        rayCamPosY++;
+        // rayCamPosY++;
+        asm("inc _rayCamPosY;");
     } else if ((-112 < rayCamRotZ) && (-80 >= rayCamRotZ)) {
-        rayCamPosX--; rayCamPosY++;
+        // rayCamPosX--; rayCamPosY++;
+        asm("dec _rayCamPosX;inc _rayCamPosY;");
     } else if ((-80 < rayCamRotZ) && (-48 >= rayCamRotZ)) {
-        rayCamPosX++;
+        // rayCamPosX++;
+        asm("inc _rayCamPosX;");
     } else if ((-48 < rayCamRotZ) && (-16 >= rayCamRotZ)) {
-        rayCamPosX--; rayCamPosY--;
+        // rayCamPosX--; rayCamPosY--;
+        asm("dec _rayCamPosX;dec _rayCamPosY;");
     } else if ((-16 < rayCamRotZ) && (16 >= rayCamRotZ)) {
-        rayCamPosY--;
+        // rayCamPosY--;
+        asm("dec _rayCamPosY;");
     } else if ((16 < rayCamRotZ) && (48 >= rayCamRotZ)) {
-        rayCamPosX++; rayCamPosY--;
+        // rayCamPosX++; rayCamPosY--;
+        asm("inc _rayCamPosX;dec _rayCamPosY;");
     } else if ((48 < rayCamRotZ) && (80 >= rayCamRotZ)) {
-        rayCamPosX++;
+        // rayCamPosX++;
+        asm("inc _rayCamPosX;");
     } else if ((80 < rayCamRotZ) && (112 >= rayCamRotZ)) {
-        rayCamPosX++; rayCamPosY++;
+        // rayCamPosX++; rayCamPosY++;
+        asm("inc _rayCamPosX;inc _rayCamPosY;");
     } else {
-        rayCamPosX++;
+        // rayCamPosX++;
+        asm("inc _rayCamPosX;");
     }
     if (!isAllowedPosition(rayCamPosX, rayCamPosY)) {
         rayCamPosX = X; rayCamPosY = Y;
