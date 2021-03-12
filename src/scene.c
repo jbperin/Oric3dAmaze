@@ -2,16 +2,18 @@
 // [ref texture_file2buffer]
 #include "texture_bluestone.h"
 #include "texture_redbrick.h"
-#include "texture_map01.h"
+//#include "texture_greystone.h"
+//#include "texture_purplestone.h"
 
 unsigned char wallTexture_high[NB_MAX_WALL] ;
 unsigned char wallTexture_low[NB_MAX_WALL] ;
 
 
 unsigned char (*isAllowedPosition)(signed char , signed char );
-
+unsigned char (*isWinningPosition)(signed char , signed char );
 // #include "scene_00.c"
 #include "scene_01.c"
+#include "scene_02.c"
 
 // [ref scene_load]
 void precalculateWallsAngle() {
@@ -43,7 +45,14 @@ void precalculateWallsAngle() {
 }
 
 // [ref scene_describe] [ref scene_load]
-void initScene (signed char sceneData[], unsigned char *wallTexture[], unsigned char (*collisionFct)(signed char , signed char )){
+void initScene (
+    signed char sceneData[]
+    , unsigned char *wallTexture[]
+    , unsigned char (*collisionFct)(signed char , signed char )
+    , unsigned char (*winFct)(signed char , signed char )
+    ){
+
+
 	unsigned int ii;
 	unsigned char jj;
 
@@ -60,4 +69,5 @@ void initScene (signed char sceneData[], unsigned char *wallTexture[], unsigned 
 	}
     precalculateWallsAngle();
     isAllowedPosition = collisionFct;
+    isWinningPosition = winFct;
 }

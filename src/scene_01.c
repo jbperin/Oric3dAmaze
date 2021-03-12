@@ -36,7 +36,11 @@
 |     |                 |
 36---37----38----------39
 */
+#include "texture_map01.h"
 
+signed char init_01[] = {
+	12, 46, 32
+};
 signed char scene_01[] = {
     /* nbPoints = */ 40, /* nbWall = */ 39
 , 0*6, 8*6	// 0
@@ -185,10 +189,79 @@ unsigned char *texture_01[]= {
 	, texture_redbrick		// W39
 };
 
-
+unsigned char win_01(signed char X, signed char Y) {
+	return Y >= 48;
+}
 unsigned char collision_01(signed char X, signed char Y) {
+	if (X%6 == 0) {
+		if (Y%6 == 0) {
+			// X and Y on 6 *6 grid
+			return (
+				( 	(X == 6) && ((Y == 6) || (Y == 24)) )
+				|| ((X ==18) && ((Y == 6) || (Y == 18)) )
+				|| ((X ==36) && ((Y ==24)) )
+				|| ((X ==42) && ((Y == 6)) )
+			);
+		} else {
+			// X on grid, Y not on grid
+			if (X == 0) {
+				return 0;
+			} else if (X == 6) {
+				return 1;
+			} else if (X == 12) {
+				return (
+					((Y>6) && (Y<18)) || (Y > 36)
+				);
+			} else if (X == 18) {
+				return ((Y < 24) ||(Y > 48));
+			} else if (X == 24) {
+				return((Y<6) 
+				|| ((Y>12) && (Y<18)) 
+				|| ((Y > 24) &&  (Y < 30)) 
+				|| (Y > 42));
+			} else if (X == 30) {
+				return((Y<6) 
+				|| ((Y>18) && (Y<30)));
+			} else if (X == 36) {
+				return((Y<6) 
+				|| ((Y>12) && (Y<18)) 
+				|| ((Y > 24) &&  (Y < 30)) 
+				|| (Y > 42));
+			} else if (X == 42) {
+				return((Y<12) 
+				|| ((Y>18) && (Y<24)) 
+				|| (Y > 42));
+			} else if (X == 48) {
+				return 0;
+			} else {
+				return 1;
+			}
+		}
+	} else if (Y%6 == 0) {
+		if (Y == 0) {
+			return 0;
+		} else if (Y == 6) {
+			return ((X < 24) || (X > 30));
+		} else if (Y == 12) {
+			return ((X < 6) || ((X > 24) && (X <36)) || (X > 42));
+		} else if (Y == 18) {
+			return (( (X > 12) && (X<24)) || ( (X > 36) && (X < 40)));
+		} else if (Y == 24) {
+			return ((X < 18) || ((X > 24) && (X < 36)) || (X > 42));
+		} else if (Y == 30) {
+			return (((X > 6) && (X < 30)) || (X > 36));
+		} else if (Y == 36) {
+			return ((X < 6 ) || (X > 12));
+		} else if (Y == 42) {
+			return ((X < 6 ) || (X > 24));
+		} else if (Y == 48) {
+			return ((X > 18 ) && (X < 30));
+		} else {
+			return 1;
+		}
 
-    return (Y < 48);
-    // return 1;
+	}
+    return 1;
+   	//return (Y < 48);
 
 }
