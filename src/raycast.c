@@ -81,11 +81,21 @@ signed char             rayCamRotZ = 0;
 
 
 void rayInitCasting(){
-    unsigned char ii;
-    for (ii=0; ii< NUMBER_OF_SLICE; ii++) {
-        rayzbuffer[ii]      = 255;
-        raywall[ii]         = 255;
-    }
+    // unsigned char ii;
+    // for (ii=0; ii< NUMBER_OF_SLICE; ii++) {
+    //     rayzbuffer[ii]      = 255;
+    //     raywall[ii]         = 255;
+    // }
+
+    asm(
+        "ldy #NUMBER_OF_SLICE;"
+        "lda #$FF;"
+        ".(: loop:;"
+        "sta _rayzbuffer, Y;"
+        "sta _raywall, Y;"
+        "dey;"
+        "bpl loop: .):;"
+    );
 }
 
 #ifdef USE_C_TOTO

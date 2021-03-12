@@ -39,7 +39,7 @@
 #include "texture_map01.h"
 
 signed char init_01[] = {
-	12, 46, 32
+	12, 45, 0
 };
 signed char scene_01[] = {
     /* nbPoints = */ 40, /* nbWall = */ 39
@@ -245,7 +245,7 @@ unsigned char collision_01(signed char X, signed char Y) {
 		} else if (Y == 12) {
 			return ((X < 6) || ((X > 24) && (X <36)) || (X > 42));
 		} else if (Y == 18) {
-			return (( (X > 12) && (X<24)) || ( (X > 36) && (X < 40)));
+			return (( (X > 12) && (X<24)) || ( (X > 36) && (X < 42)));
 		} else if (Y == 24) {
 			return ((X < 18) || ((X > 24) && (X < 36)) || (X > 42));
 		} else if (Y == 30) {

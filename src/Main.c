@@ -33,7 +33,7 @@ extern unsigned char 	kernel_beat;
 extern unsigned char 	kernel_tempo;
 extern unsigned char 	nbE_keybuf;
 
-char message [50];
+char message [40];
 unsigned char refreshNeeded;
 unsigned char running ;
 
@@ -144,18 +144,18 @@ void keyPressed(unsigned char c){
     // }
 }
 
-void keyReleased(unsigned char c){
-	// printf ("kr: %x, ", c);
+// void keyReleased(unsigned char c){
+// 	// printf ("kr: %x, ", c);
 
-}
+// }
 
 void lsys(){
 	unsigned char c;
 	while (nbE_keybuf != 0) {
-		c=get_keyevent();
-		if (c & 0x80){
-			keyReleased (c & 0x7F);
-		} else {
+		// c=get_keyevent();
+		if (! ((c=get_keyevent()) & 0x80)){
+			// keyReleased (c & 0x7F);
+//		} else {
 			keyPressed (c);
 		}
         //if (isWinningPosition(rayCamPosX, rayCamPosY)) break;
@@ -252,24 +252,33 @@ void welcome(){
 
 void bye() {
     text();
-    cls();
-    printf ("   Thanks for playing \n");
-    printf ("    --== Paths of Galdeon ==--\n");
+    printf (" Merci d'avoir joue avec \n\n"
+    "    --== Les Chemins De Galdeon ==--\n\n"
+    "    par Jean-Baptiste PERIN (2021)\n\n");
 }
 char  retry() {
     char c;
     hires();
     do {
         cls();
-        printf ("Reessayer: [Y] Oui, [N] Non, [X] Quitter");
+        printf ("Reessayer: [Y] Oui, [N] Non");
         c=get();
     } while ((c != 'Y') && (c!= 'N') && (c !='X'));
     return c;
 }
-
+//tabTempoPing[]={250, 200, 150, 100, 50, 40, 30, 20, 10, 5, 4, 3, 2, 1};
+unsigned char tabLevelParam[] = {
+    35*3, 3,
+    35*2, 4,
+    35*1, 7, 
+    255 , 0,
+    90*2, 2,
+    90*1, 4,
+ };
 void main(){
     char c;
-    game_level = 0;
+    unsigned char idxparam;
+
 
     do {
         welcome();
@@ -281,14 +290,15 @@ void main(){
     if (c == 'X') {
         bye(); return ;
     }
+    idxparam = (unsigned char)(c-'1')<<1;
     wanna_retry = 1;
     maze_completed = 0;
-    while (wanna_retry && !maze_completed) {
+    remaining_seconds       = tabLevelParam[idxparam++]; // game_level * 35 ; // 35 = Difficile
+    idxTempoPing            = tabLevelParam[idxparam++];
 
+    while (wanna_retry && !maze_completed) {
         initCamera(init_02);
         initScene (scene_02, texture_02, collision_02, win_02);
-        remaining_seconds       = 25;
-        idxTempoPing            = 5;
         nxtPing                 = tabTempoPing[idxTempoPing];
         maze();
 
@@ -301,17 +311,20 @@ void main(){
         bye();
         return ;
     }
+    idxparam+=4;
     cls();
-    printf ("   Felicitations \n");
-    printf (" Appuyer sur une touche pour continuer \n");
+    printf ("   Felicitations \n"
+    " Appuyer sur une touche pour continuer.\n");
     get();
     wanna_retry = 1;
     maze_completed = 0;
+    remaining_seconds       = tabLevelParam[idxparam++]; // game_level * 35 ; // 35 = Difficile
+    idxTempoPing            = tabLevelParam[idxparam++];
     while (wanna_retry && !maze_completed) {
         initCamera(init_01);
         initScene (scene_01, texture_01, collision_01, win_01);
-        remaining_seconds       = 25;
-        idxTempoPing            = 5;
+        // remaining_seconds       = game_level * 90 ; // 90 = difficile
+        // idxTempoPing            = 2;
         nxtPing                 = tabTempoPing[idxTempoPing];
 
         maze();

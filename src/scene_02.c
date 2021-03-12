@@ -28,7 +28,7 @@
 #include "texture_map02.h"
 
 signed char init_02[] = {
-	25, 3, 0
+	27, 27, 0
 };
 
 signed char scene_02[] = {
@@ -134,7 +134,7 @@ unsigned char collision_02(signed char X, signed char Y) {
 				return (Y < 6) || (Y > 24);
 			} else if (X == 12) {
 				return (
-					(Y < 6) || (Y > 18)
+					(Y < 6) || (Y > 12)
 				);
 			} else if (X == 18) {
 				return ( (Y < 12) || ((Y > 18) && (Y < 24)) );
