@@ -468,23 +468,14 @@ void rayProcessWalls() {
         RayCurrentWall = raywall[RaySliceIdx];
         if (RayCurrentWall != 255) {
             raylogdist[RaySliceIdx] = rayzbuffer[RaySliceIdx];
-
+            angle       = rayCamRotZ + tabRayAngles[RaySliceIdx];
             if (unfish[RaySliceIdx] < rayzbuffer[RaySliceIdx])
                 rayzbuffer[RaySliceIdx] -= unfish[RaySliceIdx];
 
 
             TableVerticalPos[RaySliceIdx] =dist2hh(rayzbuffer[RaySliceIdx]);
-            rayzbuffer[RaySliceIdx] = longexp(rayzbuffer[RaySliceIdx]);        
-        } else {
-            
-        }
-    }
+            rayzbuffer[RaySliceIdx] = longexp(rayzbuffer[RaySliceIdx]);     
 
-    // Compute texture column informations
-    for (RaySliceIdx=0; RaySliceIdx<NUMBER_OF_SLICE; RaySliceIdx++){
-        RayCurrentWall = raywall[RaySliceIdx];
-        if (RayCurrentWall != 255) {
-            angle       = rayCamRotZ + tabRayAngles[RaySliceIdx];
             if (lWallsCosBeta[RayCurrentWall] == 0){    // Wall is O,y aligned   
                 deltaY      = lPointsY[lWallsPt1[RayCurrentWall]]-rayCamPosY;
                  
@@ -533,11 +524,71 @@ void rayProcessWalls() {
                     tabTexCol [RaySliceIdx]        = abs(v2-multiCoeff[deltaX]);
                 }
             }
+
+
         } else {
             tabTexCol [RaySliceIdx]        = 0;
         }
-
     }
+
+    // // Compute texture column informations
+    // for (RaySliceIdx=0; RaySliceIdx<NUMBER_OF_SLICE; RaySliceIdx++){
+    //     RayCurrentWall = raywall[RaySliceIdx];
+    //     if (RayCurrentWall != 255) {
+    //         angle       = rayCamRotZ + tabRayAngles[RaySliceIdx];
+    //         if (lWallsCosBeta[RayCurrentWall] == 0){    // Wall is O,y aligned   
+    //             deltaY      = lPointsY[lWallsPt1[RayCurrentWall]]-rayCamPosY;
+                 
+    //             if (angle == 0){
+    //                 v0 = 0;
+    //                 v1 = 0;
+    //                 v2 = 0;
+    //             } else if (angle > 0) {
+    //                 v0 = log2sin(angle); // round(32*math.log2(math.sin(angle*FIX2RAD)*COEFF))
+    //                 v1 = raylogdist[RaySliceIdx] + v0;
+    //                 if (v1<0) v1=0;
+    //                 v2 = longexp(v1); // (2**(v1/32))
+
+    //             } else if (angle < 0) {
+    //                 v0 = log2sin(angle); // round(32*math.log2(-math.sin(angle*FIX2RAD)*COEFF))
+    //                 v1 = raylogdist[RaySliceIdx] + v0;
+    //                 if (v1<0) v1=0;
+    //                 v2 = -longexp(v1); // -(2**(v1/32)) # 
+    //             }
+    //             if (deltaY < 0) {
+    //                 tabTexCol [RaySliceIdx]        = abs(v2+multiCoeff[abs(deltaY)]);
+    //             } else {
+    //                 tabTexCol [RaySliceIdx]        = abs(v2-multiCoeff[abs(deltaY)]);
+    //             }
+    //         } else {                       // Wall is O,x aligned 
+    //             deltaX      = lPointsX[lWallsPt1[RayCurrentWall]]-rayCamPosX;
+    //             if (tabRayAngles[RaySliceIdx] == 0){
+    //                 v0 = 0;
+    //                 v1 = 0;
+    //                 v2 = 0;
+    //             } else if (abs (angle) < 64) {
+    //                 v0 = log2cos(angle); // round(32*math.log2(math.sin(angle*FIX2RAD)*COEFF))
+    //                 v1 = raylogdist[RaySliceIdx] + v0;
+    //                 if (v1<0) v1=0;
+    //                 v2 = longexp(v1); // (2**(v1/32))
+
+    //             } else if (abs (angle) >= 64) {
+    //                 v0 = log2cos(angle); // round(32*math.log2(-math.sin(angle*FIX2RAD)*COEFF))
+    //                 v1 = raylogdist[RaySliceIdx] + v0;
+    //                 if (v1<0) v1=0;
+    //                 v2 = -longexp(v1); // -(2**(v1/32)) # 
+    //             }
+    //             if (deltaX < 0){
+    //                 tabTexCol [RaySliceIdx]        = abs(v2+multiCoeff[abs(deltaX)]);
+    //             } else {
+    //                 tabTexCol [RaySliceIdx]        = abs(v2-multiCoeff[deltaX]);
+    //             }
+    //         }
+    //     } else {
+    //         tabTexCol [RaySliceIdx]        = 0;
+    //     }
+
+    // }
 
 }
 
