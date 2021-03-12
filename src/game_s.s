@@ -4,8 +4,8 @@
 
 ;; Taken from http://6502org.wikidot.com/software-output-decimal
 #define LORES_SCREEN_ADDRESS            48000
-#define NUM_LIGNE 25
-#define NUM_COLONNE 12
+#define NUM_LIGNE 26
+#define NUM_COLONNE 17
 #define ADR_WRITE LORES_SCREEN_ADDRESS+NUM_LIGNE*40+NUM_COLONNE
 
 

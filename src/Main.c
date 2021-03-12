@@ -107,7 +107,7 @@ void keyPressed(unsigned char c){
     } else if (c == keyStraffeLeft) {
             refreshNeeded           = 1;
             shiftLeft();
-    } else if (c == keyStraffeLeft) {
+    } else if (c == keyQuit) {
             running = 0;
     }
 
@@ -175,6 +175,9 @@ void maze(){
 	osmeInit();
 	ayInit();
 
+    sprintf (message, "Temps restant: ");
+    AdvancedPrint(3,26, message);
+
     refreshNeeded           = 1;
 
     // game init
@@ -196,8 +199,13 @@ void maze(){
             drawWalls();
             refreshNeeded = 0;
         }
+        if (remaining_seconds == nxtPing){
+            ping();
+            nxtPing = tabTempoPing[++idxTempoPing];
+        }
 
     } while (running && (remaining_seconds != 0));
+    if (remaining_seconds == 0) explode();
 	kernelEnd();
 
 }
@@ -209,14 +217,12 @@ void credits(){
     "       Jean-Baptiste PERIN (JiBe)\n\n"
     "  conseille par: \n\n"
     "        Mickael POINTIER (Dbug)\n\n"
+    "        Vincent BILLET (Xaratheus)\n\n"
     );
     get();
 }
 void welcome(){
     cls();
-    // printf ("          --== Paths of Galdeon ==--\n"
-    // "              by Jean-Baptiste PERIN\n"
-    // "   Press a key to enter next city \n");
 
     printf (" --== Les Chemins de Galdeon ==--\n\n"
 "    par Jean-Baptiste PERIN (2021)\n\n"
@@ -243,14 +249,37 @@ void welcome(){
 "- 2 pour jouer au niveau Moyen\n"
 "- 3 pour jouer au niveau Difficile\n");
 }
-void main(){
 
+void bye() {
+    text();
+    cls();
+    printf ("   Thanks for playing \n");
+    printf ("    --== Paths of Galdeon ==--\n");
+}
+char  retry() {
+    char c;
+    hires();
+    do {
+        cls();
+        printf ("Reessayer: [Y] Oui, [N] Non, [X] Quitter");
+        c=get();
+    } while ((c != 'Y') && (c!= 'N') && (c !='X'));
+    return c;
+}
+
+void main(){
+    char c;
     game_level = 0;
 
-    welcome();
-    while ('C' == get()){
-        credits();
+    do {
         welcome();
+        while ('C' == (c = get())){
+            credits();
+            welcome();
+        }
+    } while ((c != '1') && (c != '2') && (c != '3') && (c != 'X')) ;
+    if (c == 'X') {
+        bye(); return ;
     }
     wanna_retry = 1;
     maze_completed = 0;
@@ -259,46 +288,39 @@ void main(){
         initCamera(init_02);
         initScene (scene_02, texture_02, collision_02, win_02);
         remaining_seconds       = 25;
-
+        idxTempoPing            = 5;
+        nxtPing                 = tabTempoPing[idxTempoPing];
         maze();
 
         if (!maze_completed) {
-            hires();
-            printf ("Do you wana retry?");
-            wanna_retry = (get()=='Y');
+            wanna_retry = (retry()=='Y');
         }
 
     }
     if (! maze_completed) {
-        text();
-        cls();
-        printf ("   Thanks for playing \n");
-        printf ("    --== Paths of Galdeon ==--\n");
+        bye();
         return ;
     }
     cls();
-    printf ("   Congratulations \n");
-    printf ("   Press a key to enter next city \n");
+    printf ("   Felicitations \n");
+    printf (" Appuyer sur une touche pour continuer \n");
     get();
     wanna_retry = 1;
     maze_completed = 0;
     while (wanna_retry && !maze_completed) {
         initCamera(init_01);
         initScene (scene_01, texture_01, collision_01, win_01);
-        remaining_seconds       = 50;
+        remaining_seconds       = 25;
+        idxTempoPing            = 5;
+        nxtPing                 = tabTempoPing[idxTempoPing];
 
         maze();
 
         if (!maze_completed) {
-            cls();
-            printf ("Do you wana retry?");
-            wanna_retry = (get()=='Y');
+            wanna_retry = (retry()=='Y');
         }
     }
-    text();
-    cls();
-    printf ("   Thanks for playing \n");
-    printf ("    --== Paths of Galdeon ==--\n");
+    bye();
 
 }
 // #define LORES_SCREEN_ADDRESS            ((unsigned int)0xBB80)
