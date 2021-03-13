@@ -79,24 +79,15 @@ signed char             rayCamRotZ = 0;
 #include "math.c"
 
 
-
+#ifdef USE_C_RAYCAST
 void rayInitCasting(){
-    // unsigned char ii;
-    // for (ii=0; ii< NUMBER_OF_SLICE; ii++) {
-    //     rayzbuffer[ii]      = 255;
-    //     raywall[ii]         = 255;
-    // }
-
-    asm(
-        "ldy #NUMBER_OF_SLICE;"
-        "lda #$FF;"
-        ".(: loop:;"
-        "sta _rayzbuffer, Y;"
-        "sta _raywall, Y;"
-        "dey;"
-        "bpl loop: .):;"
-    );
+    unsigned char ii;
+    for (ii=0; ii< NUMBER_OF_SLICE; ii++) {
+        rayzbuffer[ii]      = 255;
+        raywall[ii]         = 255;
+    }
 }
+#endif  //USE_C_RAYCAST
 
 #ifdef USE_C_TOTO
 void toto() {
@@ -278,13 +269,9 @@ void drawRightCuttingWall1Visible(){
 }
 #endif // USE_C_RAYCAST
 
-void rayProcessWalls() {
-    int v0, v2;
-    int v1;
-    int deltaX, deltaY;
-    signed char angle;
-    
 
+void zbuffWalls(){
+    
     for (RayCurrentWall = 0; RayCurrentWall < rayNbWalls; RayCurrentWall ++){
         RayIdXPoint1        = lWallsPt1[RayCurrentWall];
         RayIdXPoint2        = lWallsPt2[RayCurrentWall];
@@ -471,6 +458,14 @@ void rayProcessWalls() {
             }
         }
     }
+}
+void rayProcessWalls() {
+    int v0, v2;
+    int v1;
+    int deltaX, deltaY;
+    signed char angle;
+    
+    zbuffWalls();
     /* 
      * Change output from logarithmic scale to linear scale 
      */
