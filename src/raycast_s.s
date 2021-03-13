@@ -12,6 +12,314 @@ _tab_denom:             .dsb 2
 .text
 
 
+#ifndef USE_C_ZBUFFWALLS
+_zbuffWalls:
+.(
+    lda     _rayNbWalls
+    sta     _RayCurrentWall
+    dec     _RayCurrentWall
+wallsloop:
+
+
+
+;;         RayIdXPoint1        = lWallsPt1[RayCurrentWall];
+;;         RayIdXPoint2        = lWallsPt2[RayCurrentWall];
+;; 
+        ldy         _RayCurrentWall
+        lda         _lWallsPt1,Y
+        sta         _RayIdXPoint1
+        lda         _lWallsPt2,Y
+        sta         _RayIdXPoint2
+
+;;         if (isVisible[RayIdXPoint1]) {
+        ldy         _RayIdXPoint1
+        lda         _isVisible,Y
+
+        bne         Point1Visible_00
+        jmp         Point1NotVisible_00
+Point1Visible_00
+;;             if (isVisible[RayIdXPoint2]) {
+            ldy         _RayIdXPoint2
+            lda         _isVisible,Y
+            beq         Point2NotVisible_00
+
+;;                 drawFullVisibleWall();
+                jsr     _drawFullVisibleWall
+jmp EndIfPoint2Visible_00                
+;;             } else {
+Point2NotVisible_00
+;;                 // Point 1 is visible and Point 2 is not in FOV
+;;                 if (lAngle[RayIdXPoint1] > 0){
+                ldy         _RayIdXPoint1
+                lda         _lAngle,Y
+                beq         Angle1Null_00
+                bpl         Angle1Positiv
+Angle1Null_00
+jmp  Angle1NegativeOrNull_00              
+Angle1Positiv
+;;                     if ((lAngle[RayIdXPoint1] & 0x80) == (lAngle[RayIdXPoint2] & 0x80)) {
+                    ldy         _RayIdXPoint1
+                    lda         _lAngle,Y
+                    ldy         _RayIdXPoint2
+                    eor         _lAngle,Y
+                    and         #$80
+                    bne         AngleDifferentSign_00
+;;                         drawLeftCuttingWall1Visible();
+                        jsr         _drawLeftCuttingWall1Visible
+jmp EndIfAngleSameSign_00
+;;                     } else {
+AngleDifferentSign_00
+
+                        ldy _RayIdXPoint2
+                        lda _lAngle,Y
+                        sta reg7
+                        ldy _RayIdXPoint1
+                        lda _lAngle,Y
+                        sec
+                        sbc reg7
+                        bvc VeryWideAngle_01
+                        jsr _drawLeftCuttingWall1Visible
+                        jmp endAngleSpecific_01
+VeryWideAngle_01
+                        jsr _drawRightCuttingWall1Visible
+endAngleSpecific_01
+
+
+
+;;                     }
+EndIfAngleSameSign_00
+    jmp EndIfAngle1_00
+;; 
+Angle1NegativeOrNull_00
+;;                 } else if (lAngle[RayIdXPoint1] < 0) {
+                ldy         _RayIdXPoint1
+                lda         _lAngle,Y
+                bpl         Angle1PositivOrNull_01
+;;                     if ((lAngle[RayIdXPoint1] & 0x80) == (lAngle[RayIdXPoint2] & 0x80)) {
+                    ldy         _RayIdXPoint1
+                    lda         _lAngle,Y
+                    ldy         _RayIdXPoint2
+                    eor         _lAngle,Y
+                    and         #$80
+                    bne         AngleDifferentSign_01
+
+;;                         drawRightCuttingWall1Visible();
+                        jsr         _drawRightCuttingWall1Visible
+jmp EndIfAngleSameSign_01
+;;                     } else {
+AngleDifferentSign_01
+                        ldy _RayIdXPoint2
+                        lda _lAngle,Y
+                        sta reg7
+                        ldy _RayIdXPoint1
+                        lda _lAngle,Y
+                        sec
+                        sbc reg7
+                        bvc VeryWideAngle_02
+                        jsr _drawRightCuttingWall1Visible
+                        jmp endAngleSpecific_02
+VeryWideAngle_02
+                        jsr _drawLeftCuttingWall1Visible
+endAngleSpecific_02
+
+
+
+;;                     }
+EndIfAngleSameSign_01
+jmp EndIfAngle1_00
+;; 
+Angle1PositivOrNull_01
+;;                 } else { // (lAngle[idxPt1] < 0)
+
+                        ldy _RayIdXPoint2
+                        lda _lAngle,Y
+                        bpl PositivPoint2Angle
+                            jsr _drawRightCuttingWall1Visible
+                        jmp endPositivPoint2Angle
+PositivPoint2Angle
+                            jsr _drawLeftCuttingWall1Visible
+endPositivPoint2Angle
+
+
+EndIfAngle1_00
+
+;;                 }
+EndIfPoint2Visible_00 
+;;             }
+jmp EndIfPoint1Visible_00
+;;         } else {
+Point1NotVisible_00
+;;             if (isVisible[RayIdXPoint2]) {
+            ldy         _RayIdXPoint2
+            lda         _isVisible,Y
+            bne         Point2Visible_01
+            jmp         Point2NotVisible_01
+;; 
+Point2Visible_01
+;;                 // Point 2 is visible and Point 1 is not in FOV
+;;                 if (lAngle[RayIdXPoint2] > 0){
+                ldy         _RayIdXPoint2
+                lda         _lAngle,Y
+                beq         Angle2Null_00
+                bpl         Angle2Positiv_01
+Angle2Null_00
+                jmp         Angle2NegativeOrNull_01
+Angle2Positiv_01                
+;;                     if ((lAngle[RayIdXPoint1] & 0x80) == (lAngle[RayIdXPoint2] & 0x80)) {
+                    ldy         _RayIdXPoint1
+                    lda         _lAngle,Y
+                    ldy         _RayIdXPoint2
+                    eor         _lAngle,Y
+                    and         #$80
+                    bne         AngleDifferentSign_02
+;;                         drawLeftCuttingWall2Visible();
+                        jsr         _drawLeftCuttingWall2Visible
+                        jmp         EndIfAngleSameSign_02
+;;                     } else {
+AngleDifferentSign_02    
+
+                        ldy _RayIdXPoint1
+                        lda _lAngle,Y
+                        sta reg7
+                        ldy _RayIdXPoint2
+                        lda _lAngle,Y
+                        sec
+                        sbc reg7
+                        bvc VeryWideAngle_03
+                        jsr _drawLeftCuttingWall2Visible
+                        jmp endAngleSpecific_03
+VeryWideAngle_03
+                        jsr _drawRightCuttingWall2Visible
+endAngleSpecific_03
+
+
+
+EndIfAngleSameSign_02
+;;                     }
+jmp         EndIfAngle2Positiv_01
+Angle2NegativeOrNull_01
+;;                 } else if (lAngle[RayIdXPoint2] < 0) {
+                        ldy         _RayIdXPoint2
+                        lda         _lAngle, y
+                        bmi         Angle2Negativ_02
+                        jmp         Angle2Null_01
+Angle2Negativ_02                        
+;;                     if ((lAngle[RayIdXPoint1] & 0x80) == (lAngle[RayIdXPoint2] & 0x80)) {
+                            ldy         _RayIdXPoint1
+                            lda         _lAngle,Y
+                            ldy         _RayIdXPoint2
+                            eor         _lAngle,Y
+                            and         #$80
+                            bne         AngleDifferentSign_03
+
+;;                         drawRightCuttingWall2Visible();
+                                jsr         _drawRightCuttingWall2Visible
+                                jmp         EndIfAngleSameSign_03
+;;                     } else {
+AngleDifferentSign_03
+
+                            ldy _RayIdXPoint1
+                            lda _lAngle,Y
+                            sta reg7
+                            ldy _RayIdXPoint2
+                            lda _lAngle,Y
+                            sec
+                            sbc reg7
+                            bvc VeryWideAngle_04
+                            jsr _drawRightCuttingWall2Visible
+                            jmp endAngleSpecific_04
+VeryWideAngle_04
+                            jsr _drawLeftCuttingWall2Visible
+endAngleSpecific_04
+
+EndIfAngleSameSign_03
+
+;;                     }
+        jmp             EndIfAngle2_03
+;;                 } else { // (lAngle[idxPt2] == 0
+Angle2Null_01
+
+                        ldy _RayIdXPoint1
+                        lda _lAngle,Y
+                        bpl PositivPoint2Angle_02
+                            jsr _drawRightCuttingWall2Visible
+                        jmp endPositivPoint2Angle_02
+PositivPoint2Angle_02
+                            jsr _drawLeftCuttingWall2Visible
+endPositivPoint2Angle_02
+
+EndIfAngle2_03
+;;                 }
+EndIfAngle2Positiv_01
+jmp EndIfPoint2Visible_01
+;;             } else {
+Point2NotVisible_01
+;;                 if (   (isFront[RayIdXPoint1] 
+;;                     || isFront[RayIdXPoint2] )
+;;                     && ((lAngle[RayIdXPoint1] & 0x80) != (lAngle[RayIdXPoint2] & 0x80)) 
+;;                     && (abs(lAngle[RayIdXPoint2]) < 127 - abs(lAngle[RayIdXPoint1])) 
+;;                 ) {
+                    ldy         _RayIdXPoint1
+                    lda         _isFront, Y
+                    ldy         _RayIdXPoint2
+                    ora         _isFront, Y
+                    beq         EndIfFullCrossingWall
+
+                    ldy         _RayIdXPoint1
+                    lda         _lAngle,Y
+                    ldy         _RayIdXPoint2
+                    eor         _lAngle,Y
+                    and         #$80
+                    beq         EndIfFullCrossingWall
+
+                    ldy _RayIdXPoint1   ;; FIXME  // not sure about this way to code the condition.
+                    lda _lAngle,Y
+                    sta reg7
+                    ldy _RayIdXPoint2
+                    lda _lAngle,Y
+                    sec
+                    sbc reg7
+                    bvs EndIfFullCrossingWall
+;;                     drawFullCrossingWall();
+                        jsr         _drawFullCrossingWall
+EndIfFullCrossingWall
+;;                 }
+EndIfPoint2Visible_01
+;;             }
+
+EndIfPoint1Visible_00
+;;         }
+
+    dec     _RayCurrentWall
+    bmi     wallsendloop
+    jmp     wallsloop
+
+wallsendloop
+
+.)
+    rts
+
+#endif // USE_C_ZBUFFWALLS
+
+
+#ifndef USE_C_RAYCAST
+
+_rayInitCasting:
+.(
+    ldy #NUMBER_OF_SLICE
+    lda #$FF
+.(: loop:
+    sta _rayzbuffer, Y
+    sta _raywall, Y
+    dey
+    bpl loop: .):
+
+.)
+    rts
+#endif
+
+
+
 #undef USE_C_PREDRAW
 ; void preDraw()
 _preDraw:

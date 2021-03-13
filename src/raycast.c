@@ -269,10 +269,14 @@ void drawRightCuttingWall1Visible(){
 }
 #endif // USE_C_RAYCAST
 
-
-void zbuffWalls(){
+#ifdef USE_C_ZBUFFWALLS
+void zbuffWalls() {
     
-    for (RayCurrentWall = 0; RayCurrentWall < rayNbWalls; RayCurrentWall ++){
+    RayCurrentWall = rayNbWalls;
+    do {
+        RayCurrentWall --;
+
+
         RayIdXPoint1        = lWallsPt1[RayCurrentWall];
         RayIdXPoint2        = lWallsPt2[RayCurrentWall];
 
@@ -457,8 +461,11 @@ void zbuffWalls(){
                 }
             }
         }
-    }
+    } while (RayCurrentWall != 0);
 }
+
+#endif // USE_C_ZBUFFWALLS
+
 void rayProcessWalls() {
     int v0, v2;
     int v1;

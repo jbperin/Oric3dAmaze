@@ -143,6 +143,7 @@ unsigned int longexp(unsigned int x){
     }
 }
 
+#ifdef USE_C_PROCESS_POINT
 signed char ATAN2 (signed int ty, signed int tx){
     signed char     x, y;
     unsigned char   ix, iy;
@@ -187,3 +188,4 @@ signed char ATAN2 (signed int ty, signed int tx){
 
     return (signed char)v;
 }
+#endif USE_C_PROCESS_POINT
