@@ -467,142 +467,81 @@ void zbuffWalls() {
 #endif // USE_C_ZBUFFWALLS
 
 void rayProcessWalls() {
-    int v0, v2;
-    int v1;
-    int deltaX, deltaY;
-    signed char angle;
+
+    int rayTmp2;
+    int rayTmp1;
+    int rayDeltaX, rayDeltaY;
+    signed char rayCurrentAngle;
     
     zbuffWalls();
-    /* 
-     * Change output from logarithmic scale to linear scale 
-     */
-    for (RaySliceIdx=0; RaySliceIdx<NUMBER_OF_SLICE; RaySliceIdx++){
-        RayCurrentWall = raywall[RaySliceIdx];
+
+    
+
+    // Compute texture column informations
+    RaySliceIdx = NUMBER_OF_SLICE;
+    do {
+         
+        RaySliceIdx--;
+
+        RayCurrentWall                  = raywall[RaySliceIdx];
+        tabTexCol [RaySliceIdx]         = 0;
         if (RayCurrentWall != 255) {
+
+
             raylogdist[RaySliceIdx] = rayzbuffer[RaySliceIdx];
-            angle       = rayCamRotZ + tabRayAngles[RaySliceIdx];
+
             if (unfish[RaySliceIdx] < rayzbuffer[RaySliceIdx])
                 rayzbuffer[RaySliceIdx] -= unfish[RaySliceIdx];
 
 
             TableVerticalPos[RaySliceIdx] =dist2hh(rayzbuffer[RaySliceIdx]);
-            rayzbuffer[RaySliceIdx] = longexp(rayzbuffer[RaySliceIdx]);     
+            /* 
+            * Change output from logarithmic scale to linear scale 
+            */
+            // rayzbuffer[RaySliceIdx] = longexp(rayzbuffer[RaySliceIdx]);        
 
+
+            rayCurrentAngle       = rayCamRotZ + tabRayAngles[RaySliceIdx];
             if (lWallsCosBeta[RayCurrentWall] == 0){    // Wall is O,y aligned   
-                deltaY      = lPointsY[lWallsPt1[RayCurrentWall]]-rayCamPosY;
                  
-                if (angle == 0){
-                    v0 = 0;
-                    v1 = 0;
-                    v2 = 0;
-                } else if (angle > 0) {
-                    v0 = log2sin(angle); // round(32*math.log2(math.sin(angle*FIX2RAD)*COEFF))
-                    v1 = raylogdist[RaySliceIdx] + v0;
-                    if (v1<0) v1=0;
-                    v2 = longexp(v1); // (2**(v1/32))
-
-                } else if (angle < 0) {
-                    v0 = log2sin(angle); // round(32*math.log2(-math.sin(angle*FIX2RAD)*COEFF))
-                    v1 = raylogdist[RaySliceIdx] + v0;
-                    if (v1<0) v1=0;
-                    v2 = -longexp(v1); // -(2**(v1/32)) # 
-                }
-                if (deltaY < 0) {
-                    tabTexCol [RaySliceIdx]        = abs(v2+multiCoeff[abs(deltaY)]);
+                if (rayCurrentAngle == 0){
+                    rayTmp2 = 0;
                 } else {
-                    tabTexCol [RaySliceIdx]        = abs(v2-multiCoeff[abs(deltaY)]);
+                    rayTmp1 = raylogdist[RaySliceIdx] + tabLog2Sin[(unsigned char)rayCurrentAngle];
+                    if (rayTmp1<0) rayTmp1=0;
+                    rayTmp2 = longexp(rayTmp1);
+                    if (rayCurrentAngle <= 0) rayTmp2 = -rayTmp2;
+                }
+                rayDeltaY      = lPointsY[lWallsPt1[RayCurrentWall]]-rayCamPosY;
+                if (rayDeltaY < 0) {
+                    rayTmp2      +=  multiCoeff[-rayDeltaY];
+                } else {
+                    rayTmp2      -=  multiCoeff[rayDeltaY];
                 }
             } else {                       // Wall is O,x aligned 
-                deltaX      = lPointsX[lWallsPt1[RayCurrentWall]]-rayCamPosX;
                 if (tabRayAngles[RaySliceIdx] == 0){
-                    v0 = 0;
-                    v1 = 0;
-                    v2 = 0;
-                } else if (abs (angle) < 64) {
-                    v0 = log2cos(angle); // round(32*math.log2(math.sin(angle*FIX2RAD)*COEFF))
-                    v1 = raylogdist[RaySliceIdx] + v0;
-                    if (v1<0) v1=0;
-                    v2 = longexp(v1); // (2**(v1/32))
-
-                } else if (abs (angle) >= 64) {
-                    v0 = log2cos(angle); // round(32*math.log2(-math.sin(angle*FIX2RAD)*COEFF))
-                    v1 = raylogdist[RaySliceIdx] + v0;
-                    if (v1<0) v1=0;
-                    v2 = -longexp(v1); // -(2**(v1/32)) # 
-                }
-                if (deltaX < 0){
-                    tabTexCol [RaySliceIdx]        = abs(v2+multiCoeff[abs(deltaX)]);
+                    rayTmp2 = 0;
                 } else {
-                    tabTexCol [RaySliceIdx]        = abs(v2-multiCoeff[deltaX]);
+                    rayTmp1 = raylogdist[RaySliceIdx] + tabLog2Cos[(unsigned char)rayCurrentAngle]; // v0; //tabLog2Cos[rayCurrentAngle];
+                    if (rayTmp1<0) rayTmp1=0;
+                    rayTmp2 = longexp(rayTmp1);
+                    if (abs (rayCurrentAngle) >= 64) {
+                        rayTmp2 = -rayTmp2; // -(2**(v1/32)) # 
+                    }
+                }
+                rayDeltaX      = lPointsX[lWallsPt1[RayCurrentWall]]-rayCamPosX;
+                if (rayDeltaX < 0){
+                    rayTmp2      += multiCoeff[-rayDeltaX];
+                } else {
+                    rayTmp2      -= multiCoeff[rayDeltaX];
                 }
             }
-
-
-        } else {
-            tabTexCol [RaySliceIdx]        = 0;
+            if (rayTmp2 < 0) rayTmp2 = -rayTmp2;
+            tabTexCol [RaySliceIdx]        = rayTmp2;
         }
-    }
-
-    // // Compute texture column informations
-    // for (RaySliceIdx=0; RaySliceIdx<NUMBER_OF_SLICE; RaySliceIdx++){
-    //     RayCurrentWall = raywall[RaySliceIdx];
-    //     if (RayCurrentWall != 255) {
-    //         angle       = rayCamRotZ + tabRayAngles[RaySliceIdx];
-    //         if (lWallsCosBeta[RayCurrentWall] == 0){    // Wall is O,y aligned   
-    //             deltaY      = lPointsY[lWallsPt1[RayCurrentWall]]-rayCamPosY;
-                 
-    //             if (angle == 0){
-    //                 v0 = 0;
-    //                 v1 = 0;
-    //                 v2 = 0;
-    //             } else if (angle > 0) {
-    //                 v0 = log2sin(angle); // round(32*math.log2(math.sin(angle*FIX2RAD)*COEFF))
-    //                 v1 = raylogdist[RaySliceIdx] + v0;
-    //                 if (v1<0) v1=0;
-    //                 v2 = longexp(v1); // (2**(v1/32))
-
-    //             } else if (angle < 0) {
-    //                 v0 = log2sin(angle); // round(32*math.log2(-math.sin(angle*FIX2RAD)*COEFF))
-    //                 v1 = raylogdist[RaySliceIdx] + v0;
-    //                 if (v1<0) v1=0;
-    //                 v2 = -longexp(v1); // -(2**(v1/32)) # 
-    //             }
-    //             if (deltaY < 0) {
-    //                 tabTexCol [RaySliceIdx]        = abs(v2+multiCoeff[abs(deltaY)]);
-    //             } else {
-    //                 tabTexCol [RaySliceIdx]        = abs(v2-multiCoeff[abs(deltaY)]);
-    //             }
-    //         } else {                       // Wall is O,x aligned 
-    //             deltaX      = lPointsX[lWallsPt1[RayCurrentWall]]-rayCamPosX;
-    //             if (tabRayAngles[RaySliceIdx] == 0){
-    //                 v0 = 0;
-    //                 v1 = 0;
-    //                 v2 = 0;
-    //             } else if (abs (angle) < 64) {
-    //                 v0 = log2cos(angle); // round(32*math.log2(math.sin(angle*FIX2RAD)*COEFF))
-    //                 v1 = raylogdist[RaySliceIdx] + v0;
-    //                 if (v1<0) v1=0;
-    //                 v2 = longexp(v1); // (2**(v1/32))
-
-    //             } else if (abs (angle) >= 64) {
-    //                 v0 = log2cos(angle); // round(32*math.log2(-math.sin(angle*FIX2RAD)*COEFF))
-    //                 v1 = raylogdist[RaySliceIdx] + v0;
-    //                 if (v1<0) v1=0;
-    //                 v2 = -longexp(v1); // -(2**(v1/32)) # 
-    //             }
-    //             if (deltaX < 0){
-    //                 tabTexCol [RaySliceIdx]        = abs(v2+multiCoeff[abs(deltaX)]);
-    //             } else {
-    //                 tabTexCol [RaySliceIdx]        = abs(v2-multiCoeff[deltaX]);
-    //             }
-    //         }
-    //     } else {
-    //         tabTexCol [RaySliceIdx]        = 0;
-    //     }
-
-    // }
-
+    } while (RaySliceIdx !=0);
 }
+
 
 #ifdef USE_C_PROCESS_POINT
 void rayProcessPoints() {
