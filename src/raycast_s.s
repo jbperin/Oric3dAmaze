@@ -618,7 +618,7 @@ _rayInitCasting:
 
 
 
-#undef USE_C_PREDRAW
+#ifndef USE_C_PREDRAW
 ; void preDraw()
 _preDraw:
 .(
