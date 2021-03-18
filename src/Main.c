@@ -36,10 +36,11 @@ extern unsigned char 	nbE_keybuf;
 char message [40];
 unsigned char refreshNeeded;
 unsigned char running ;
-
+#define CHANGE_INK_TO_BLACK             0
 #define CHANGE_INK_TO_RED	            1		
 #define CHANGE_INK_TO_GREEN	            2		
 #define CHANGE_INK_TO_BLUE	            4		
+#define CHANGE_PAPER_TO_WHITE	        23
 
 
 void prepareRGB(){
@@ -72,6 +73,15 @@ void initCamera(signed char init[] ){
 #define KEY_W       0x5A
 #define KEY_Z       0x57
 #define KEY_X       0x58
+
+#define KEY_Y       0x59
+#define KEY_H       0x48
+#define KEY_T       0x54
+#define KEY_U       0x55
+#define KEY_G       0x47
+#define KEY_J       0x4A
+#define KEY_L       0x4C
+
 #define KEY_UP      0x01
 #define KEY_DOWN    0x03
 #define KEY_LEFT    0x02
@@ -84,6 +94,38 @@ char keyTurnRight       = KEY_E;
 char keyStraffeLeft     = KEY_Q;
 char keyStraffeRight    = KEY_D;
 char keyQuit            = KEY_X;
+
+unsigned char keybconfig        = 0; // 0 : AZEQSD , 1 : TYUGHJ, 2:ArrowKeys
+unsigned char soundenabled      = 0; // 0 : No Sound, 1 = Sound Enabled
+
+void setKeyboardConfig(){
+    if (keybconfig == 0) {
+        keyForward         = KEY_Z;
+        keyBackward        = KEY_S;
+        keyTurnLeft        = KEY_A;
+        keyTurnRight       = KEY_E;
+        keyStraffeLeft     = KEY_Q;
+        keyStraffeRight    = KEY_D;
+        keyQuit            = KEY_L;
+    } else if (keybconfig == 1) {
+        keyForward         = KEY_Y;
+        keyBackward        = KEY_H;
+        keyTurnLeft        = KEY_T;
+        keyTurnRight       = KEY_U;
+        keyStraffeLeft     = KEY_G;
+        keyStraffeRight    = KEY_J;
+        keyQuit            = KEY_X;
+    } else if (keybconfig == 2) {
+        keyForward         = KEY_UP;
+        keyBackward        = KEY_DOWN;
+        keyTurnLeft        = KEY_LEFT;
+        keyTurnRight       = KEY_RIGHT;
+        keyStraffeLeft     = KEY_W;
+        keyStraffeRight    = KEY_X;
+        keyQuit            = KEY_Q;
+    }
+}
+
 
 void keyPressed(unsigned char c){
 	// printf ("kp: %x, ", c);
@@ -111,59 +153,21 @@ void keyPressed(unsigned char c){
             running = 0;
     }
 
-    // switch (c) {
-    //     case 1: // UP
-    //         forward(); 
-    //         refreshNeeded   = 1;
-    //         break;
-    //     case 2: // LEFT
-    //         rayCamRotZ      += ROT_ANGLE_STEP;
-    //         RayLeftAlpha    = rayCamRotZ + HALF_FOV_FIX_ANGLE;
-    //         refreshNeeded   = 1;
-    //         break;
-    //     case 3: // DOWN
-    //         backward();
-    //         refreshNeeded   = 1;
-    //         break;
-    //     case 4: // RIGHT
-    //         rayCamRotZ      -= ROT_ANGLE_STEP; 
-    //         RayLeftAlpha    = rayCamRotZ + HALF_FOV_FIX_ANGLE;
-    //         refreshNeeded   = 1;
-    //         break;
-    //     case 90:  // Z
-    //         refreshNeeded           = 1;
-    //         shiftLeft(); break;
-    //     case 88:  // X
-    //         refreshNeeded           = 1;
-    //         shiftRight(); break;
-    //     case 81: // Q
-    //         running = 0;
-    //         break;
-    //     default:
-    //         break;
-    // }
 }
 
-// void keyReleased(unsigned char c){
-// 	// printf ("kr: %x, ", c);
-
-// }
+void keyReleased(unsigned char c){
+	// printf ("kr: %x, ", c);
+}
 
 void lsys(){
 	unsigned char c;
 	while (nbE_keybuf != 0) {
-		// c=get_keyevent();
-		if (! ((c=get_keyevent()) & 0x80)){
-			// keyReleased (c & 0x7F);
-//		} else {
+		if ((c=get_keyevent()) & 0x80){
+			keyReleased (c & 0x7F);
+		} else {
 			keyPressed (c);
 		}
-        //if (isWinningPosition(rayCamPosX, rayCamPosY)) break;
 	}
-    // nbE_keybuf = 0;
-	// while (nbE_keybuf != 0) {
-	// 	c=get_keyevent();
-    // }
 }
 
 void maze(){
@@ -175,23 +179,18 @@ void maze(){
 	osmeInit();
 	ayInit();
 
-    sprintf (message, "Temps restant: ");
+    sprintf (message, "Temps restant:");
     AdvancedPrint(3,26, message);
 
     refreshNeeded           = 1;
-
-    // game init
     running                 = 1;
 
 	do {
-
 		lsys();
-
         if (isWinningPosition(rayCamPosX, rayCamPosY)) {
             running = 0;
             maze_completed  = 1;
         }
-
         if (refreshNeeded) {
             rayInitCasting();
             rayProcessPoints();
@@ -200,29 +199,81 @@ void maze(){
             refreshNeeded = 0;
         }
         if (remaining_seconds == nxtPing){
-            ping();
+            if (soundenabled) ping();
             nxtPing = tabTempoPing[++idxTempoPing];
         }
-
     } while (running && (remaining_seconds != 0));
-    if (remaining_seconds == 0) explode();
+    if ((remaining_seconds == 0) && (soundenabled)) explode();
 	kernelEnd();
-
 }
 
+#define CLS cls();poke (0xBBA3, CHANGE_INK_TO_BLACK);
+
 void credits(){
-    cls();
-    printf ("   --== Les Chemins De Galdeon ==--\n\n"
-    "  Cree et developpe par: \n\n"
+
+    CLS
+    printf ("  --== Les Chemins De Galdeon ==--\n\n"
+    "    Cree et developpe par: \n\n"
     "       Jean-Baptiste PERIN (JiBe)\n\n"
-    "  conseille par: \n\n"
+    "    conseille par: \n\n"
     "        Mickael POINTIER (Dbug)\n\n"
-    "        Vincent BILLET (Xaratheus)\n\n"
+    "        Vincent BILLET (Xaratheus)\n\n\n\n\n");
+    printf("\n\n\n\nCe jeu utilise castoric pour la 3D\n\n"
+    " github.com/oric-software/castoric\n"
+    " ---------------------------------\n"
     );
     get();
 }
+void setKeyboard(){
+    char c;
+    do {
+        CLS
+        printf (
+        "   --== PARAMETRAGE CLAVIER ==--\n\n"
+        "Selectionner votre configuration \n"
+        "    clavier preferee en appuyant sur \n"
+        "    la touche 1, 2 ou 3:\n");
+
+        printf ("\n[1]: \n\n"
+        "  Q / E : tourner gauche / droite\n"
+        "  W / S : avancer / reculer\n"
+        "  Z / D : decaler gauche / droite\n");
+
+        printf ("\n[2]: \n\n"
+        "  T / U : tourner gauche / droite\n"
+        "  Y / H : avancer / reculer\n"
+        "  G / J : decaler gauche / droite\n");
+
+        printf ("\n[3]: \n\n"
+        "  LEFT/RIGHT : tourner gauche/droite\n"
+        "  UP/DOWN    : avancer / reculer\n"
+        "  W / X     : decaler gauche / droite\n"
+        );
+    } while (((c=get()) != '1') && (c != '2') && (c != '3'));
+    keybconfig = c-'1';
+    setKeyboardConfig();
+}
+
+void setSound(){
+    char c;
+    do {
+        CLS
+        printf (
+        "   --== PARAMETRAGE SONS ==--\n\n"
+        " [1]: Sons desactives\n\n"
+        " [2]: Sons actives\n\n"
+        );
+    } while (((c=get()) != '1') && (c != '2'));
+    soundenabled = c-'1';
+}
+
+void options(){
+    setKeyboard();
+    setSound ();
+}
+char charQuit[]={'L', 'X', 'Q'};
 void welcome(){
-    cls();
+    CLS
 
     printf (" --== Les Chemins de Galdeon ==--\n\n"
 "    par Jean-Baptiste PERIN (2021)\n\n"
@@ -234,105 +285,210 @@ void welcome(){
 "ne devez pas rester.\n"
 "Le temps est compte pour vous evader \n"
 "par les chemins de Galdeon ...\n\n");
-    printf ("Commandes de jeu:\n"
-"\n"
+    printf ("Appuyer sur :\n\n"
+"- 1 pour jouer au niveau Facile\n"
+"- 2 pour jouer au niveau Moyen\n"
+"- 3 pour jouer au niveau Difficile\n"
+"- C pour afficher les credits\n"
+"- O pour configurer les options\n\nq");
+if (keybconfig==0) {
+    printf ("Commandes de jeu:\n\n"
 "W / S : Avancer / Reculer\n"
 "Q / E : Tourner Gauche / Droite\n"
 "Z / D : Decaler Gauche / Droite\n"
-"X     : Quitter\n");
-
-    printf ("\n Appuyer sur :\n");
-
-    printf ("\n"
-"- C pour afficher les credits\n"
-"- 1 pour jouer au niveau Facile\n"
-"- 2 pour jouer au niveau Moyen\n"
-"- 3 pour jouer au niveau Difficile\n");
+"L     : Quitter");
+} else if (keybconfig==1){
+    printf ("Commandes de jeu:\n\n"
+"Y / H : Avancer / Reculer\n"
+"T / U : Tourner Gauche / Droite\n"
+"G / J : Decaler Gauche / Droite\n"
+"X     : Quitter");
+} else if (keybconfig==2){
+    printf ("Commandes de jeu:\n\n"
+"UP / DOWN  : Avancer / Reculer\n"
+"LEFT/RIGHT : Tourner Gauche / Droite\n"
+"W / X      : Decaler Gauche / Droite\n"
+"Q          : Quitter");
 }
 
+}
+void wanaContinue(){
+    printf("Appuyer sur:\n");
+    printf ("- C pour continuer,\n");
+    if (keybconfig==0) {
+        printf ("- L pour quitter.");
+    } else if (keybconfig==1){
+        printf ("- X pour quitter.");
+    } else if (keybconfig==2){
+        printf ("- Q pour suitter.");
+    }
+}
 void bye() {
     text();
+    CLS
     printf (" Merci d'avoir joue avec \n\n"
     "    --== Les Chemins De Galdeon ==--\n\n"
     "    par Jean-Baptiste PERIN (2021)\n\n");
 }
 char  retry() {
     char c;
-    hires();
+    text();
     do {
-        cls();
-        printf ("Reessayer: [Y] Oui, [N] Non");
-        c=get();
-    } while ((c != 'Y') && (c!= 'N') && (c !='X'));
+        CLS
+        printf("   --== MAUVAIS REVE ==--  \n\n\n\n");
+        printf("Fichtre !! \nVous venez de faire un sacre cauchemard.\n");
+        printf("Vous vous etiez assoupi et vous avez reve que vous restiez bloque dans l'explosion\n");
+        printf("Heureusement que tout cela n'etait qu'un mauvais reve.\n");
+        printf("Prenez le temps de reprendre vos emotions\n");
+        wanaContinue();
+    } while (((c=get()) != 'C') && (c!= charQuit[keybconfig]));
     return c;
 }
 //tabTempoPing[]={250, 200, 150, 100, 50, 40, 30, 20, 10, 5, 4, 3, 2, 1};
 unsigned char tabLevelParam[] = {
-    35*3, 3,
+    255, 0,
+    20*2, 8,
+    20*1, 8, 
+    255, 0,
     35*2, 4,
-    35*1, 7, 
+    35*1, 6, 
     255 , 0,
     90*2, 2,
     90*1, 4,
  };
-void main(){
-    char c;
-    unsigned char idxparam;
 
-
+char mainChoice(){
+    char c=0;
     do {
         welcome();
-        while ('C' == (c = get())){
-            credits();
-            welcome();
+        c = get();
+        while ((c == 'C') || (c == 'O') || (c == '0')){
+            if (c == 'C') {
+                credits();
+            } else if ((c == 'O')|| (c == '0')) {
+                options();
+            }
+            c=0;
         }
-    } while ((c != '1') && (c != '2') && (c != '3') && (c != 'X')) ;
-    if (c == 'X') {
-        bye(); return ;
+    } while ((c != '1') && (c != '2') && (c != '3') && (c != charQuit[keybconfig])) ;
+    return c;
+}
+unsigned char currentIdxParam;
+
+void computeNewScore(){
+    if (game_level == 0) {
+        current_score += (tabLevelParam[currentIdxParam-2]-remaining_seconds) ;
+    } else if (game_level == 1){
+        current_score += 3*(tabLevelParam[currentIdxParam-2]-remaining_seconds) ;
+    }else {
+        current_score += 10*(tabLevelParam[currentIdxParam-2]-remaining_seconds) ;
     }
-    idxparam = (unsigned char)(c-'1')<<1;
-    wanna_retry = 1;
-    maze_completed = 0;
-    remaining_seconds       = tabLevelParam[idxparam++]; // game_level * 35 ; // 35 = Difficile
-    idxTempoPing            = tabLevelParam[idxparam++];
+}
+char  congrats() {
 
-    while (wanna_retry && !maze_completed) {
-        initCamera(init_02);
-        initScene (scene_02, texture_02, collision_02, win_02);
-        nxtPing                 = tabTempoPing[idxTempoPing];
-        maze();
+    char c;
+    text();
 
-        if (!maze_completed) {
-            wanna_retry = (retry()=='Y');
+    computeNewScore();
+
+    CLS
+    printf("   --== FELICITATIONS ==--  \n\n\n\n");
+    printf("Vous vous etes echappe en %d secondes.\n\n",tabLevelParam[currentIdxParam-2]- remaining_seconds);
+    printf("Il ne restait plus que %d secondes\navant l'explosion.\n\n",remaining_seconds);
+
+    if (game_level == 0)
+        printf("Votre score au niveau FACILE\n");
+    else if (game_level == 1)
+        printf("Votre score au niveau MOYEN\n");
+    else if (game_level == 2)
+        printf("Votre score au niveau DIFFICILE\n");
+    printf("\n est desormais de %d points\n\n\n\n\n", current_score);
+
+    wanaContinue();
+    while (((c=get()) != 'C') && (c!= charQuit[keybconfig]));
+    return c;
+}
+
+void playLab(signed char init_0x[], signed char scene_0x[], unsigned char *texture_0x[]
+    , unsigned char (*collision_0x)(signed char , signed char )
+    , unsigned char (*win_0x)(signed char , signed char )){
+
+        wanna_retry             = 1;
+        maze_completed          = 0;
+
+        while (wanna_retry && !maze_completed) {
+
+            initCamera(init_0x);
+            initScene (scene_0x, texture_0x, collision_0x, win_0x);
+            
+            nxtPing                 = tabTempoPing[idxTempoPing];
+            maze();
+
+            if ((!maze_completed) && (wanna_retry = (retry()=='Y'))) {
+                remaining_seconds       = tabLevelParam[currentIdxParam-2]; // game_level * 35 ; // 35 = Difficile
+                idxTempoPing            = tabLevelParam[currentIdxParam-1];
+            }
         }
+}
 
-    }
-    if (! maze_completed) {
-        bye();
-        return ;
-    }
-    idxparam+=4;
-    cls();
-    printf ("   Felicitations \n"
-    " Appuyer sur une touche pour continuer.\n");
-    get();
-    wanna_retry = 1;
-    maze_completed = 0;
-    remaining_seconds       = tabLevelParam[idxparam++]; // game_level * 35 ; // 35 = Difficile
-    idxTempoPing            = tabLevelParam[idxparam++];
-    while (wanna_retry && !maze_completed) {
-        initCamera(init_01);
-        initScene (scene_01, texture_01, collision_01, win_01);
-        // remaining_seconds       = game_level * 90 ; // 90 = difficile
-        // idxTempoPing            = 2;
-        nxtPing                 = tabTempoPing[idxTempoPing];
+void main(){
 
-        maze();
 
-        if (!maze_completed) {
-            wanna_retry = (retry()=='Y');
-        }
-    }
+    char c=0;
+
+    do {
+        c = mainChoice();
+        if (c == charQuit[keybconfig]) break ;
+
+        game_level              = (unsigned char)(c-'1');
+        current_score           = 0;
+        currentIdxParam         = game_level<<1;
+
+
+        remaining_seconds       = tabLevelParam[currentIdxParam++]; // game_level * 35 ; // 35 = Difficile
+        idxTempoPing            = tabLevelParam[currentIdxParam++];
+
+        playLab(init_04, scene_04, texture_04, collision_04, win_04);
+
+        if (! maze_completed) continue;
+
+        c = congrats();
+        if (c == charQuit[keybconfig]) continue ;
+
+
+
+        currentIdxParam+=4;
+
+        remaining_seconds       = tabLevelParam[currentIdxParam++]; // game_level * 35 ; // 35 = Difficile
+        idxTempoPing            = tabLevelParam[currentIdxParam++];
+
+        playLab(init_02, scene_02, texture_02, collision_02, win_02);
+
+        if (! maze_completed) continue;
+
+        c = congrats();
+        if (c == charQuit[keybconfig]) continue ;
+
+
+
+        currentIdxParam+=4;
+
+        remaining_seconds       = tabLevelParam[currentIdxParam++]; // game_level * 35 ; // 35 = Difficile
+        idxTempoPing            = tabLevelParam[currentIdxParam++];
+
+        wanna_retry             = 1;
+        maze_completed          = 0;
+
+        playLab(init_01, scene_01, texture_01, collision_01, win_01);
+
+        if (! maze_completed) continue;
+
+        c = congrats();
+        if (c == charQuit[keybconfig]) continue ;
+
+
+    } while (1);
+
     bye();
 
 }

@@ -1,7 +1,5 @@
 
 // [ref texture_file2buffer]
-#include "texture_bluestone.h"
-#include "texture_redbrick.h"
 //#include "texture_greystone.h"
 //#include "texture_purplestone.h"
 
@@ -14,6 +12,7 @@ unsigned char (*isWinningPosition)(signed char , signed char );
 // #include "scene_00.c"
 #include "scene_01.c"
 #include "scene_02.c"
+#include "scene_04.c"
 
 // [ref scene_load]
 void precalculateWallsAngle() {

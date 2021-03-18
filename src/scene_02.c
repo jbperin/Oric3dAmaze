@@ -26,6 +26,8 @@
 19---20-------21
 */
 #include "texture_map02.h"
+#include "textures/texture_bluestone.h"
+#include "textures/texture_redbrick.h"
 
 signed char init_02[] = {
 	27, 27, 0

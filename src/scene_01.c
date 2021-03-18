@@ -36,6 +36,10 @@
 |     |                 |
 36---37----38----------39
 */
+
+#include "textures/texture_bluestone.h"
+#include "textures/texture_redbrick.h"
+
 #include "texture_map01.h"
 
 signed char init_01[] = {
