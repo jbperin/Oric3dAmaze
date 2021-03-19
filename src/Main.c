@@ -331,6 +331,7 @@ void bye() {
 char  retry() {
     char c;
     text();
+    
     do {
         CLS
         printf("   --== MAUVAIS REVE ==--  \n\n\n\n");
@@ -340,7 +341,8 @@ char  retry() {
         printf("Prenez le temps de reprendre vos\nemotions puis appuyer sur\n");
         printf ("- R pour recommencer l'aventure,\n\n");
         printf ("- ESC pour quitter.");
-    } while (((c=get()) != 'R') && (c!= KEY_ESCAPE));
+        c=get();
+    } while ((c != 'R') && (c!= KEY_ESCAPE)); //&& (c!= KEY_ESCAPE)
     return c;
 }
 //tabTempoPing[]={250, 200, 150, 100, 50, 40, 30, 20, 10, 5, 4, 3, 2, 1};
@@ -423,9 +425,12 @@ void playLab(signed char init_0x[], signed char scene_0x[], unsigned char *textu
             nxtPing                 = tabTempoPing[idxTempoPing];
             maze();
 
-            if ((!maze_completed) && (wanna_retry = (retry()=='R'))) {
-                remaining_seconds       = tabLevelParam[currentIdxParam-2]; // game_level * 35 ; // 35 = Difficile
-                idxTempoPing            = tabLevelParam[currentIdxParam-1];
+            if (!maze_completed) {
+                if (remaining_seconds!=0) get(); // flush escape char 
+                if (wanna_retry = (retry()=='R')) {
+                    remaining_seconds       = tabLevelParam[currentIdxParam-2]; // game_level * 35 ; // 35 = Difficile
+                    idxTempoPing            = tabLevelParam[currentIdxParam-1];
+                }
             }
         }
 }
