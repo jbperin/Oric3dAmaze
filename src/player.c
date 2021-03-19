@@ -82,7 +82,11 @@ void forward() {
         // rayCamPosX--;
         asm("dec _rayCamPosX;");
     }
+#ifdef USE_C_GENERIC_COLLISION
+    if (collideWall()){
+#else
     if (!isAllowedPosition(rayCamPosX, rayCamPosY)) {
+#endif
         rayCamPosX = X; rayCamPosY = Y;
     }
 }
@@ -117,7 +121,11 @@ void backward() {
         // rayCamPosX++;
         asm("inc _rayCamPosX;");
     }
+#ifdef USE_C_GENERIC_COLLISION
+    if (collideWall()){
+#else
     if (!isAllowedPosition(rayCamPosX, rayCamPosY)) {
+#endif
         rayCamPosX = X; rayCamPosY = Y;
     }
 }
@@ -152,7 +160,11 @@ void shiftLeft() {
         // rayCamPosY--;
         asm("dec _rayCamPosY;");
     }
+#ifdef USE_C_GENERIC_COLLISION
+    if (collideWall()){
+#else
     if (!isAllowedPosition(rayCamPosX, rayCamPosY)) {
+#endif
         rayCamPosX = X; rayCamPosY = Y;
     }
 }
@@ -188,7 +200,11 @@ void shiftRight() {
         // rayCamPosX++;
         asm("inc _rayCamPosX;");
     }
+#ifdef USE_C_GENERIC_COLLISION
+    if (collideWall()){
+#else
     if (!isAllowedPosition(rayCamPosX, rayCamPosY)) {
+#endif
         rayCamPosX = X; rayCamPosY = Y;
     }
 }

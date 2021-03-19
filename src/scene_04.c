@@ -76,37 +76,37 @@ unsigned char *texture_04[]= {
 unsigned char win_04(signed char X, signed char Y) {
 	return Y >= 18;
 }
-unsigned char collision_04(signed char X, signed char Y) {
-	if (X%6 == 0) {
-		if (Y%6 == 0) {
-			// X and Y on 6 *6 grid
-			return 0;
-		} else {
-			// X on grid, Y not on grid
-			if (X == 0) {
-				return 0;
-			} else if (X == 6) {
-				return (Y < 6);
-			} else if (X == 12) {
-				return (Y < 12);
-			} else if (X == 18) {
-				return 0;
-			} else {
-				return 1;
-			}
-		}
-	} else if (Y%6 == 0) {
-		if (Y == 0) {
-			return 0;
-		} else if (Y == 6) {
-			return (X < 6) || (X > 12);
-		} else if (Y == 12) {
-			return 1;
-		} else if (Y == 18) {
-			return (X < 6);
-		} else {
-			return 1;
-		}
-	}
-    return 1;
-}
+// unsigned char collision_04(signed char X, signed char Y) {
+// 	if (X%6 == 0) {
+// 		if (Y%6 == 0) {
+// 			// X and Y on 6 *6 grid
+// 			return 0;
+// 		} else {
+// 			// X on grid, Y not on grid
+// 			if (X == 0) {
+// 				return 0;
+// 			} else if (X == 6) {
+// 				return (Y < 6);
+// 			} else if (X == 12) {
+// 				return (Y < 12);
+// 			} else if (X == 18) {
+// 				return 0;
+// 			} else {
+// 				return 1;
+// 			}
+// 		}
+// 	} else if (Y%6 == 0) {
+// 		if (Y == 0) {
+// 			return 0;
+// 		} else if (Y == 6) {
+// 			return (X < 6) || (X > 12);
+// 		} else if (Y == 12) {
+// 			return 1;
+// 		} else if (Y == 18) {
+// 			return (X < 6);
+// 		} else {
+// 			return 1;
+// 		}
+// 	}
+//     return 1;
+// }

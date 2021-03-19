@@ -87,42 +87,44 @@ void initCamera(signed char init[] ){
 #define KEY_LEFT    0x02
 #define KEY_RIGHT   0x04
 
-char keyForward         = KEY_Z;
-char keyBackward        = KEY_S;
-char keyTurnLeft        = KEY_A;
-char keyTurnRight       = KEY_E;
-char keyStraffeLeft     = KEY_Q;
-char keyStraffeRight    = KEY_D;
-char keyQuit            = KEY_X;
+#define KEY_ESCAPE  0x1B
 
-unsigned char keybconfig        = 0; // 0 : AZEQSD , 1 : TYUGHJ, 2:ArrowKeys
+char keyForward         = KEY_UP;
+char keyBackward        = KEY_DOWN;
+char keyTurnLeft        = KEY_LEFT;
+char keyTurnRight       = KEY_RIGHT;
+char keyStraffeLeft     = KEY_X;
+char keyStraffeRight    = KEY_C;
+char keyQuit            = KEY_ESCAPE;
+
+unsigned char keybconfig        = 0; // 0 : ArrowKeys + XC,  1: AZEQSD , 2 : TYUGHJ
 unsigned char soundenabled      = 0; // 0 : No Sound, 1 = Sound Enabled
 
 void setKeyboardConfig(){
     if (keybconfig == 0) {
+        keyForward         = KEY_UP;
+        keyBackward        = KEY_DOWN;
+        keyTurnLeft        = KEY_LEFT;
+        keyTurnRight       = KEY_RIGHT;
+        keyStraffeLeft     = KEY_X;
+        keyStraffeRight    = KEY_C;
+        keyQuit            = KEY_ESCAPE;
+    } else if (keybconfig == 1) {
         keyForward         = KEY_Z;
         keyBackward        = KEY_S;
         keyTurnLeft        = KEY_A;
         keyTurnRight       = KEY_E;
         keyStraffeLeft     = KEY_Q;
         keyStraffeRight    = KEY_D;
-        keyQuit            = KEY_L;
-    } else if (keybconfig == 1) {
+        keyQuit            = KEY_ESCAPE;
+    } else if (keybconfig == 2) {
         keyForward         = KEY_Y;
         keyBackward        = KEY_H;
         keyTurnLeft        = KEY_T;
         keyTurnRight       = KEY_U;
         keyStraffeLeft     = KEY_G;
         keyStraffeRight    = KEY_J;
-        keyQuit            = KEY_X;
-    } else if (keybconfig == 2) {
-        keyForward         = KEY_UP;
-        keyBackward        = KEY_DOWN;
-        keyTurnLeft        = KEY_LEFT;
-        keyTurnRight       = KEY_RIGHT;
-        keyStraffeLeft     = KEY_W;
-        keyStraffeRight    = KEY_X;
-        keyQuit            = KEY_Q;
+        keyQuit            = KEY_ESCAPE;
     }
 }
 
@@ -235,20 +237,20 @@ void setKeyboard(){
         "    la touche 1, 2 ou 3:\n");
 
         printf ("\n[1]: \n\n"
+        "  LEFT/RIGHT : tourner gauche/droite\n"
+        "  UP/DOWN    : avancer / reculer\n"
+        "  X / C     : decaler gauche / droite\n");
+
+        printf ("\n[2]: \n\n"
+
         "  Q / E : tourner gauche / droite\n"
         "  W / S : avancer / reculer\n"
         "  Z / D : decaler gauche / droite\n");
 
-        printf ("\n[2]: \n\n"
+        printf ("\n[3]: \n\n"
         "  T / U : tourner gauche / droite\n"
         "  Y / H : avancer / reculer\n"
-        "  G / J : decaler gauche / droite\n");
-
-        printf ("\n[3]: \n\n"
-        "  LEFT/RIGHT : tourner gauche/droite\n"
-        "  UP/DOWN    : avancer / reculer\n"
-        "  W / X     : decaler gauche / droite\n"
-        );
+        "  G / J : decaler gauche / droite\n"        );
     } while (((c=get()) != '1') && (c != '2') && (c != '3'));
     keybconfig = c-'1';
     setKeyboardConfig();
@@ -271,7 +273,7 @@ void options(){
     setKeyboard();
     setSound ();
 }
-char charQuit[]={'L', 'X', 'Q'};
+
 void welcome(){
     CLS
 
@@ -291,37 +293,33 @@ void welcome(){
 "- 3 pour jouer au niveau Difficile\n"
 "- C pour afficher les credits\n"
 "- O pour configurer les options\n\nq");
+setKeyboardConfig();
 if (keybconfig==0) {
+    printf ("Commandes de jeu:\n\n"
+"UP / DOWN  : Avancer / Reculer\n"
+"LEFT/RIGHT : Tourner Gauche / Droite\n"
+"X / C      : Decaler Gauche / Droite\n"
+"ESC        : Quitter");
+} else if (keybconfig==1){
     printf ("Commandes de jeu:\n\n"
 "W / S : Avancer / Reculer\n"
 "Q / E : Tourner Gauche / Droite\n"
 "Z / D : Decaler Gauche / Droite\n"
-"L     : Quitter");
-} else if (keybconfig==1){
+"ESC   : Quitter");
+} else if (keybconfig==2){
     printf ("Commandes de jeu:\n\n"
 "Y / H : Avancer / Reculer\n"
 "T / U : Tourner Gauche / Droite\n"
 "G / J : Decaler Gauche / Droite\n"
-"X     : Quitter");
-} else if (keybconfig==2){
-    printf ("Commandes de jeu:\n\n"
-"UP / DOWN  : Avancer / Reculer\n"
-"LEFT/RIGHT : Tourner Gauche / Droite\n"
-"W / X      : Decaler Gauche / Droite\n"
-"Q          : Quitter");
+"ESC   : Quitter");
+
 }
 
 }
 void wanaContinue(){
     printf("Appuyer sur:\n");
     printf ("- C pour continuer,\n");
-    if (keybconfig==0) {
-        printf ("- L pour quitter.");
-    } else if (keybconfig==1){
-        printf ("- X pour quitter.");
-    } else if (keybconfig==2){
-        printf ("- Q pour suitter.");
-    }
+    printf ("- ESC pour quitter.");
 }
 void bye() {
     text();
@@ -336,12 +334,13 @@ char  retry() {
     do {
         CLS
         printf("   --== MAUVAIS REVE ==--  \n\n\n\n");
-        printf("Fichtre !! \nVous venez de faire un sacre cauchemard.\n");
-        printf("Vous vous etiez assoupi et vous avez reve que vous restiez bloque dans l'explosion\n");
-        printf("Heureusement que tout cela n'etait qu'un mauvais reve.\n");
-        printf("Prenez le temps de reprendre vos emotions\n");
-        wanaContinue();
-    } while (((c=get()) != 'C') && (c!= charQuit[keybconfig]));
+        printf("Fichtre !!\n\nQuel horrible cauchemard vous venez de faire !\n\n");
+        printf("Vous vous etiez assoupi et vous avez  reve que vous restiez bloque dans\nl'explosion\n\n");
+        printf("Heureusement que tout cela n'etait\nqu'un mauvais reve.\n\n");
+        printf("Prenez le temps de reprendre vos\nemotions puis appuyer sur\n");
+        printf ("- R pour recommencer l'aventure,\n\n");
+        printf ("- ESC pour quitter.");
+    } while (((c=get()) != 'R') && (c!= KEY_ESCAPE));
     return c;
 }
 //tabTempoPing[]={250, 200, 150, 100, 50, 40, 30, 20, 10, 5, 4, 3, 2, 1};
@@ -370,7 +369,7 @@ char mainChoice(){
             }
             c=0;
         }
-    } while ((c != '1') && (c != '2') && (c != '3') && (c != charQuit[keybconfig])) ;
+    } while ((c != '1') && (c != '2') && (c != '3') && (c != KEY_ESCAPE)) ;
     return c;
 }
 unsigned char currentIdxParam;
@@ -405,7 +404,7 @@ char  congrats() {
     printf("\n est desormais de %d points\n\n\n\n\n", current_score);
 
     wanaContinue();
-    while (((c=get()) != 'C') && (c!= charQuit[keybconfig]));
+    while (((c=get()) != 'C') && (c!= KEY_ESCAPE));
     return c;
 }
 
@@ -424,7 +423,7 @@ void playLab(signed char init_0x[], signed char scene_0x[], unsigned char *textu
             nxtPing                 = tabTempoPing[idxTempoPing];
             maze();
 
-            if ((!maze_completed) && (wanna_retry = (retry()=='Y'))) {
+            if ((!maze_completed) && (wanna_retry = (retry()=='R'))) {
                 remaining_seconds       = tabLevelParam[currentIdxParam-2]; // game_level * 35 ; // 35 = Difficile
                 idxTempoPing            = tabLevelParam[currentIdxParam-1];
             }
@@ -438,7 +437,7 @@ void main(){
 
     do {
         c = mainChoice();
-        if (c == charQuit[keybconfig]) break ;
+        if (c == KEY_ESCAPE) break ;
 
         game_level              = (unsigned char)(c-'1');
         current_score           = 0;
@@ -448,12 +447,12 @@ void main(){
         remaining_seconds       = tabLevelParam[currentIdxParam++]; // game_level * 35 ; // 35 = Difficile
         idxTempoPing            = tabLevelParam[currentIdxParam++];
 
-        playLab(init_04, scene_04, texture_04, collision_04, win_04);
+        playLab(init_04, scene_04, texture_04, 0, win_04);
 
         if (! maze_completed) continue;
 
         c = congrats();
-        if (c == charQuit[keybconfig]) continue ;
+        if (c == KEY_ESCAPE) continue ;
 
 
 
@@ -462,12 +461,12 @@ void main(){
         remaining_seconds       = tabLevelParam[currentIdxParam++]; // game_level * 35 ; // 35 = Difficile
         idxTempoPing            = tabLevelParam[currentIdxParam++];
 
-        playLab(init_02, scene_02, texture_02, collision_02, win_02);
+        playLab(init_02, scene_02, texture_02, 0, win_02);
 
         if (! maze_completed) continue;
 
         c = congrats();
-        if (c == charQuit[keybconfig]) continue ;
+        if (c == KEY_ESCAPE) continue ;
 
 
 
@@ -479,12 +478,12 @@ void main(){
         wanna_retry             = 1;
         maze_completed          = 0;
 
-        playLab(init_01, scene_01, texture_01, collision_01, win_01);
+        playLab(init_01, scene_01, texture_01, 0, win_01);
 
         if (! maze_completed) continue;
 
         c = congrats();
-        if (c == charQuit[keybconfig]) continue ;
+        if (c == KEY_ESCAPE) continue ;
 
 
     } while (1);

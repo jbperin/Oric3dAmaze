@@ -123,48 +123,48 @@ unsigned char *texture_02[]= {
 unsigned char win_02(signed char X, signed char Y) {
 	return X >= 30;
 }
-unsigned char collision_02(signed char X, signed char Y) {
-	if (X%6 == 0) {
-		if (Y%6 == 0) {
-			// X and Y on 6 *6 grid
-			return 0;
-		} else {
-			// X on grid, Y not on grid
-			if (X == 0) {
-				return 0;
-			} else if (X == 6) {
-				return (Y < 6) || (Y > 24);
-			} else if (X == 12) {
-				return (
-					(Y < 6) || (Y > 12)
-				);
-			} else if (X == 18) {
-				return ( (Y < 12) || ((Y > 18) && (Y < 24)) );
-			} else if (X == 24) {
-				return((Y<12) 
-				|| (Y > 18));
-			} else if (X == 30){
-				return (Y < 6);
-			} else {
-				return 1;
-			}
-		}
-	} else if (Y%6 == 0) {
-		if (Y == 0) {
-			return 0;
-		} else if (Y == 6) {
-			return (X < 6);
-		} else if (Y == 12) {
-			return 1;
-		} else if (Y == 18) {
-			return ( (X < 6) || ( (X > 18) && (X < 24) ));
-		} else if (Y == 24) {
-			return ((X < 12) || ((X > 18) && (X < 24)));
-		} else if (Y == 30) {
-			return 0;
-		} else {
-			return 1;
-		}
-	}
-    return 1;
-}
+// unsigned char collision_02(signed char X, signed char Y) {
+// 	if (X%6 == 0) {
+// 		if (Y%6 == 0) {
+// 			// X and Y on 6 *6 grid
+// 			return 0;
+// 		} else {
+// 			// X on grid, Y not on grid
+// 			if (X == 0) {
+// 				return 0;
+// 			} else if (X == 6) {
+// 				return (Y < 6) || (Y > 24);
+// 			} else if (X == 12) {
+// 				return (
+// 					(Y < 6) || (Y > 12)
+// 				);
+// 			} else if (X == 18) {
+// 				return ( (Y < 12) || ((Y > 18) && (Y < 24)) );
+// 			} else if (X == 24) {
+// 				return((Y<12) 
+// 				|| (Y > 18));
+// 			} else if (X == 30){
+// 				return (Y < 6);
+// 			} else {
+// 				return 1;
+// 			}
+// 		}
+// 	} else if (Y%6 == 0) {
+// 		if (Y == 0) {
+// 			return 0;
+// 		} else if (Y == 6) {
+// 			return (X < 6);
+// 		} else if (Y == 12) {
+// 			return 1;
+// 		} else if (Y == 18) {
+// 			return ( (X < 6) || ( (X > 18) && (X < 24) ));
+// 		} else if (Y == 24) {
+// 			return ((X < 12) || ((X > 18) && (X < 24)));
+// 		} else if (Y == 30) {
+// 			return 0;
+// 		} else {
+// 			return 1;
+// 		}
+// 	}
+//     return 1;
+// }
