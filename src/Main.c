@@ -36,6 +36,8 @@ extern unsigned char 	nbE_keybuf;
 char message [40];
 unsigned char refreshNeeded;
 unsigned char running ;
+int mode0;
+
 #define CHANGE_INK_TO_BLACK             0
 #define CHANGE_INK_TO_RED	            1		
 #define CHANGE_INK_TO_GREEN	            2		
@@ -209,7 +211,7 @@ void maze(){
 	kernelEnd();
 }
 
-#define CLS cls();poke (0xBBA3, CHANGE_INK_TO_BLACK);
+#define CLS cls();poke (0xBBA3, CHANGE_INK_TO_BLACK);poke(0x26A, (mode0 | 0x08) & 0xFE);
 
 void credits(){
 
@@ -292,7 +294,7 @@ void welcome(){
 "- 2 pour jouer au niveau Moyen\n"
 "- 3 pour jouer au niveau Difficile\n"
 "- C pour afficher les credits\n"
-"- O pour configurer les options\n\nq");
+"- O pour configurer les options\n\n");
 setKeyboardConfig();
 if (keybconfig==0) {
     printf ("Commandes de jeu:\n\n"
@@ -317,8 +319,8 @@ if (keybconfig==0) {
 
 }
 void wanaContinue(){
-    printf("Appuyer sur:\n");
-    printf ("- C pour continuer,\n");
+    printf("Appuyer sur:\n\n");
+    printf ("- C pour continuer,\n\n");
     printf ("- ESC pour quitter.");
 }
 void bye() {
@@ -338,7 +340,7 @@ char  retry() {
         printf("Fichtre !!\n\nQuel horrible cauchemard vous venez de faire !\n\n");
         printf("Vous vous etiez assoupi et vous avez  reve que vous restiez bloque dans\nl'explosion\n\n");
         printf("Heureusement que tout cela n'etait\nqu'un mauvais reve.\n\n");
-        printf("Prenez le temps de reprendre vos\nemotions puis appuyer sur\n");
+        printf("Prenez le temps de reprendre vos\nemotions puis appuyer sur\n\n");
         printf ("- R pour recommencer l'aventure,\n\n");
         printf ("- ESC pour quitter.");
         c=get();
@@ -403,7 +405,7 @@ char  congrats() {
         printf("Votre score au niveau MOYEN\n");
     else if (game_level == 2)
         printf("Votre score au niveau DIFFICILE\n");
-    printf("\n est desormais de %d points\n\n\n\n\n", current_score);
+    printf("est desormais de:\n\n   %d points\n\n\n\n\n", current_score);
 
     wanaContinue();
     while (((c=get()) != 'C') && (c!= KEY_ESCAPE));
@@ -437,8 +439,11 @@ void playLab(signed char init_0x[], signed char scene_0x[], unsigned char *textu
 
 void main(){
 
-
     char c=0;
+
+    // Deactivate cursor and keyclick
+    mode0 = peek(0x26A);
+    
 
     do {
         c = mainChoice();
@@ -494,6 +499,9 @@ void main(){
     } while (1);
 
     bye();
+
+    // Reactivate cursor and keyclick
+    poke(0x26A, mode0);
 
 }
 // #define LORES_SCREEN_ADDRESS            ((unsigned int)0xBB80)
