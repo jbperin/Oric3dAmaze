@@ -12,11 +12,17 @@ IF "%OSDK%"=="" GOTO ErCfg
 ::
 CALL osdk_config.bat
 
+CALL osdk_prebuild.bat
 
 ::
 :: Launch the compilation of files
 ::
 CALL %OSDK%\bin\make.bat %OSDKFILE%
+
+MOVE BUILD\POG_OP1.tap BUILD\main.tap
+COPY /B BUILD\loader.tap+BUILD\splash.tap+BUILD\charset.tap+build\main.tap BUILD\POG_OP1.tap
+
+
 GOTO End
 
 

@@ -10,7 +10,6 @@
 
 #include "config.h"
 
-#include "myHires.c"
 
 
 
@@ -178,6 +177,7 @@ void lsys(){
 void maze(){
 
     hires();
+   
     prepareRGB();
 
 	kernelInit();
@@ -561,6 +561,8 @@ void intro()
 //         , 28, 34, 0, 0, 57, 1, 2, 4, 0, 0, 0, 32, 25, 2, 4, 7
 //         , 0, 0, 0, 0, 48, 9, 18, 36, 0, 0, 0, 0, 54, 9, 17, 2
 //         };
+
+#include "myHires.c"
 extern unsigned char charset[];
 void main(){
 
@@ -569,14 +571,22 @@ void main(){
     // Deactivate cursor and keyclick
     mode0 = peek(0x26A);
     
+    poke(0x26A, (mode0 | 0x08) & 0xFE);
+
     // intro();
     // get();
     //memcpy ((void*)(0xB400),(void*)(charset),1024);
     // printf ("Coucou :-)"); get();
 
     myHires();
-    get();
+    poke(0xBF68, 16); poke(0xBF69, 7);
+    poke(0xBF90, 16); poke(0xBF91, 7);
+    poke(0xBFB8, 16); poke(0xBFB9, 7);
+    poke(0x26A, (mode0 | 0x08) & 0xFE);
+    sprintf (0xBF70, "Press a key ...");get();
     text();
+    
+    paper(0); ink(7);
     do {
         c = mainChoice();
         if (c == KEY_ESCAPE) break ;
