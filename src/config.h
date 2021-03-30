@@ -4,7 +4,8 @@
 #include "constants.h"
 
 #undef USE_SPRITE
-#define USE_C_GENERIC_COLLISION
+#define USE_GENERIC_COLLISION
+#undef USE_C_GENERIC_COLLISION
 
 
 #ifdef __GNUC__

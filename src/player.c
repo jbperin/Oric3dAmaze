@@ -1,3 +1,6 @@
+
+#include "collision.c"
+
 #define ROT_ANGLE_STEP 16
 /*    ___  _                           
  *   / _ \| |  __ _  _   _   ___  _ __ 
@@ -82,8 +85,8 @@ void forward() {
         // rayCamPosX--;
         asm("dec _rayCamPosX;");
     }
-#ifdef USE_C_GENERIC_COLLISION
-    if (collideWall()){
+#ifdef USE_GENERIC_COLLISION
+    if (isInWall(rayCamPosX, rayCamPosY)){
 #else
     if (!isAllowedPosition(rayCamPosX, rayCamPosY)) {
 #endif
@@ -121,8 +124,8 @@ void backward() {
         // rayCamPosX++;
         asm("inc _rayCamPosX;");
     }
-#ifdef USE_C_GENERIC_COLLISION
-    if (collideWall()){
+#ifdef USE_GENERIC_COLLISION
+    if (isInWall(rayCamPosX, rayCamPosY)){
 #else
     if (!isAllowedPosition(rayCamPosX, rayCamPosY)) {
 #endif
@@ -160,8 +163,8 @@ void shiftLeft() {
         // rayCamPosY--;
         asm("dec _rayCamPosY;");
     }
-#ifdef USE_C_GENERIC_COLLISION
-    if (collideWall()){
+#ifdef USE_GENERIC_COLLISION
+    if (isInWall(rayCamPosX, rayCamPosY)){
 #else
     if (!isAllowedPosition(rayCamPosX, rayCamPosY)) {
 #endif
@@ -200,8 +203,8 @@ void shiftRight() {
         // rayCamPosX++;
         asm("inc _rayCamPosX;");
     }
-#ifdef USE_C_GENERIC_COLLISION
-    if (collideWall()){
+#ifdef USE_GENERIC_COLLISION
+    if (isInWall(rayCamPosX, rayCamPosY)){
 #else
     if (!isAllowedPosition(rayCamPosX, rayCamPosY)) {
 #endif
