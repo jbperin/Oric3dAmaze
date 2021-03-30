@@ -217,14 +217,16 @@ void maze(){
 void credits(){
 
     CLS
-    printf ("  --== Les Chemins De Galdeon ==--\n\n"
+    sprintf (0xBB80, "\012\001  --== Les Chemins de Galdeon ==--    ");
+    printf ("\033J\033A--== Les Chemins de Galdeon ==--    "
+    "\n\n"
     "    Cree et developpe par: \n\n"
     "       Jean-Baptiste PERIN (JiBe)\n\n"
     "    conseille par: \n\n"
     "        Mickael POINTIER (Dbug)\n\n"
     "        Vincent BILLET (Xaratheus)\n\n\n\n\n");
     printf("\n\n\n\nCe jeu utilise castoric pour la 3D\n\n"
-    " github.com/oric-software/castoric\n"
+    "\033Dgithub.com/oric-software/castoric\033G\n"
     " ---------------------------------\n"
     );
     get();
@@ -233,24 +235,25 @@ void setKeyboard(){
     char c;
     do {
         CLS
-        printf (
-        "   --== PARAMETRAGE CLAVIER ==--\n\n"
+    sprintf (0xBB80, "\012\001     --== PARAMETRAGE CLAVIER ==--    ");
+    printf ("\033J\033A   --== PARAMETRAGE CLAVIER ==--    "
+        "\n\n"
         "Selectionner votre configuration \n"
         "    clavier preferee en appuyant sur \n"
         "    la touche 1, 2 ou 3:\n");
 
-        printf ("\n[1]: \n\n"
+        printf ("\n\033D[1]\033G: \n\n"
         "  LEFT/RIGHT : tourner gauche/droite\n"
         "  UP/DOWN    : avancer / reculer\n"
         "  X / C     : decaler gauche / droite\n");
 
-        printf ("\n[2]: \n\n"
+        printf ("\n\033D[2]\033G: \n\n"
 
         "  Q / E : tourner gauche / droite\n"
         "  W / S : avancer / reculer\n"
         "  Z / D : decaler gauche / droite\n");
 
-        printf ("\n[3]: \n\n"
+        printf ("\n\033D[3]\033G: \n\n"
         "  T / U : tourner gauche / droite\n"
         "  Y / H : avancer / reculer\n"
         "  G / J : decaler gauche / droite\n"        );
@@ -263,10 +266,11 @@ void setSound(){
     char c;
     do {
         CLS
-        printf (
-        "   --== PARAMETRAGE SONS ==--\n\n"
-        " [1]: Sons desactives\n\n"
-        " [2]: Sons actives\n\n"
+    sprintf (0xBB80, "\012\001     --== PARAMETRAGE SONS ==--    ");
+    printf ("\033J\033A   --== PARAMETRAGE SONS ==--    "
+        "\n\n"
+        " \033D[1]\033G: Sons desactives\n\n"
+        " \033D[2]\033G: Sons actives\n\n"
         );
     } while (((c=get()) != '1') && (c != '2'));
     soundenabled = c-'1';
@@ -279,8 +283,11 @@ void options(){
 
 void welcome(){
     CLS
-
-    printf (" --== Les Chemins de Galdeon ==--\n\n"
+    sprintf (0xBB80, "\012\001  --== Les Chemins de Galdeon ==--    ");
+    printf ("\033J\033A--== Les Chemins de Galdeon ==--    "
+    // printf (
+    //     "\033J --== Les Chemins de Galdeon ==--\n"
+    // "\033J --== Les Chemins de Galdeon ==--\n"
 "    par Jean-Baptiste PERIN (2021)\n\n"
 "Votre teleportation au coeur des cites"
 "ennemies nous permet d'en declencher\n"
@@ -291,41 +298,44 @@ void welcome(){
 "Le temps est compte pour vous evader \n"
 "par les chemins de Galdeon ...\n\n");
     printf ("Appuyer sur :\n\n"
-"- 1 pour jouer au niveau Facile\n"
-"- 2 pour jouer au niveau Moyen\n"
-"- 3 pour jouer au niveau Difficile\n"
-"- C pour afficher les credits\n"
-"- O pour configurer les options\n\n");
+"-\033D1\033G pour jouer au niveau Facile\n"
+"-\033D2\033G pour jouer au niveau Moyen\n"
+"-\033D3\033G pour jouer au niveau Difficile\n"
+"-\033DC\033G pour afficher les credits\n"
+"-\033DO\033G pour configurer les options\n\n");
 setKeyboardConfig();
 if (keybconfig==0) {
     printf ("Commandes de jeu:\n\n"
-"UP / DOWN  : Avancer / Reculer\n"
-"LEFT/RIGHT : Tourner Gauche / Droite\n"
-"X / C      : Decaler Gauche / Droite\n"
-"ESC        : Quitter");
+"\033DUP / DOWN \033G: Avancer / Reculer\n"
+"\033DLEFT/RIGHT\033G: Tourner Gauche / Droite\n"
+"\033DX / C     \033G: Decaler Gauche / Droite\n"
+"\033DESC       \033G: Quitter");
 } else if (keybconfig==1){
     printf ("Commandes de jeu:\n\n"
-"W / S : Avancer / Reculer\n"
-"Q / E : Tourner Gauche / Droite\n"
-"Z / D : Decaler Gauche / Droite\n"
-"ESC   : Quitter");
+"\033DW / S\033G: Avancer / Reculer\n"
+"\033DQ / E\033G: Tourner Gauche / Droite\n"
+"\033DZ / D\033G: Decaler Gauche / Droite\n"
+"\033DESC  \033G: Quitter");
 } else if (keybconfig==2){
     printf ("Commandes de jeu:\n\n"
-"Y / H : Avancer / Reculer\n"
-"T / U : Tourner Gauche / Droite\n"
-"G / J : Decaler Gauche / Droite\n"
-"ESC   : Quitter");
+"\033DY / H\033G: Avancer / Reculer\n"
+"\033DT / U\033G: Tourner Gauche / Droite\n"
+"\033DG / J\033G: Decaler Gauche / Droite\n"
+"\033DESC  \033G: Quitter");
 
+    // poke(0xbbd1,10);
+    // poke(0xbbf9,10);
 }
 
 }
 void wanaContinue(){
     printf("Appuyer sur:\n\n");
-    printf ("- C pour continuer,\n\n");
-    printf ("- ESC pour quitter.");
+    printf ("-\033DC\033G pour continuer,\n\n");
+    printf ("-\033DESC\033G pour quitter.");
 }
 void bye() {
-    CLS
+    text();cls();paper(7); ink(0);
+    sprintf (0xBB80, "                                       ");
     printf (" Merci d'avoir joue avec \n\n"
     "    --== Les Chemins De Galdeon ==--\n\n"
     "    par Jean-Baptiste PERIN (2021)\n\n");
@@ -335,13 +345,15 @@ char  retry() {
     
     do {
         CLS
-        printf("   --== MAUVAIS REVE ==--  \n\n\n\n");
+        sprintf (0xBB80, "\012\001        --== MAUVAIS REVE ==--        ");
+        printf ("\033J\033A      --== MAUVAIS REVE ==--        ");
+        printf("\n\n\n\n");
         printf("Fichtre !!\n\nQuel horrible cauchemard vous venez de faire !\n\n");
         printf("Vous vous etiez assoupi et vous avez  reve que vous restiez bloque dans\nl'explosion\n\n");
         printf("Heureusement que tout cela n'etait\nqu'un mauvais reve.\n\n");
         printf("Prenez le temps de reprendre vos\nemotions puis appuyer sur\n\n");
-        printf ("- R pour recommencer l'aventure,\n\n");
-        printf ("- ESC pour quitter.");
+        printf ("-\033DR\033G pour recommencer l'aventure,\n\n");
+        printf ("-\033DESC\033G pour quitter.");
         c=get();
     } while ((c != 'R') && (c!= KEY_ESCAPE)); //&& (c!= KEY_ESCAPE)
     return c;
@@ -393,7 +405,9 @@ char  congrats() {
     computeNewScore();
 
     CLS
-    printf("   --== FELICITATIONS ==--  \n\n\n\n");
+        sprintf (0xBB80, "\012\001        --== FELICITATIONS ==--        ");
+        printf ("\033J\033A      --== FELICITATIONS ==--        ");
+    printf("\n\n\n\n");
     printf("Vous vous etes echappe en %d secondes.\n\n",tabLevelParam[currentIdxParam-2]- remaining_seconds);
     printf("Il ne restait plus que %d secondes\navant l'explosion.\n\n",remaining_seconds);
 
@@ -435,66 +449,66 @@ void playLab(signed char init_0x[], signed char scene_0x[], unsigned char *textu
         }
 }
 
-void intro()
-{
-    int i;
-	paper(6);ink(4);
+// void intro()
+// {
+//     int i;
+// 	paper(6);ink(4);
 
-	// scrolling hybrid graphics mode : Text & Hires
-	poke(0xbb80+40,30); 
-	for (i=8;i<16;i++)
-		poke(0xA000+(40*i)+2,26);
+// 	// scrolling hybrid graphics mode : Text & Hires
+// 	poke(0xbb80+40,30); 
+// 	for (i=8;i<16;i++)
+// 		poke(0xA000+(40*i)+2,26);
 
-	// Scrolling Text colors
-	*(unsigned char*)(0xA000+(40*8)+1)=1&7;
-	*(unsigned char*)(0xA000+(40*9)+1)=5&7;
-	*(unsigned char*)(0xA000+(40*10)+1)=3&7;
-	*(unsigned char*)(0xA000+(40*11)+1)=7&7;
-	*(unsigned char*)(0xA000+(40*12)+1)=3&7;
-	*(unsigned char*)(0xA000+(40*13)+1)=5&7;
-	*(unsigned char*)(0xA000+(40*14)+1)=1&7;
-	*(unsigned char*)(0xA000+(40*15)+1)=0&7;
+// 	// Scrolling Text colors
+// 	*(unsigned char*)(0xA000+(40*8)+1)=1&7;
+// 	*(unsigned char*)(0xA000+(40*9)+1)=5&7;
+// 	*(unsigned char*)(0xA000+(40*10)+1)=3&7;
+// 	*(unsigned char*)(0xA000+(40*11)+1)=7&7;
+// 	*(unsigned char*)(0xA000+(40*12)+1)=3&7;
+// 	*(unsigned char*)(0xA000+(40*13)+1)=5&7;
+// 	*(unsigned char*)(0xA000+(40*14)+1)=1&7;
+// 	*(unsigned char*)(0xA000+(40*15)+1)=0&7;
 	
-    AdvancedPrint(0,0,"                                        ");
-	AdvancedPrint(2,1,"                                      ");
-	// clear background
-	for (i=16;i<28;i++)
-	{
-		AdvancedPrint(2,i,"mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
-		poke(0xBB80+1+(i*40),4);
-	}
+//     AdvancedPrint(0,0,"                                        ");
+// 	AdvancedPrint(2,1,"                                      ");
+// 	// clear background
+// 	for (i=16;i<28;i++)
+// 	{
+// 		AdvancedPrint(2,i,"mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
+// 		poke(0xBB80+1+(i*40),4);
+// 	}
 	
-	// screen of menu page
-	AdvancedPrint(2,2,"mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
-	AdvancedPrint(2,3,"mmmmmmm     mmmm    mmm mm mmmm mmmmmm");
-	AdvancedPrint(2,4,"mmmmmm! !!!! mm !!!! m!mm!  mm! mmmmmm");
-	AdvancedPrint(2,5,"mmmmmm! mmm! m! mmm! mm m! ! m! mmmmmm");
-	AdvancedPrint(2,6,"mmmmmm!     mm!      m! m! m! ! mmmmmm");
-	AdvancedPrint(2,7,"mmmmmm! !!! mm! !!!! m! m! mm!  mmmmmm");
-	AdvancedPrint(2,8,"mmmmmm! mm!! m! mmm! m! m! mmm! mmmmmm");
-	AdvancedPrint(2,9,"mmmmmm!mmmm!mm!mmmm!mm!mm!mmmm!mmmmmmm");
-	AdvancedPrint(2,10,"mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
-	AdvancedPrint(2,11, "mmm     mmmm    mmm mmmm mm mmm    mmm");
-	AdvancedPrint(2,12,"mm! !!!! mm !!!! m!  mm! m!mmm !!!! mm");
-	AdvancedPrint(2,13,"mm! mmm! m! mmm! m! ! m! mm m! mmm!mmm");
-	AdvancedPrint(2,14,"mm!     mm!      m! m! ! m! m! mmmmmmm");
-	AdvancedPrint(2,15,"mm! !!!mmm! !!!! m! mm!  m! m! mmmm mm");
-	AdvancedPrint(2,16,"mm! mmmmmm! mmm! m! mmm! m! mm!    mmm");
-	AdvancedPrint(2,17,"mm!mmmmmmm!mmmm!mm!mmmm!mm!mmmm!!!mmmm");
-	AdvancedPrint(6,21,"\23\4DIRECTION : ARROWS KEY < > \4\26");
-	AdvancedPrint(13,23,"\23\4SPACE TO JUMP\4\26");
-	AdvancedPrint(10,25,"\23\4PRESS SPACE TO PLAY\4\26");
-    // text color   // 12 = blink
+// 	// screen of menu page
+// 	AdvancedPrint(2,2,"mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
+// 	AdvancedPrint(2,3,"mmmmmmm     mmmm    mmm mm mmmm mmmmmm");
+// 	AdvancedPrint(2,4,"mmmmmm! !!!! mm !!!! m!mm!  mm! mmmmmm");
+// 	AdvancedPrint(2,5,"mmmmmm! mmm! m! mmm! mm m! ! m! mmmmmm");
+// 	AdvancedPrint(2,6,"mmmmmm!     mm!      m! m! m! ! mmmmmm");
+// 	AdvancedPrint(2,7,"mmmmmm! !!! mm! !!!! m! m! mm!  mmmmmm");
+// 	AdvancedPrint(2,8,"mmmmmm! mm!! m! mmm! m! m! mmm! mmmmmm");
+// 	AdvancedPrint(2,9,"mmmmmm!mmmm!mm!mmmm!mm!mm!mmmm!mmmmmmm");
+// 	AdvancedPrint(2,10,"mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
+// 	AdvancedPrint(2,11, "mmm     mmmm    mmm mmmm mm mmm    mmm");
+// 	AdvancedPrint(2,12,"mm! !!!! mm !!!! m!  mm! m!mmm !!!! mm");
+// 	AdvancedPrint(2,13,"mm! mmm! m! mmm! m! ! m! mm m! mmm!mmm");
+// 	AdvancedPrint(2,14,"mm!     mm!      m! m! ! m! m! mmmmmmm");
+// 	AdvancedPrint(2,15,"mm! !!!mmm! !!!! m! mm!  m! m! mmmm mm");
+// 	AdvancedPrint(2,16,"mm! mmmmmm! mmm! m! mmm! m! mm!    mmm");
+// 	AdvancedPrint(2,17,"mm!mmmmmmm!mmmm!mm!mmmm!mm!mmmm!!!mmmm");
+// 	AdvancedPrint(6,21,"\23\4DIRECTION : ARROWS KEY < > \4\26");
+// 	AdvancedPrint(13,23,"\23\4SPACE TO JUMP\4\26");
+// 	AdvancedPrint(10,25,"\23\4PRESS SPACE TO PLAY\4\26");
+//     // text color   // 12 = blink
 
-	// color_inverse_menu();
+// 	// color_inverse_menu();
 	
-	poke(0xBB80+(25*40)+9,12);
-	poke(0xBB80+(25*40)+31,8);
+// 	poke(0xBB80+(25*40)+9,12);
+// 	poke(0xBB80+(25*40)+31,8);
 	 
 	 
-	// to debbug
-	// gotoxy(20,0);printf("CODE=%d IDX=%d",rain[index_raindrop],index_raindrop);
-}
+// 	// to debbug
+// 	// gotoxy(20,0);printf("CODE=%d IDX=%d",rain[index_raindrop],index_raindrop);
+// }
 // unsigned char charset[] = {
 //         85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85
 //         , 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85
