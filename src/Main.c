@@ -364,6 +364,9 @@ unsigned char tabLevelParam[] = {
     20*2, 8,
     20*1, 8, 
     255, 0,
+    20*2, 8,
+    20*1, 8, 
+    255, 0,
     35*2, 4,
     35*1, 6, 
     255 , 0,
@@ -609,6 +612,22 @@ void main(){
         current_score           = 0;
         currentIdxParam         = game_level<<1;
 
+        remaining_seconds       = tabLevelParam[currentIdxParam++]; // game_level * 35 ; // 35 = Difficile
+        idxTempoPing            = tabLevelParam[currentIdxParam++];
+
+        // playLab(init_05, scene_05, texture_05, 0, win_05);
+        // playLab(init_07, scene_07, texture_07, 0, win_07);
+        playLab(init_09, scene_09, texture_09, 0, win_09);
+        // playLab(init_00, scene_00, texture_00, 0, win_00);
+
+        if (! maze_completed) continue;
+
+        c = congrats();
+        if (c == KEY_ESCAPE) continue ;
+
+
+
+        currentIdxParam+=4;
 
         remaining_seconds       = tabLevelParam[currentIdxParam++]; // game_level * 35 ; // 35 = Difficile
         idxTempoPing            = tabLevelParam[currentIdxParam++];

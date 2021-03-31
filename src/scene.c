@@ -9,10 +9,13 @@ unsigned char wallTexture_low[NB_MAX_WALL] ;
 
 unsigned char (*isAllowedPosition)(signed char , signed char );
 unsigned char (*isWinningPosition)(signed char , signed char );
-// #include "scene_00.c"
+#include "scene_00.c"
 #include "scene_01.c"
 #include "scene_02.c"
 #include "scene_04.c"
+#include "scene_05.c"
+#include "scene_07.c"
+#include "scene_09.c"
 
 // [ref scene_load]
 void precalculateWallsAngle() {

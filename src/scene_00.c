@@ -1,4 +1,12 @@
 
+// #include "textures/texture_dentwall.h"
+// #include "textures/texture_redbricks.h"
+#include "textures/texture_bluestone.h"
+#include "textures/texture_redbrick.h"
+
+signed char init_00[] = {
+	0, 0, 0
+};
 
 // [ref scene_describe]
 signed char scene_00[] = {
@@ -18,15 +26,11 @@ signed char scene_00[] = {
 // [ref texture_file2buffer]
 unsigned char *texture_00[]= {
 	texture_bluestone		// W0
-	, texture_christmas		// W1
-	, texture_redbrick		// W2
-	, texture_logo			// W3
+	, texture_redbrick		// W1
+	, texture_bluestone		// W2
+	, texture_redbrick			// W3
 };
 
-// Collision Detection 
-// unsigned char collision_00(signed char X, signed char Y) {
-
-//     // return (abs(X) <= 4) && (abs(Y) <= 4);
-//     return 1;
-
-// }
+unsigned char win_00(signed char X, signed char Y) {
+	return (X >= 5) && (Y >= 5);
+}
