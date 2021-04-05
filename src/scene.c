@@ -16,6 +16,7 @@ unsigned char (*isWinningPosition)(signed char , signed char );
 #include "scene_05.c"
 #include "scene_07.c"
 #include "scene_09.c"
+#include "scene_11.c"
 
 // [ref scene_load]
 void precalculateWallsAngle() {

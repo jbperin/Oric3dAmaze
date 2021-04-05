@@ -617,7 +617,8 @@ void main(){
 
         // playLab(init_05, scene_05, texture_05, 0, win_05);
         // playLab(init_07, scene_07, texture_07, 0, win_07);
-        playLab(init_09, scene_09, texture_09, 0, win_09);
+        playLab(init_11, scene_11, texture_11, 0, win_11);
+        // playLab(init_09, scene_09, texture_09, 0, win_09);
         // playLab(init_00, scene_00, texture_00, 0, win_00);
 
         if (! maze_completed) continue;

@@ -14,8 +14,8 @@
 #define EMPTY_ALPHA                     0
 
 // [ref scene_describe]
-#define NB_MAX_WALL                     42
-#define NB_MAX_POINT                    42
+#define NB_MAX_WALL                     53
+#define NB_MAX_POINT                    53
 
 //((unsigned int)0xA000)
 #define HIRES_SCREEN_ADDRESS            40960
