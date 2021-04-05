@@ -25,7 +25,7 @@
 |               
 19---20-------21
 */
-#include "texture_map02.h"
+// #include "texture_map02.h"
 #include "textures/texture_bluestone.h"
 #include "textures/texture_redbrick.h"
 
@@ -100,7 +100,7 @@ unsigned char *texture_02[]= {
 	, texture_redbrick		// W1
 	, texture_bluestone		// W2
 	, texture_redbrick		// W3
-	, texture_map02		// W4
+	, texture_bluestone		// W4
 	, texture_bluestone		// W5
 	, texture_bluestone		// W6
 	, texture_redbrick		// W7

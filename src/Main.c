@@ -360,15 +360,31 @@ char  retry() {
 }
 //tabTempoPing[]={250, 200, 150, 100, 50, 40, 30, 20, 10, 5, 4, 3, 2, 1};
 unsigned char tabLevelParam[] = {
+// 5 
     255, 0,
     20*2, 8,
     20*1, 8, 
+// 4
     255, 0,
     20*2, 8,
     20*1, 8, 
+// 2
     255, 0,
     35*2, 4,
     35*1, 6, 
+// 7
+    255, 0,
+    35*2, 4,
+    35*1, 6, 
+// 9
+    255 , 0,
+    90*2, 2,
+    90*1, 4,
+// 1
+    255 , 0,
+    90*2, 2,
+    90*1, 4,
+// 11
     255 , 0,
     90*2, 2,
     90*1, 4,
@@ -615,9 +631,10 @@ void main(){
         remaining_seconds       = tabLevelParam[currentIdxParam++]; // game_level * 35 ; // 35 = Difficile
         idxTempoPing            = tabLevelParam[currentIdxParam++];
 
-        // playLab(init_05, scene_05, texture_05, 0, win_05);
+        playLab(init_04, scene_04, texture_04, 0, win_04);
+        
         // playLab(init_07, scene_07, texture_07, 0, win_07);
-        playLab(init_11, scene_11, texture_11, 0, win_11);
+        // playLab(init_11, scene_11, texture_11, 0, win_11);
         // playLab(init_09, scene_09, texture_09, 0, win_09);
         // playLab(init_00, scene_00, texture_00, 0, win_00);
 
@@ -633,7 +650,7 @@ void main(){
         remaining_seconds       = tabLevelParam[currentIdxParam++]; // game_level * 35 ; // 35 = Difficile
         idxTempoPing            = tabLevelParam[currentIdxParam++];
 
-        playLab(init_04, scene_04, texture_04, 0, win_04);
+        playLab(init_05, scene_05, texture_05, 0, win_05);
 
         if (! maze_completed) continue;
 
@@ -648,6 +665,32 @@ void main(){
         idxTempoPing            = tabLevelParam[currentIdxParam++];
 
         playLab(init_02, scene_02, texture_02, 0, win_02);
+
+        if (! maze_completed) continue;
+
+        c = congrats();
+        if (c == KEY_ESCAPE) continue ;
+
+
+        currentIdxParam+=4;
+
+        remaining_seconds       = tabLevelParam[currentIdxParam++]; // game_level * 35 ; // 35 = Difficile
+        idxTempoPing            = tabLevelParam[currentIdxParam++];
+
+        playLab(init_07, scene_07, texture_07, 0, win_07);
+
+        if (! maze_completed) continue;
+
+        c = congrats();
+        if (c == KEY_ESCAPE) continue ;
+
+
+        currentIdxParam+=4;
+
+        remaining_seconds       = tabLevelParam[currentIdxParam++]; // game_level * 35 ; // 35 = Difficile
+        idxTempoPing            = tabLevelParam[currentIdxParam++];
+
+        playLab(init_09, scene_09, texture_09, 0, win_09);
 
         if (! maze_completed) continue;
 
@@ -670,6 +713,28 @@ void main(){
 
         c = congrats();
         if (c == KEY_ESCAPE) continue ;
+
+
+
+
+
+        currentIdxParam+=4;
+
+        remaining_seconds       = tabLevelParam[currentIdxParam++]; // game_level * 35 ; // 35 = Difficile
+        idxTempoPing            = tabLevelParam[currentIdxParam++];
+
+        wanna_retry             = 1;
+        maze_completed          = 0;
+
+        playLab(init_11, scene_11, texture_11, 0, win_11);
+
+        if (! maze_completed) continue;
+
+        c = congrats();
+        if (c == KEY_ESCAPE) continue ;
+
+
+
 
 
     } while (1);

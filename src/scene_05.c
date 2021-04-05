@@ -20,7 +20,7 @@
 */
 
 
-#include "textures/texture_dentwall.h"
+#include "textures/texture_greystone.h"
 #include "textures/texture_redbricks.h"
 
 signed char init_05[] = {
@@ -121,20 +121,20 @@ w12                     w13
 };
 
 unsigned char *texture_05[]= {
-	texture_dentwall		// W0
-	, texture_dentwall		// W1
-	, texture_dentwall		// W2
+	texture_greystone		// W0
+	, texture_greystone		// W1
+	, texture_greystone		// W2
 	, texture_redbricks		// W3
 	, texture_redbricks		// W4
 	, texture_redbricks		// W5
 	, texture_redbricks		// W6
 	, texture_redbricks		// W7
 	, texture_redbricks		// W8
-	, texture_dentwall		// W9
+	, texture_greystone		// W9
 	, texture_redbricks		// W10
 	, texture_redbricks		// W11
-	, texture_dentwall		// W12
-	, texture_dentwall		// W13
+	, texture_greystone		// W12
+	, texture_greystone		// W13
 	, texture_redbricks		// W14
 	, texture_redbricks		// W15
 	, texture_redbricks		// W16
@@ -143,8 +143,8 @@ unsigned char *texture_05[]= {
 	, texture_redbricks		// W19
 	, texture_redbricks		// W20
 	, texture_redbricks		// W21
-	, texture_dentwall		// W22
-	, texture_dentwall		// W23
+	, texture_greystone		// W22
+	, texture_greystone		// W23
 
 };
 
