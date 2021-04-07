@@ -44,6 +44,7 @@ int mode0;
 #define CHANGE_INK_TO_BLUE	            4		
 #define CHANGE_PAPER_TO_WHITE	        23
 
+#include "mmi_fr.c"
 
 void prepareRGB(){
     int ii;
@@ -63,71 +64,6 @@ void initCamera(signed char init[] ){
     rayCamPosY               = init[1]; // 25; // 46; 
     rayCamRotZ               = init[2]; //-128; // 32;
     RayLeftAlpha            = rayCamRotZ + HALF_FOV_FIX_ANGLE;
-}
-
-#define KEY_Q       0x41
-#define KEY_C       0x43
-#define KEY_D       0x44
-#define KEY_E       0x45
-#define KEY_O       0x4F
-#define KEY_A       0x51
-#define KEY_S       0x53
-#define KEY_W       0x5A
-#define KEY_Z       0x57
-#define KEY_X       0x58
-
-#define KEY_Y       0x59
-#define KEY_H       0x48
-#define KEY_T       0x54
-#define KEY_U       0x55
-#define KEY_G       0x47
-#define KEY_J       0x4A
-#define KEY_L       0x4C
-
-#define KEY_UP      0x01
-#define KEY_DOWN    0x03
-#define KEY_LEFT    0x02
-#define KEY_RIGHT   0x04
-
-#define KEY_ESCAPE  0x1B
-
-char keyForward         = KEY_UP;
-char keyBackward        = KEY_DOWN;
-char keyTurnLeft        = KEY_LEFT;
-char keyTurnRight       = KEY_RIGHT;
-char keyStraffeLeft     = KEY_X;
-char keyStraffeRight    = KEY_C;
-char keyQuit            = KEY_ESCAPE;
-
-unsigned char keybconfig        = 0; // 0 : ArrowKeys + XC,  1: AZEQSD , 2 : TYUGHJ
-unsigned char soundenabled      = 0; // 0 : No Sound, 1 = Sound Enabled
-
-void setKeyboardConfig(){
-    if (keybconfig == 0) {
-        keyForward         = KEY_UP;
-        keyBackward        = KEY_DOWN;
-        keyTurnLeft        = KEY_LEFT;
-        keyTurnRight       = KEY_RIGHT;
-        keyStraffeLeft     = KEY_X;
-        keyStraffeRight    = KEY_C;
-        keyQuit            = KEY_ESCAPE;
-    } else if (keybconfig == 1) {
-        keyForward         = KEY_Z;
-        keyBackward        = KEY_S;
-        keyTurnLeft        = KEY_A;
-        keyTurnRight       = KEY_E;
-        keyStraffeLeft     = KEY_Q;
-        keyStraffeRight    = KEY_D;
-        keyQuit            = KEY_ESCAPE;
-    } else if (keybconfig == 2) {
-        keyForward         = KEY_Y;
-        keyBackward        = KEY_H;
-        keyTurnLeft        = KEY_T;
-        keyTurnRight       = KEY_U;
-        keyStraffeLeft     = KEY_G;
-        keyStraffeRight    = KEY_J;
-        keyQuit            = KEY_ESCAPE;
-    }
 }
 
 
@@ -174,6 +110,8 @@ void lsys(){
 	}
 }
 
+
+
 void maze(){
 
     hires();
@@ -184,9 +122,7 @@ void maze(){
 	osmeInit();
 	ayInit();
 
-    sprintf (message, "Temps restant:");
-    AdvancedPrint(3,26, message);
-
+    mmiInit ();
     refreshNeeded           = 1;
     running                 = 1;
 
@@ -212,183 +148,8 @@ void maze(){
 	kernelEnd();
 }
 
-#define CLS text();cls();poke (0xBBA3, CHANGE_INK_TO_BLACK);poke(0x26A, (mode0 | 0x08) & 0xFE);
 
-void credits(){
 
-    CLS
-    sprintf (0xBB80, "\012\001  --== Les Chemins de Galdeon ==--    ");
-    printf ("\033J\033A--== Les Chemins de Galdeon ==--    "
-    "\n\n"
-    "    Cree et developpe par: \n\n"
-    "       Jean-Baptiste PERIN (JiBe)\n\n"
-    "    conseille par: \n\n"
-    "        Mickael POINTIER (Dbug)\n\n"
-    "        Vincent BILLET (Xaratheus)\n\n\n\n\n");
-    printf("\n\n\n\nCe jeu utilise castoric pour la 3D\n\n"
-    "\033Dgithub.com/oric-software/castoric\033G\n"
-    " ---------------------------------\n"
-    );
-    get();
-}
-void setKeyboard(){
-    char c;
-    do {
-        CLS
-    sprintf (0xBB80, "\012\001     --== PARAMETRAGE CLAVIER ==--    ");
-    printf ("\033J\033A   --== PARAMETRAGE CLAVIER ==--    "
-        "\n\n"
-        "Selectionner votre configuration \n"
-        "    clavier preferee en appuyant sur \n"
-        "    la touche 1, 2 ou 3:\n");
-
-        printf ("\n\033D[1]\033G: \n\n"
-        "  LEFT/RIGHT : tourner gauche/droite\n"
-        "  UP/DOWN    : avancer / reculer\n"
-        "  X / C     : decaler gauche / droite\n");
-
-        printf ("\n\033D[2]\033G: \n\n"
-
-        "  Q / E : tourner gauche / droite\n"
-        "  W / S : avancer / reculer\n"
-        "  Z / D : decaler gauche / droite\n");
-
-        printf ("\n\033D[3]\033G: \n\n"
-        "  T / U : tourner gauche / droite\n"
-        "  Y / H : avancer / reculer\n"
-        "  G / J : decaler gauche / droite\n"        );
-    } while (((c=get()) != '1') && (c != '2') && (c != '3'));
-    keybconfig = c-'1';
-    setKeyboardConfig();
-}
-
-void setSound(){
-    char c;
-    do {
-        CLS
-    sprintf (0xBB80, "\012\001     --== PARAMETRAGE SONS ==--    ");
-    printf ("\033J\033A   --== PARAMETRAGE SONS ==--    "
-        "\n\n"
-        " \033D[1]\033G: Sons desactives\n\n"
-        " \033D[2]\033G: Sons actives\n\n"
-        );
-    } while (((c=get()) != '1') && (c != '2'));
-    soundenabled = c-'1';
-}
-
-void options(){
-    setKeyboard();
-    setSound ();
-}
-
-void welcome(){
-    CLS
-    sprintf (0xBB80, "\012\001  --== Les Chemins de Galdeon ==--    ");
-    printf ("\033J\033A--== Les Chemins de Galdeon ==--    "
-    // printf (
-    //     "\033J --== Les Chemins de Galdeon ==--\n"
-    // "\033J --== Les Chemins de Galdeon ==--\n"
-"    par Jean-Baptiste PERIN (2021)\n\n"
-"Votre teleportation au coeur des cites"
-"ennemies nous permet d'en declencher\n"
-"l'explosion programmee.\n");
-    printf ("Mais cette situation vous expose car \n"
-"l'explosion est imminente et vous\n"
-"ne devez pas rester.\n"
-"Le temps est compte pour vous evader \n"
-"par les chemins de Galdeon ...\n\n");
-    printf ("Appuyer sur :\n\n"
-"-\033D1\033G pour jouer au niveau Facile\n"
-"-\033D2\033G pour jouer au niveau Moyen\n"
-"-\033D3\033G pour jouer au niveau Difficile\n"
-"-\033DC\033G pour afficher les credits\n"
-"-\033DO\033G pour configurer les options\n\n");
-setKeyboardConfig();
-if (keybconfig==0) {
-    printf ("Commandes de jeu:\n\n"
-"\033DUP / DOWN \033G: Avancer / Reculer\n"
-"\033DLEFT/RIGHT\033G: Tourner Gauche / Droite\n"
-"\033DX / C     \033G: Decaler Gauche / Droite\n"
-"\033DESC       \033G: Quitter");
-} else if (keybconfig==1){
-    printf ("Commandes de jeu:\n\n"
-"\033DW / S\033G: Avancer / Reculer\n"
-"\033DQ / E\033G: Tourner Gauche / Droite\n"
-"\033DZ / D\033G: Decaler Gauche / Droite\n"
-"\033DESC  \033G: Quitter");
-} else if (keybconfig==2){
-    printf ("Commandes de jeu:\n\n"
-"\033DY / H\033G: Avancer / Reculer\n"
-"\033DT / U\033G: Tourner Gauche / Droite\n"
-"\033DG / J\033G: Decaler Gauche / Droite\n"
-"\033DESC  \033G: Quitter");
-
-    // poke(0xbbd1,10);
-    // poke(0xbbf9,10);
-}
-
-}
-void wanaContinue(){
-    printf("Appuyer sur:\n\n");
-    printf ("-\033DC\033G pour continuer,\n\n");
-    printf ("-\033DESC\033G pour quitter.");
-}
-void bye() {
-    text();cls();paper(7); ink(0);
-    sprintf (0xBB80, "                                       ");
-    printf (" Merci d'avoir joue avec \n\n"
-    "    --== Les Chemins De Galdeon ==--\n\n"
-    "    par Jean-Baptiste PERIN (2021)\n\n");
-}
-char  retry() {
-    char c;
-    
-    do {
-        CLS
-        sprintf (0xBB80, "\012\001        --== MAUVAIS REVE ==--        ");
-        printf ("\033J\033A      --== MAUVAIS REVE ==--        ");
-        printf("\n\n\n\n");
-        printf("Fichtre !!\n\nQuel horrible cauchemard vous venez de faire !\n\n");
-        printf("Vous vous etiez assoupi et vous avez  reve que vous restiez bloque dans\nl'explosion\n\n");
-        printf("Heureusement que tout cela n'etait\nqu'un mauvais reve.\n\n");
-        printf("Prenez le temps de reprendre vos\nemotions puis appuyer sur\n\n");
-        printf ("-\033DR\033G pour recommencer l'aventure,\n\n");
-        printf ("-\033DESC\033G pour quitter.");
-        c=get();
-    } while ((c != 'R') && (c!= KEY_ESCAPE)); //&& (c!= KEY_ESCAPE)
-    return c;
-}
-//tabTempoPing[]={250, 200, 150, 100, 50, 40, 30, 20, 10, 5, 4, 3, 2, 1};
-unsigned char tabLevelParam[] = {
-// 5 
-    255, 0,
-    20*2, 8,
-    20*1, 8, 
-// 4
-    255, 0,
-    20*2, 8,
-    20*1, 8, 
-// 2
-    255, 0,
-    35*2, 4,
-    35*1, 6, 
-// 7
-    255, 0,
-    35*2, 4,
-    35*1, 6, 
-// 9
-    255 , 0,
-    90*2, 2,
-    90*1, 4,
-// 1
-    255 , 0,
-    90*2, 2,
-    90*1, 4,
-// 11
-    255 , 0,
-    90*2, 2,
-    90*1, 4,
- };
 
 char mainChoice(){
     char c=0;
@@ -406,42 +167,9 @@ char mainChoice(){
     } while ((c != '1') && (c != '2') && (c != '3') && (c != KEY_ESCAPE)) ;
     return c;
 }
-unsigned char currentIdxParam;
 
-void computeNewScore(){
-    if (game_level == 0) {
-        current_score += (tabLevelParam[currentIdxParam-2]-remaining_seconds) ;
-    } else if (game_level == 1){
-        current_score += 3*(tabLevelParam[currentIdxParam-2]-remaining_seconds) ;
-    }else {
-        current_score += 10*(tabLevelParam[currentIdxParam-2]-remaining_seconds) ;
-    }
-}
-char  congrats() {
 
-    char c;
 
-    computeNewScore();
-
-    CLS
-        sprintf (0xBB80, "\012\001        --== FELICITATIONS ==--        ");
-        printf ("\033J\033A      --== FELICITATIONS ==--        ");
-    printf("\n\n\n\n");
-    printf("Vous vous etes echappe en %d secondes.\n\n",tabLevelParam[currentIdxParam-2]- remaining_seconds);
-    printf("Il ne restait plus que %d secondes\navant l'explosion.\n\n",remaining_seconds);
-
-    if (game_level == 0)
-        printf("Votre score au niveau FACILE\n");
-    else if (game_level == 1)
-        printf("Votre score au niveau MOYEN\n");
-    else if (game_level == 2)
-        printf("Votre score au niveau DIFFICILE\n");
-    printf("est desormais de:\n\n   %d points\n\n\n\n\n", current_score);
-
-    wanaContinue();
-    while (((c=get()) != 'C') && (c!= KEY_ESCAPE));
-    return c;
-}
 
 void playLab(signed char init_0x[], signed char scene_0x[], unsigned char *texture_0x[]
     , unsigned char (*collision_0x)(signed char , signed char )
@@ -597,6 +325,8 @@ void playLab(signed char init_0x[], signed char scene_0x[], unsigned char *textu
 
 #include "myHires.c"
 extern unsigned char charset[];
+
+
 void main(){
 
     char c=0;
@@ -616,7 +346,7 @@ void main(){
     poke(0xBF90, 16); poke(0xBF91, 7);
     poke(0xBFB8, 16); poke(0xBFB9, 7);
     poke(0x26A, (mode0 | 0x08) & 0xFE);
-    sprintf (0xBF70, "Press a key ...");get();
+    waitkey();
     text();
     
     paper(0); ink(7);
