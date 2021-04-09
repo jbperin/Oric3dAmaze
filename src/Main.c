@@ -44,9 +44,16 @@ int mode0;
 #define CHANGE_INK_TO_BLUE	            4		
 #define CHANGE_PAPER_TO_WHITE	        23
 
-// #include "mmi_fr.c"
-// #include "mmi_es.c"
+#if LANG == 2
+#include "mmi_es.c"
+#elif LANG == 1
+#include "mmi_fr.c"
+#elif LANG == 0
 #include "mmi_en.c"
+#endif
+// #if LANG==3
+// #include "mmi_it.c"
+// #endif
 
 void prepareRGB(){
     int ii;

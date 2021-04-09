@@ -62,3 +62,15 @@ cp contrib/castoric/proto/c/texture_christmas.h ./src
 cp contrib/castoric/proto/c/texture_logo.h ./src
 cp contrib/castoric/proto/c/texture_pillar.h ./src
 cp contrib/castoric/proto/c/texture_redbrick.h ./src
+
+
+TODO:
+
+dans version espagnole, corriger défaut sur titre "felicitaciones" et "mal sueno".
+
+revoir le mode de calcul du score au niveau facile.
+
+troisième laby: défaut jointure texture sur premiere pièce.
+
+quatrième laby, pas de détection de la sortie.
+
