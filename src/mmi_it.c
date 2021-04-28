@@ -4,27 +4,28 @@
 
 #define CLS text();cls();poke (0xBBA3, CHANGE_INK_TO_BLACK);poke(0x26A, (mode0 | 0x08) & 0xFE);
 
+
 void waitkey () {
-    sprintf (0xBF70, "Appuyez sur une touche ...");
+    sprintf (0xBF70, "Premere un tasto ...");
     get();
 }
 
 void mmiInit(){
-    sprintf (message, "Temps restant:");
+    sprintf (message, "Tempo rimanente:");
     AdvancedPrint(3,26, message);
 }
 void credits(){
 
     CLS
-    sprintf (0xBB80, "\012\001  --== Les Chemins de Galdeon ==--    ");
-    printf ("\033J\033A--== Les Chemins de Galdeon ==--    "
+    sprintf (0xBB80, "\012\001  --== I sentieri di Galdeon ==--     ");
+    printf ("\033J\033A--== I sentieri di Galdeon ==--    "
     "\n\n"
-    "    Cree et developpe par: \n\n"
+    "    Creato e sviluppato da: \n\n"
     "       Jean-Baptiste PERIN (JiBe)\n\n"
-    "    conseille par: \n\n"
+    "    consigliato da: \n\n"
     "        Mickael POINTIER (Dbug)\n\n"
-    "        Vincent BILLET (Xaratheus)\n\n\n\n\n");
-    printf("\n\n\n\nCe jeu utilise castoric pour la 3D\n\n"
+    "        Vincent BILLET (Xaratheus)\n\n\n\n");
+    printf("\n\n\n\nQuesto gioco utilizza castoric per il 3D\n\n"
     "\033Dgithub.com/oric-software/castoric\033G\n"
     " ---------------------------------\n"
     );
@@ -34,28 +35,28 @@ void setKeyboard(){
     char c;
     do {
         CLS
-    sprintf (0xBB80, "\012\001     --== PARAMETRAGE CLAVIER ==--    ");
-    printf ("\033J\033A   --== PARAMETRAGE CLAVIER ==--    "
+sprintf (0xBB80, "\012\001     --== IMPOSTAZIONI TASTERIA ==--  ");
+    printf ("\033J\033A   --== IMPOSTAZIONI TASTERIA ==--  "
         "\n\n"
-        "Selectionner votre configuration \n"
-        "    clavier preferee en appuyant sur \n"
-        "    la touche 1, 2 ou 3:\n");
+        "Selezionare la configurazione della\n"
+        "  tastiera preferita premendo \n"
+        "    sul tasto 1, 2 o 3:\n");
 
         printf ("\n\033D[1]\033G: \n\n"
-        "  LEFT/RIGHT : tourner gauche/droite\n"
-        "  UP/DOWN    : avancer / reculer\n"
-        "  X / C     : decaler gauche / droite\n");
+        "  LEFT/RIGHT: girare a sinistra/destra"
+        "  UP/DOWN   : avanti / indietro\n"
+        "  X / C     : decaler sinistra/destra\n");
 
         printf ("\n\033D[2]\033G: \n\n"
 
-        "  Q / E : tourner gauche / droite\n"
-        "  W / S : avancer / reculer\n"
-        "  Z / D : decaler gauche / droite\n");
+        "  Q / E : girare a sinistra / destra\n"
+        "  W / S : avanti / indietro\n"
+        "  Z / D : decaler sinistra / destra\n");
 
         printf ("\n\033D[3]\033G: \n\n"
-        "  T / U : tourner gauche / droite\n"
-        "  Y / H : avancer / reculer\n"
-        "  G / J : decaler gauche / droite\n"        );
+        "  T / U : girare a sinistra / destra\n"
+        "  Y / H : avanti / indietro\n"
+        "  G / J : decaler sinistra / destra\n"        );
     } while (((c=get()) != '1') && (c != '2') && (c != '3'));
     keybconfig = c-'1';
     setKeyboardConfig();
@@ -65,11 +66,11 @@ void setSound(){
     char c;
     do {
         CLS
-    sprintf (0xBB80, "\012\001     --== PARAMETRAGE SONS ==--    ");
-    printf ("\033J\033A   --== PARAMETRAGE SONS ==--    "
+    sprintf (0xBB80, "\012\001     --== IMPOSTAZIONI AUDIO ==--  ");
+    printf ("\033J\033A   --== IMPOSTAZIONI AUDIO ==--  "
         "\n\n"
-        " \033D[1]\033G: Sons desactives\n\n"
-        " \033D[2]\033G: Sons actives\n\n"
+        " \033D[1]\033G: Suona spento\n\n"
+        " \033D[2]\033G: Suoni attivati\n\n"
         );
     } while (((c=get()) != '1') && (c != '2'));
     soundenabled = c-'1';
@@ -82,45 +83,45 @@ void options(){
 
 void welcome(){
     CLS
-    sprintf (0xBB80, "\012\001  --== Les Chemins de Galdeon ==--    ");
-    printf ("\033J\033A--== Les Chemins de Galdeon ==--    "
+    sprintf (0xBB80, "\012\001  --== I sentieri di Galdeon ==--     ");
+    printf ("\033J\033A--== I sentieri di Galdeon ==--     "
     // printf (
     //     "\033J --== Les Chemins de Galdeon ==--\n"
     // "\033J --== Les Chemins de Galdeon ==--\n"
-"    par Jean-Baptiste PERIN (2021)\n\n"
-"Votre teleportation au coeur des cites"
-"ennemies nous permet d'en declencher\n"
-"l'explosion programmee.\n");
-    printf ("Mais cette situation vous expose car \n"
-"l'explosion est imminente et vous\n"
-"ne devez pas rester.\n"
-"Le temps est compte pour vous evader \n"
-"par les chemins de Galdeon ...\n\n");
-    printf ("Appuyer sur :\n\n"
-"-\033D1\033G pour jouer au niveau Facile\n"
-"-\033D2\033G pour jouer au niveau Moyen\n"
-"-\033D3\033G pour jouer au niveau Difficile\n"
-"-\033DC\033G pour afficher les credits\n"
-"-\033DO\033G pour configurer les options\n\n");
+"    da Jean-Baptiste PERIN (2021)\n\n"
+"Il tuo teletrasporto nel cuore delle\n"
+"citta nemiche ci permette di innescare"
+"la loro esplosione programmata.\n");
+    printf ("Ma questa situazione ti espone perche\n"
+"l'esplosione e imminente e non devi\n"
+"rimanere.\n"
+"Il tempo sta per scadere per sfuggire\n"
+"ai sentieri di Galdeon ...\n\n");
+    printf ("Premere :\n\n"
+"-\033D1\033G per giocare a livello Facile\n"
+"-\033D2\033G per giocare a livello Medio\n"
+"-\033D3\033G per giocare a livello Difficile\n"
+"-\033DC\033G per visualizzare i crediti\n"
+"-\033DO\033G per configurare le opzioni\n\n");
 setKeyboardConfig();
 if (keybconfig==0) {
-    printf ("Commandes de jeu:\n\n"
-"\033DUP / DOWN \033G: Avancer / Reculer\n"
-"\033DLEFT/RIGHT\033G: Tourner Gauche / Droite\n"
-"\033DX / C     \033G: Decaler Gauche / Droite\n"
-"\033DESC       \033G: Quitter");
+    printf ("Controlli di gioco:\n\n"
+"\033DUP / DOWN \033G: avanti / indietro\n"
+"\033DLEFT/RIGHT\033G: girare a sinistra/destra"
+"\033DX / C     \033G: decaler sinistra/destra\n"
+"\033DESC       \033G: Lasciare");
 } else if (keybconfig==1){
-    printf ("Commandes de jeu:\n\n"
-"\033DW / S\033G: Avancer / Reculer\n"
-"\033DQ / E\033G: Tourner Gauche / Droite\n"
-"\033DZ / D\033G: Decaler Gauche / Droite\n"
-"\033DESC  \033G: Quitter");
+    printf ("Controlli di gioco:\n\n"
+"\033DW / S\033G: avanti / indietro\n"
+"\033DQ / E\033G: girare a sinistra/destra\n"
+"\033DZ / D\033G: decaler sinistra/destra\n"
+"\033DESC  \033G: Lasciare");
 } else if (keybconfig==2){
-    printf ("Commandes de jeu:\n\n"
-"\033DY / H\033G: Avancer / Reculer\n"
-"\033DT / U\033G: Tourner Gauche / Droite\n"
-"\033DG / J\033G: Decaler Gauche / Droite\n"
-"\033DESC  \033G: Quitter");
+    printf ("Controlli di gioco:\n\n"
+"\033DY / H\033G: avanti / indietro\n"
+"\033DT / U\033G: girare a sinistra/destra\n"
+"\033DG / J\033G: decaler sinistra/destra\n"
+"\033DESC  \033G: Lasciare");
 
     // poke(0xbbd1,10);
     // poke(0xbbf9,10);
@@ -128,31 +129,31 @@ if (keybconfig==0) {
 
 }
 void wanaContinue(){
-    printf("Appuyer sur:\n\n");
-    printf ("-\033DC\033G pour continuer,\n\n");
-    printf ("-\033DESC\033G pour quitter.");
+    printf("Premere :\n\n");
+    printf ("-\033DC\033G per continuare,\n\n");
+    printf ("-\033DESC\033G per lasciare.");
 }
 void bye() {
     text();cls();paper(7); ink(0);
     sprintf (0xBB80, "                                       ");
-    printf (" Merci d'avoir joue avec \n\n"
-    "    --== Les Chemins De Galdeon ==--\n\n"
-    "    par Jean-Baptiste PERIN (2021)\n\n");
+    printf (" Grazie per aver giocato con \n\n"
+    "    --== I sentieri di Galdeon ==--\n\n"
+    "    da Jean-Baptiste PERIN (2021)\n\n");
 }
 char  retry() {
     char c;
     
     do {
         CLS
-        sprintf (0xBB80, "\012\001        --== MAUVAIS REVE ==--        ");
-        printf ("\033J\033A      --== MAUVAIS REVE ==--        ");
+        sprintf (0xBB80, "\012\001        --== BRUTO SOGNO ==--         ");
+        printf ("\033J\033A      --== BRUTO SOGNO ==--         ");
         printf("\n\n\n\n");
-        printf("Fichtre !!\n\nQuel horrible cauchemard vous venez de faire !\n\n");
-        printf("Vous vous etiez assoupi et vous avez  reve que vous restiez bloque dans\nl'explosion\n\n");
-        printf("Heureusement que tout cela n'etait\nqu'un mauvais reve.\n\n");
-        printf("Prenez le temps de reprendre vos\nemotions puis appuyer sur\n\n");
-        printf ("-\033DR\033G pour recommencer l'aventure,\n\n");
-        printf ("-\033DESC\033G pour quitter.");
+        printf("Fichtre !!\n\nChe incubo orribile che hai appena\nfatto !\n\n");
+        printf("Ti sei assopito e hai sognato di\nessere rimasto bloccato\nnell'esplosione\n\n");
+        printf("Fortunatamente, tutto questo era solo un brutto sogno.\n\n");
+        printf("Prendetevi il tempo per venire\nai vostri sensi e quindi premere\n\n");
+        printf ("-\033DR\033G per ricominciare l'avventura,\n\n");
+        printf ("-\033DESC\033G per lasciare.");
         c=get();
     } while ((c != 'R') && (c!= KEY_ESCAPE)); //&& (c!= KEY_ESCAPE)
     return c;
@@ -165,19 +166,19 @@ char  congrats() {
     computeNewScore();
 
     CLS
-    sprintf (0xBB80, "\012\001        --== FELICITATIONS ==--        ");
-    printf ("\033J\033A      --== FELICITATIONS ==--        ");
+    sprintf (0xBB80, "\012\001        --== KUDOS ==--                ");
+    printf ("\033J\033A      --== KUDOS ==--                ");
     printf("\n\n\n\n");
-    printf("Vous vous etes echappe en %d secondes.\n\n",tabLevelParam[currentIdxParam-2]- remaining_seconds);
-    printf("Il ne restait plus que %d secondes\navant l'explosion.\n\n",remaining_seconds);
+    printf("Sei scappato in  %d secondi.\n\n",tabLevelParam[currentIdxParam-2]- remaining_seconds);
+    printf("Erano rimasti solo %d secondi\nprima dell'esplosione.\n\n",remaining_seconds);
 
     if (game_level == 0)
-        printf("Votre score au niveau FACILE\n");
+        printf("Il tuo punteggio a livello FACILE\n");
     else if (game_level == 1)
-        printf("Votre score au niveau MOYEN\n");
+        printf("Il tuo punteggio a livello MEDIO\n");
     else if (game_level == 2)
-        printf("Votre score au niveau DIFFICILE\n");
-    printf("est desormais de:\n\n   %d points\n\n\n\n\n", current_score);
+        printf("Il tuo punteggio a livello DIFFICILE\n");
+    printf("e ora di :\n\n   %d punti\n\n\n\n\n", current_score);
 
     wanaContinue();
     while (((c=get()) != 'C') && (c!= KEY_ESCAPE));
