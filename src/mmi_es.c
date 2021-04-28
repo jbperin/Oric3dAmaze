@@ -27,7 +27,7 @@ void credits(){
     "        Vincent BILLET (Xaratheus)\n\n\n\n\n");
     printf("\n\ncon contribuciones de\n"
 "Tu nombre\n"
-"y el benevolente estímulo de\n"
+"y el benevolente estimulo de\n"
 "\n"
     );
     printf("\n\n\n\nEste juego usa castoric para 3D\n\n"
