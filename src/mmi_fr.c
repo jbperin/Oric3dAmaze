@@ -147,7 +147,7 @@ char  retry() {
         sprintf (0xBB80, "\012\001        --== MAUVAIS REVE ==--        ");
         printf ("\033J\033A      --== MAUVAIS REVE ==--        ");
         printf("\n\n\n\n");
-        printf("Fichtre !!\n\nQuel horrible cauchemard vous venez de faire !\n\n");
+        printf("Fichtre !!\n\nQuel horrible cauchemar vous venez de faire !\n\n");
         printf("Vous vous etiez assoupi et vous avez  reve que vous restiez bloque dans\nl'explosion\n\n");
         printf("Heureusement que tout cela n'etait\nqu'un mauvais reve.\n\n");
         printf("Prenez le temps de reprendre vos\nemotions puis appuyer sur\n\n");
