@@ -12,20 +12,25 @@ void waitkey () {
 
 void mmiInit(){
     sprintf (message, "Tempo rimanente:");
-    AdvancedPrint(3,26, message);
+    AdvancedPrint(1,26, message);
 }
 void credits(){
 
     CLS
     sprintf (0xBB80, "\012\001  --== I sentieri di Galdeon ==--     ");
     printf ("\033J\033A--== I sentieri di Galdeon ==--    "
-    "\n\n"
+    "\n                            v 1.0\n"
     "    Creato e sviluppato da: \n\n"
     "       Jean-Baptiste PERIN (JiBe)\n\n"
     "    consigliato da: \n\n"
     "        Mickael POINTIER (Dbug)\n\n"
-    "        Vincent BILLET (Xaratheus)\n\n\n\n");
-    printf("\n\n\n\nQuesto gioco utilizza castoric per il 3D\n\n"
+    "        Vincent BILLET (Xaratheus)\n");
+    printf("\ncon la partecipazione di:\n"
+"Chema, Dbug, Twiligthe (keyboard)\n"
+"\ne l'incoraggiamento benevolo di:\n"
+"Badger, didierV, gotcha, ibisum, iss, jede, kenneth, Magoric,  Neotenien,\nrax, sam, SteveM, Symoon, ThomH,\nxahmol\n"
+    );
+    printf("\nQuesto gioco utilizza castoric per il 3D\n\n"
     "\033Dgithub.com/oric-software/castoric\033G\n"
     " ---------------------------------\n"
     );

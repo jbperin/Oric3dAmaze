@@ -2,6 +2,7 @@
 
 #include "keyboard_c.c"
 
+
 #define CLS text();cls();poke (0xBBA3, CHANGE_INK_TO_BLACK);poke(0x26A, (mode0 | 0x08) & 0xFE);
 
 void waitkey () {
@@ -19,18 +20,18 @@ void credits(){
     CLS
     sprintf (0xBB80, "\012\001  --== Los caminos de Galdeon ==--    ");
     printf ("\033J\033A--== Los caminos de Galdeon ==--    "
-    "\n\n"
+    "\n                            v 1.0\n"
     "    Creado y desarrollado por: \n\n"
     "       Jean-Baptiste PERIN (JiBe)\n\n"
     "    aconseja por: \n\n"
     "        Mickael POINTIER (Dbug)\n\n"
-    "        Vincent BILLET (Xaratheus)\n\n\n\n\n");
-    printf("\n\ncon contribuciones de\n"
-"Tu nombre\n"
-"y el benevolente estimulo de\n"
-"\n"
+    "        Vincent BILLET (Xaratheus)\n");
+    printf("\nCon contribuciones de:\n"
+"Chema, Dbug, Twiligthe (keyboard)\n"
+"\nY el benevolente estimulo de:\n"
+"Badger, didierV, gotcha, ibisum, iss, jede, kenneth, Magoric,  Neotenien,\nrax, sam, SteveM, Symoon, ThomH,\nxahmol\n"
     );
-    printf("\n\n\n\nEste juego usa castoric para 3D\n\n"
+    printf("\nEste juego usa castoric para 3D\n\n"
     "\033Dgithub.com/oric-software/castoric\033G\n"
     " ---------------------------------\n"
     );

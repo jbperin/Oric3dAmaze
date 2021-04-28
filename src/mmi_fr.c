@@ -18,13 +18,18 @@ void credits(){
     CLS
     sprintf (0xBB80, "\012\001  --== Les Chemins de Galdeon ==--    ");
     printf ("\033J\033A--== Les Chemins de Galdeon ==--    "
-    "\n\n"
+    "\n                            v 1.0\n"
     "    Cree et developpe par: \n\n"
     "       Jean-Baptiste PERIN (JiBe)\n\n"
     "    conseille par: \n\n"
     "        Mickael POINTIER (Dbug)\n\n"
-    "        Vincent BILLET (Xaratheus)\n\n\n\n\n");
-    printf("\n\n\n\nCe jeu utilise castoric pour la 3D\n\n"
+    "        Vincent BILLET (Xaratheus)\n");
+    printf("\nAvec la participation de:\n"
+"Chema, Dbug, Twiligthe (keyboard)\n"
+"\nEt les encouragements amicaux de:\n"
+"Badger, didierV, gotcha, ibisum, iss, jede, kenneth, Magoric,  Neotenien,\nrax, sam, SteveM, Symoon, ThomH,\nxahmol\n"
+    );
+    printf("\nCe jeu utilise castoric pour la 3D\n\n"
     "\033Dgithub.com/oric-software/castoric\033G\n"
     " ---------------------------------\n"
     );
@@ -150,7 +155,7 @@ char  retry() {
         printf("Fichtre !!\n\nQuel horrible cauchemar vous venez de faire !\n\n");
         printf("Vous vous etiez assoupi et vous avez  reve que vous restiez bloque dans\nl'explosion\n\n");
         printf("Heureusement que tout cela n'etait\nqu'un mauvais reve.\n\n");
-        printf("Prenez le temps de reprendre vos\nemotions puis appuyer sur\n\n");
+        printf("Prenez le temps de reprendre vos\nesprits puis appuyer sur:\n\n");
         printf ("-\033DR\033G pour recommencer l'aventure,\n\n");
         printf ("-\033DESC\033G pour quitter.");
         c=get();

@@ -41,7 +41,7 @@ IF "%LANG%"=="EN" GOTO EnglishSplash
 IF "%LANG%"=="FR" GOTO FrenchSplash
 IF "%LANG%"=="ES" GOTO SpanishSplash
 IF "%LANG%"=="IT" GOTO ItalianSplash
-echo HERE
+
 :EnglishSplash
 SET INPUTFN=loader_en
 echo "English"

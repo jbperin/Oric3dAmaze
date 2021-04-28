@@ -1,6 +1,7 @@
 @ECHO OFF
 
-SET LANG=FR
+:: Language in "EN", "FR", "ES", "IT"
+SET LANG=ES
 
 ::
 :: Set the build paremeters
@@ -20,7 +21,7 @@ IF "%LANG%"=="ES" GOTO Spanish
 IF "%LANG%"=="IT" GOTO Italian
 
 :English
-SET OSDKPREPROC=-DLANG=0
+SET OSDKPREPROC=-DLANG=4
 GOTO End
 :French
 SET OSDKPREPROC=-DLANG=1
