@@ -12,6 +12,102 @@ _tab_denom:             .dsb 2
 .text
 
 
+_background_01:
+.(
+    lda #$66: sta patch_red_in_sky+1
+    lda #$40: sta patch_green_in_sky+1
+    lda #$55: sta patch_blue_in_sky+1
+
+    lda #$40: sta patch_red_on_ground+1
+    lda #$55: sta patch_green_on_ground+1
+    lda #$62: sta patch_blue_on_ground+1
+;    lda #$40: sta patch_red_in_sky+1
+;    lda #$40: sta patch_green_in_sky+1
+;    lda #$7F: sta patch_blue_in_sky+1
+;
+;    lda #$40: sta patch_red_on_ground+1
+;    lda #$7F: sta patch_green_on_ground+1
+;    lda #$40: sta patch_blue_on_ground+1
+
+.)
+    rts
+
+_background_02:
+.(
+    lda #$7F: sta patch_red_in_sky+1
+    lda #$40: sta patch_green_in_sky+1
+    lda #$7F: sta patch_blue_in_sky+1
+
+    lda #$40: sta patch_red_on_ground+1
+    lda #$6C: sta patch_green_on_ground+1
+    lda #$C6: sta patch_blue_on_ground+1
+
+.)
+    rts
+
+_background_03:
+.(
+    lda #$44: sta patch_red_in_sky+1
+    lda #$40: sta patch_green_in_sky+1
+    lda #$7F: sta patch_blue_in_sky+1
+
+    lda #$7F: sta patch_red_on_ground+1
+    lda #$7F: sta patch_green_on_ground+1
+    lda #$7F: sta patch_blue_on_ground+1
+
+.)
+    rts
+
+_background_04:
+.(
+    lda #$44: sta patch_red_in_sky+1
+    lda #$40: sta patch_green_in_sky+1
+    lda #$7F: sta patch_blue_in_sky+1
+
+    lda #$7F: sta patch_red_on_ground+1
+    lda #$7F: sta patch_green_on_ground+1
+    lda #$7F: sta patch_blue_on_ground+1
+
+.)
+    rts
+_background_05:
+.(
+    lda #$40: sta patch_red_in_sky+1
+    lda #$40: sta patch_green_in_sky+1
+    lda #$7F: sta patch_blue_in_sky+1
+
+    lda #$40: sta patch_red_on_ground+1
+    lda #$7F: sta patch_green_on_ground+1
+    lda #$40: sta patch_blue_on_ground+1
+
+.)
+    rts
+_background_06:
+.(
+    lda #$40: sta patch_red_in_sky+1
+    lda #$40: sta patch_green_in_sky+1
+    lda #$55: sta patch_blue_in_sky+1
+
+    lda #$40: sta patch_red_on_ground+1
+    lda #$55: sta patch_green_on_ground+1
+    lda #$40: sta patch_blue_on_ground+1
+
+.)
+    rts
+
+_background_07:
+.(
+    lda #$40: sta patch_red_in_sky+1
+    lda #$40: sta patch_green_in_sky+1
+    lda #$40: sta patch_blue_in_sky+1
+
+    lda #$40: sta patch_red_on_ground+1
+    lda #$40: sta patch_green_on_ground+1
+    lda #$40: sta patch_blue_on_ground+1
+
+.)
+    rts
+
 #ifndef USE_C_ZBUFFWALLS
 _zbuffWalls:
 .(
