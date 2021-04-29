@@ -44,11 +44,9 @@ IF "%LANG%"=="IT" GOTO ItalianSplash
 
 :EnglishSplash
 SET INPUTFN=loader_en
-echo "English"
 GOTO EndLoader
 :FrenchSplash
 SET INPUTFN=loader_fr
-echo "French"
 GOTO EndLoader
 :SpanishSplash
 SET INPUTFN=loader_es

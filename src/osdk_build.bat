@@ -19,8 +19,8 @@ CALL osdk_prebuild.bat
 ::
 CALL %OSDK%\bin\make.bat %OSDKFILE%
 
-MOVE BUILD\POG_OP1.tap BUILD\main.tap
-COPY /B BUILD\loader.tap+BUILD\splash.tap+BUILD\charset.tap+build\main.tap BUILD\POG_OP1.tap
+MOVE BUILD\%OSDKNAME%.tap BUILD\main.tap
+COPY /B BUILD\loader.tap+BUILD\splash.tap+BUILD\charset.tap+build\main.tap BUILD\%OSDKNAME%.tap
 
 
 GOTO End
