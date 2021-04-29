@@ -224,11 +224,28 @@ void main(){
         if (c == KEY_ESCAPE) break ;
 
         game_level              = (unsigned char)(c-'1');
-        current_score           = 0;
-        currentIdxParam         = game_level<<1;
+        // current_score           = 0;
+        // currentIdxParam         = game_level<<1;
 
-        remaining_seconds       = tabLevelParam[currentIdxParam++]; // game_level * 35 ; // 35 = Difficile
-        idxTempoPing            = tabLevelParam[currentIdxParam++];
+        asm (
+            "lda #0;"
+            "sta _current_score;"
+            "lda _game_level;"
+            "asl;"
+            "sta _currentIdxParam;"
+        );
+
+        // remaining_seconds       = tabLevelParam[currentIdxParam++]; // game_level * 35 ; // 35 = Difficile
+        // idxTempoPing            = tabLevelParam[currentIdxParam++];
+        asm (
+            "tay;"
+            "lda _tabLevelParam, Y;"
+            "sta _remaining_seconds;"
+            "iny;"
+            "lda _tabLevelParam, Y;"
+            "sta _idxTempoPing;"
+            "iny;"
+            "sty _currentIdxParam;");
 
         background_01();
         playLab(init_04, scene_04, texture_04, 0, win_04);
@@ -241,9 +258,21 @@ void main(){
 
 
         currentIdxParam+=4;
+        // asm ("lda _currentIdxParam;"
+        //     "clc;"
+        //     "adc #4;"
+        //     "sta _currentIdxParam;");
 
-        remaining_seconds       = tabLevelParam[currentIdxParam++]; // game_level * 35 ; // 35 = Difficile
-        idxTempoPing            = tabLevelParam[currentIdxParam++];
+        // remaining_seconds       = tabLevelParam[currentIdxParam++]; // game_level * 35 ; // 35 = Difficile
+        // idxTempoPing            = tabLevelParam[currentIdxParam++];
+        asm ("ldy _currentIdxParam;"
+            "lda _tabLevelParam, Y;"
+            "sta _remaining_seconds;"
+            "iny;"
+            "lda _tabLevelParam, Y;"
+            "sta _idxTempoPing;"
+            "iny;"
+            "sty _currentIdxParam;");
 
         background_02();
         playLab(init_05, scene_05, texture_05, 0, win_05);
@@ -256,9 +285,21 @@ void main(){
 
 
         currentIdxParam+=4;
+        // asm ("lda _currentIdxParam;"
+        //     "clc;"
+        //     "adc #4;"
+        //     "sta _currentIdxParam;");
 
-        remaining_seconds       = tabLevelParam[currentIdxParam++]; // game_level * 35 ; // 35 = Difficile
-        idxTempoPing            = tabLevelParam[currentIdxParam++];
+        // remaining_seconds       = tabLevelParam[currentIdxParam++]; // game_level * 35 ; // 35 = Difficile
+        // idxTempoPing            = tabLevelParam[currentIdxParam++];
+        asm ("ldy _currentIdxParam;"
+            "lda _tabLevelParam, Y;"
+            "sta _remaining_seconds;"
+            "iny;"
+            "lda _tabLevelParam, Y;"
+            "sta _idxTempoPing;"
+            "iny;"
+            "sty _currentIdxParam;");
 
         background_03();
         playLab(init_02, scene_02, texture_02, 0, win_02);
@@ -270,9 +311,21 @@ void main(){
 
 
         currentIdxParam+=4;
+        // asm ("lda _currentIdxParam;"
+        //     "clc;"
+        //     "adc #4;"
+        //     "sta _currentIdxParam;");
 
-        remaining_seconds       = tabLevelParam[currentIdxParam++]; // game_level * 35 ; // 35 = Difficile
-        idxTempoPing            = tabLevelParam[currentIdxParam++];
+        // remaining_seconds       = tabLevelParam[currentIdxParam++]; // game_level * 35 ; // 35 = Difficile
+        // idxTempoPing            = tabLevelParam[currentIdxParam++];
+        asm ("ldy _currentIdxParam;"
+            "lda _tabLevelParam, Y;"
+            "sta _remaining_seconds;"
+            "iny;"
+            "lda _tabLevelParam, Y;"
+            "sta _idxTempoPing;"
+            "iny;"
+            "sty _currentIdxParam;");
 
         background_04();
         playLab(init_07, scene_07, texture_07, 0, win_07);
@@ -284,9 +337,21 @@ void main(){
 
 
         currentIdxParam+=4;
+        // asm ("lda _currentIdxParam;"
+        //     "clc;"
+        //     "adc #4;"
+        //     "sta _currentIdxParam;");
 
-        remaining_seconds       = tabLevelParam[currentIdxParam++]; // game_level * 35 ; // 35 = Difficile
-        idxTempoPing            = tabLevelParam[currentIdxParam++];
+        // remaining_seconds       = tabLevelParam[currentIdxParam++]; // game_level * 35 ; // 35 = Difficile
+        // idxTempoPing            = tabLevelParam[currentIdxParam++];
+        asm ("ldy _currentIdxParam;"
+            "lda _tabLevelParam, Y;"
+            "sta _remaining_seconds;"
+            "iny;"
+            "lda _tabLevelParam, Y;"
+            "sta _idxTempoPing;"
+            "iny;"
+            "sty _currentIdxParam;");
 
         background_05();
         playLab(init_09, scene_09, texture_09, 0, win_09);
@@ -299,9 +364,21 @@ void main(){
 
 
         currentIdxParam+=4;
+        // asm ("lda _currentIdxParam;"
+        //     "clc;"
+        //     "adc #4;"
+        //     "sta _currentIdxParam;");
 
-        remaining_seconds       = tabLevelParam[currentIdxParam++]; // game_level * 35 ; // 35 = Difficile
-        idxTempoPing            = tabLevelParam[currentIdxParam++];
+        // remaining_seconds       = tabLevelParam[currentIdxParam++]; // game_level * 35 ; // 35 = Difficile
+        // idxTempoPing            = tabLevelParam[currentIdxParam++];
+        asm ("ldy _currentIdxParam;"
+            "lda _tabLevelParam, Y;"
+            "sta _remaining_seconds;"
+            "iny;"
+            "lda _tabLevelParam, Y;"
+            "sta _idxTempoPing;"
+            "iny;"
+            "sty _currentIdxParam;");
 
         wanna_retry             = 1;
         maze_completed          = 0;
@@ -319,9 +396,21 @@ void main(){
 
 
         currentIdxParam+=4;
+        // asm ("lda _currentIdxParam;"
+        //     "clc;"
+        //     "adc #4;"
+        //     "sta _currentIdxParam;");
 
-        remaining_seconds       = tabLevelParam[currentIdxParam++]; // game_level * 35 ; // 35 = Difficile
-        idxTempoPing            = tabLevelParam[currentIdxParam++];
+        // remaining_seconds       = tabLevelParam[currentIdxParam++]; // game_level * 35 ; // 35 = Difficile
+        // idxTempoPing            = tabLevelParam[currentIdxParam++];
+        asm ("ldy _currentIdxParam;"
+            "lda _tabLevelParam, Y;"
+            "sta _remaining_seconds;"
+            "iny;"
+            "lda _tabLevelParam, Y;"
+            "sta _idxTempoPing;"
+            "iny;"
+            "sty _currentIdxParam;");
 
         wanna_retry             = 1;
         maze_completed          = 0;
