@@ -18,7 +18,7 @@
 
 #include "textures/texture_bluestone.h"
 #include "textures/texture_redbrick.h"
-
+#include "textures/texture_dentwall.h"
 signed char init_07[] = {
 	20, 14, 0
 };
@@ -119,13 +119,13 @@ signed char scene_07[] = {
 };
 
 unsigned char *texture_07[]= {
-        texture_bluestone    // W0
-    , texture_bluestone    // W1
-    , texture_bluestone    // W2
-    , texture_redbrick     // W3
+        texture_dentwall    // W0
+    , texture_dentwall    // W1
+    , texture_dentwall    // W2
+    , texture_dentwall     // W3
     , texture_redbrick     // W4
     , texture_redbrick     // W5
-    , texture_redbrick     // W6
+    , texture_dentwall     // W6
     , texture_bluestone    // W7
     , texture_redbrick     // W8
     , texture_redbrick     // W9
@@ -135,20 +135,20 @@ unsigned char *texture_07[]= {
     , texture_redbrick     // W13
     , texture_bluestone    // W14
     , texture_bluestone    // W15
-    , texture_redbrick     // W16
+    , texture_dentwall     // W16
     , texture_redbrick     // W17
     , texture_redbrick     // W18
     , texture_redbrick     // W19
-    , texture_redbrick     // W20
+    , texture_dentwall     // W20
     , texture_bluestone    // w21
     , texture_redbrick     // w22
     , texture_bluestone    // w23
     , texture_bluestone    // w24
     , texture_redbrick     // w25
-    , texture_bluestone    // w26
-    , texture_bluestone    // w27
+    , texture_dentwall    // w26
+    , texture_dentwall    // w27
 };
 
 unsigned char win_07(signed char X, signed char Y) {
-	return X >= 36;
+	return Y >= 36;
 }

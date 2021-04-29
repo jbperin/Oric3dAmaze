@@ -15,8 +15,8 @@
 */
 
 #include "textures/texture_bluestone.h"
-#include "textures/texture_redbrick.h"
-
+#include "textures/texture_redbricks.h"
+#include "textures/texture_dentwall.h"
 signed char init_09[] = {
 	20, 32, 64
 };
@@ -117,34 +117,34 @@ signed char scene_09[] = {
 };
 
 unsigned char *texture_09[]= {
-      texture_bluestone      // W0
-    , texture_bluestone      // W1
-    , texture_redbrick       // W2
-    , texture_redbrick       // W3
+      texture_dentwall      // W0
+    , texture_dentwall      // W1
+    , texture_dentwall       // W2
+    , texture_dentwall       // W3
     , texture_bluestone      // W4
     , texture_bluestone      // W5
-    , texture_redbrick       // W6
-    , texture_redbrick       // W7
+    , texture_dentwall       // W6
+    , texture_redbricks       // W7
     , texture_bluestone      // W8
-    , texture_redbrick       // W9
-    , texture_bluestone      // W10
+    , texture_redbricks       // W9
+    , texture_dentwall      // W10
     , texture_bluestone      // W11
     , texture_bluestone      // W12
     , texture_bluestone      // W13
-    , texture_redbrick       // W14
-    , texture_redbrick       // W15
+    , texture_redbricks       // W14
+    , texture_redbricks       // W15
     , texture_bluestone      // W16
     , texture_bluestone      // W17
-    , texture_redbrick       // W18
-    , texture_redbrick       // W19
+    , texture_redbricks       // W18
+    , texture_redbricks       // W19
     , texture_bluestone      // W20
     , texture_bluestone      // w21
     , texture_bluestone      // w22
-    , texture_redbrick       // w23
-    , texture_redbrick       // w24
-    , texture_redbrick       // w25
-    , texture_bluestone      // w26
-    , texture_bluestone      // w27
+    , texture_dentwall       // w23
+    , texture_redbricks       // w24
+    , texture_redbricks       // w25
+    , texture_dentwall      // w26
+    , texture_dentwall      // w27
 };
 
 unsigned char win_09(signed char X, signed char Y) {

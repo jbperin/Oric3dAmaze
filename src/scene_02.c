@@ -97,10 +97,10 @@ signed char scene_02[] = {
 
 unsigned char *texture_02[]= {
 	texture_bluestone		// W0
-	, texture_redbrick		// W1
-	, texture_bluestone		// W2
+	, texture_bluestone		// W1
+	, texture_redbrick		// W2
 	, texture_redbrick		// W3
-	, texture_bluestone		// W4
+	, texture_redbrick		// W4
 	, texture_bluestone		// W5
 	, texture_bluestone		// W6
 	, texture_redbrick		// W7
@@ -109,12 +109,12 @@ unsigned char *texture_02[]= {
 	, texture_bluestone		// W10
 	, texture_redbrick		// W11
 	, texture_redbrick		// W12
-	, texture_bluestone		// W13
-	, texture_bluestone		// W14
-	, texture_bluestone		// W15
-	, texture_bluestone		// W16
-	, texture_redbrick		// W17
-	, texture_redbrick		// W18
+	, texture_redbrick		// W13
+	, texture_redbrick		// W14
+	, texture_redbrick		// W15
+	, texture_redbrick		// W16
+	, texture_bluestone		// W17
+	, texture_bluestone		// W18
 	, texture_bluestone		// W19
 	, texture_bluestone		// W20
 

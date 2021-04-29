@@ -21,7 +21,8 @@
 */
 
 #include "textures/texture_bluestone.h"
-#include "textures/texture_redbrick.h"
+#include "textures/texture_claybricks.h"
+#include "textures/texture_greystone.h"
 
 signed char init_11[] = {
 	44, 44, 64
@@ -185,67 +186,67 @@ signed char scene_11[] = {
 };
 
 unsigned char *texture_11[]= {
-      texture_bluestone    // W0
-    , texture_bluestone    // W1
-    , texture_redbrick    // W2
-    , texture_redbrick    // W3
-    , texture_redbrick    // W4
+      texture_greystone    // W0
+    , texture_greystone    // W1
+    , texture_greystone    // W2
+    , texture_claybricks    // W3
+    , texture_greystone    // W4
     , texture_bluestone    // W5
     , texture_bluestone    // W6
     , texture_bluestone    // W7
-    , texture_redbrick    // W8
-    , texture_redbrick    // W9
-    , texture_redbrick    // W10
+    , texture_claybricks    // W8
+    , texture_claybricks    // W9
+    , texture_claybricks    // W10
     , texture_bluestone    // W11
-    , texture_redbrick    // W12
+    , texture_claybricks    // W12
     , texture_bluestone    // W13
     , texture_bluestone    // W14
     , texture_bluestone    // W15
-    , texture_redbrick    // W16
-    , texture_redbrick    // W17
-    , texture_redbrick    // W18
+    , texture_claybricks    // W16
+    , texture_claybricks    // W17
+    , texture_claybricks    // W18
     , texture_bluestone    // W19
     , texture_bluestone    // W20
     , texture_bluestone    // W21
-    , texture_redbrick    // W22
-    , texture_redbrick    // W23
+    , texture_claybricks    // W22
+    , texture_claybricks    // W23
     , texture_bluestone    // W24
     , texture_bluestone    // W25
     , texture_bluestone    // W26
-    , texture_redbrick    // W27
-    , texture_redbrick    // W28
-    , texture_redbrick    // W29
-    , texture_redbrick    // W20
-    , texture_redbrick    // W21
-    , texture_redbrick    // W22
-    , texture_redbrick    // W23
-    , texture_redbrick    // W24
-    , texture_redbrick    // W25
-    , texture_redbrick    // W26
-    , texture_redbrick    // W27
-    , texture_redbrick    // W28
-    , texture_redbrick    // W29
+    , texture_claybricks    // W27
+    , texture_claybricks    // W28
+    , texture_claybricks    // W29
+    , texture_claybricks    // W20
+    , texture_claybricks    // W21
+    , texture_claybricks    // W22
+    , texture_claybricks    // W23
+    , texture_claybricks    // W24
+    , texture_claybricks    // W25
+    , texture_claybricks    // W26
+    , texture_claybricks    // W27
+    , texture_claybricks    // W28
+    , texture_claybricks    // W29
     , texture_bluestone    // W30
     , texture_bluestone    // W31
     , texture_bluestone    // W32
     , texture_bluestone    // W33
     , texture_bluestone    // W34
-    , texture_redbrick    // W35
-    , texture_redbrick    // W36
-    , texture_redbrick    // W37
-    , texture_redbrick    // W38
-    , texture_redbrick    // W39
+    , texture_claybricks    // W35
+    , texture_claybricks    // W36
+    , texture_claybricks    // W37
+    , texture_claybricks    // W38
+    , texture_greystone    // W39
     , texture_bluestone    // W40
     , texture_bluestone    // W41
-    , texture_redbrick    // W42
-    , texture_redbrick    // W43
-    , texture_redbrick    // W44
+    , texture_greystone    // W42
+    , texture_claybricks    // W43
+    , texture_claybricks    // W44
     , texture_bluestone    // W45
     , texture_bluestone    // W46
     , texture_bluestone    // W47
-    , texture_redbrick    // W48
-    , texture_bluestone    // W49
-    , texture_bluestone    // W50
+    , texture_claybricks    // W48
+    , texture_greystone    // W49
+    , texture_greystone    // W50
 
 };
 

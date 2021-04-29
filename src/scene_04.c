@@ -20,7 +20,7 @@
 */
 
 #include "textures/texture_greystone.h"
-#include "textures/texture_redbricks.h"
+#include "textures/texture_claybricks.h"
 
 signed char init_04[] = {
 	9, 12, 64
@@ -60,14 +60,14 @@ signed char scene_04[] = {
 
 
 unsigned char *texture_04[]= {
-	texture_redbricks		// W0
-	, texture_redbricks		// W1
+	texture_claybricks		// W0
+	, texture_claybricks		// W1
 	, texture_greystone		// W2
 	, texture_greystone		// W3
 	, texture_greystone		// W4
 	, texture_greystone		// W5
-	, texture_redbricks		// W6
-	, texture_redbricks		// W7
+	, texture_claybricks		// W6
+	, texture_claybricks		// W7
 
 
 };
