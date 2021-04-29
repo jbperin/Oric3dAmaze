@@ -21,18 +21,18 @@ void credits(){
     sprintf (0xBB80, "\012\001  --== Los caminos de Galdeon ==--    ");
     printf ("\033J\033A--== Los caminos de Galdeon ==--    "
     "\n                            v 1.0\n"
-    "    Creado y desarrollado por: \n\n"
+    "\033C   Creado y desarrollado por: \n\n"
     "       Jean-Baptiste PERIN (JiBe)\n\n"
-    "    aconseja por: \n\n"
+    "\033C   aconseja por: \n\n"
     "        Mickael POINTIER (Dbug)\n\n"
     "        Vincent BILLET (Xaratheus)\n");
-    printf("\nCon contribuciones de:\n"
+    printf("\n\033CCon contribuciones de:\n"
 "Chema, Dbug, Twiligthe (keyboard)\n"
-"\nY el benevolente estimulo de:\n"
+"\n\033CY el benevolente estimulo de:\n"
 "Badger, didierV, gotcha, ibisum, iss, jede, kenneth, Magoric,  Neotenien,\nrax, sam, SteveM, Symoon, ThomH,\nxahmol\n"
     );
-    printf("\nEste juego usa castoric para 3D\n\n"
-    "\033Dgithub.com/oric-software/castoric\033G\n"
+    printf("\n\033CEste juego usa castoric para 3D\n\n"
+    "\033Dgithub.com/oric-software/castoric\033C\n"
     " ---------------------------------\n"
     );
     get();
@@ -44,25 +44,25 @@ void setKeyboard(){
     sprintf (0xBB80, "\012\001     --== AJUSTE DEL TECLADO ==--    ");
     printf ("\033J\033A   --== AJUSTE DEL TECLADO ==--    "
         "\n\n"
-        "Seleccione su configuracion \n"
-        "    teclado preferido presionando \n"
-        "    tecla 1, 2 o 3:\n");
+        "\033CSeleccione su configuracion\n"
+        "\033C   teclado preferido presionando \n"
+        "\033C   tecla 1, 2 o 3:\n");
 
-        printf ("\n\033D[1]\033G: \n\n"
-        "  LEFT/RIGHT : girar izquierda/derecha\n"
-        "  UP/DOWN    : avanzar / retroceder\n"
-        "  X / C : desplazarse izquierda/derecha\n");
+        printf ("\n\033D[1]\033C: \n\n"
+        " LEFT/RIGHT : girar izquierda/derecha\n"
+        " UP/DOWN    : avanzar / retroceder\n"
+        " X / C : desplazarse izquierda/derecha\n");
 
-        printf ("\n\033D[2]\033G: \n\n"
+        printf ("\n\033D[2]\033C: \n\n"
 
-        "  Q / E : girar izquierda/derecha\n"
-        "  W / S : avanzar / retroceder\n"
-        "  Z / D : desplazarse izquierda/derecha\n");
+        " Q / E : girar izquierda/derecha\n"
+        " W / S : avanzar / retroceder\n"
+        " Z / D : desplazarse izquierda/derecha\n");
 
-        printf ("\n\033D[3]\033G: \n\n"
-        "  T / U : girar izquierda/derecha\n"
-        "  Y / H : avanzar / retroceder\n"
-        "  G / J : desplazarse izquierda/derecha\n" );
+        printf ("\n\033D[3]\033C: \n\n"
+        " T / U : girar izquierda/derecha\n"
+        " Y / H : avanzar / retroceder\n"
+        " G / J : desplazarse izquierda/derecha\n" );
     } while (((c=get()) != '1') && (c != '2') && (c != '3'));
     keybconfig = c-'1';
     setKeyboardConfig();
@@ -75,8 +75,8 @@ void setSound(){
     sprintf (0xBB80, "\012\001     --== AJUSTE DE SONIDOS ==--    ");
     printf ("\033J\033A   --== AJUSTE DE SONIDOS ==--    "
         "\n\n"
-        " \033D[1]\033G: suena mal\n\n"
-        " \033D[2]\033G: sonidos activos\n\n"
+        " \033D[1]\033C: suena mal\n\n"
+        " \033D[2]\033C: sonidos activos\n\n"
         );
     } while (((c=get()) != '1') && (c != '2'));
     soundenabled = c-'1';
@@ -100,42 +100,38 @@ void welcome(){
   "activarlos la explosion programada."
 );
     printf (
-   "\nPero esta situación te expone porque \n"
+   "\nPero esta situacion te expone porque\n"
    "la explosion es inminente y tu no debe"
    "quedarse.\n"
    "El tiempo es esencial para alejarse de"
-   "todo por los caminos de Galdeón ...\n"
+   "todo por los caminos de Galdeon ...\n"
     );
-//     printf ("Mais cette situation vous expose car \n"
-// "l'explosion est imminente et vous\n"
-// "ne devez pas rester.\n"
-// "Le temps est compte pour vous evader \n"
-// "par les chemins de Galdeon ...\n\n");
+
     printf ("Apoyar sobre :\n\n"
-"-\033D1\033G para jugar en el nivel Facil\n"
-"-\033D2\033G para jugar a nivel Medio\n"
-"-\033D3\033G para jugar en el nivel Dificil\n"
-"-\033DC\033G para mostrar los creditos\n"
-"-\033DO\033G para configurar opciones\n\n");
+"-\033D1\033C para jugar en el nivel Facil\n"
+"-\033D2\033C para jugar en el nivel Medio\n"
+"-\033D3\033C para jugar en el nivel Dificil\n"
+"-\033DC\033C para mostrar los creditos\n"
+"-\033DO\033C para configurar opciones\n\n");
 setKeyboardConfig();
 if (keybconfig==0) {
     printf ("Controles del juego:\n\n"
-"\033DUP / DOWN \033G: Avanzar / Retroceder\n"
-"\033DLEFT/RIGHT\033G: Girar Izquierda/Derecha\n"
-"\033DX / C \033G: Desplazar Izquierda/Derecha\n"
-"\033DESC       \033G: Salir");
+"\033DUP / DOWN \033C: Avanzar / Retroceder\n"
+"\033DLEFT/RIGHT\033C: Girar Izquierda/Derecha\n"
+"\033DX / C \033C: Desplazar Izquierda/Derecha\n"
+"\033DESC       \033C: Salir");
 } else if (keybconfig==1){
     printf ("Controles del juego:\n\n"
-"\033DW / S\033G: Avanzar / Retroceder\n"
-"\033DQ / E\033G: Girar Izquierda / Derecha\n"
-"\033DZ / D\033G: Desplazar Izquierda / Derecha\n"
-"\033DESC  \033G: Salir");
+"\033DW / S\033C: Avanzar / Retroceder\n"
+"\033DQ / E\033C: Girar Izquierda / Derecha\n"
+"\033DZ / D\033C: Desplazar Izquierda / Derecha\n"
+"\033DESC  \033C: Salir");
 } else if (keybconfig==2){
     printf ("Controles del juego:\n\n"
-"\033DY / H\033G: Avanzar / Retroceder\n"
-"\033DT / U\033G: Girar Izquierda / Derecha\n"
-"\033DG / J\033G: Desplazar Izquierda / Derecha\n"
-"\033DESC  \033G: Salir");
+"\033DY / H\033C: Avanzar / Retroceder\n"
+"\033DT / U\033C: Girar Izquierda / Derecha\n"
+"\033DG / J\033C: Desplazar Izquierda / Derecha\n"
+"\033DESC  \033C: Salir");
 
     // poke(0xbbd1,10);
     // poke(0xbbf9,10);
@@ -144,8 +140,8 @@ if (keybconfig==0) {
 }
 void wanaContinue(){
     printf("Pulse la tecla:\n\n");
-    printf ("-\033DC\033G para continuar,\n\n");
-    printf ("-\033DESC\033G para salir.");
+    printf ("-\033DC\033C para continuar,\n\n");
+    printf ("-\033DESC\033C para salir.");
 }
 void bye() {
     text();cls();paper(7); ink(0);
@@ -168,8 +164,8 @@ char  retry() {
         printf("Afortunadamente, todo esto fue solo\nuna pesadilla.\n\n");
         // printf("Prenez le temps de reprendre vos\nemotions puis appuyer sur\n\n");
         printf("Tomese el tiempo para volver a sus\nsentidos y luego presione la tecla\n\n");
-        printf ("-\033DR\033G para reiniciar la aventura,\n\n");
-        printf ("-\033DESC\033G para salir.");
+        printf ("-\033DR\033C para reiniciar la aventura,\n\n");
+        printf ("-\033DESC\033C para salir.");
         c=get();
     } while ((c != 'R') && (c!= KEY_ESCAPE)); //&& (c!= KEY_ESCAPE)
     return c;
@@ -182,8 +178,8 @@ char  congrats() {
     computeNewScore();
 
     CLS
-    sprintf (0xBB80, "\012\001        --== FELICITACIONES ==--    ");
-    printf ("\033J\033A      --== FELICITACIONES ==--    ");
+    sprintf (0xBB80, "\012\001        --== FELICITACIONES ==--      ");
+    printf ("\033J\033A      --== FELICITACIONES ==--      ");
     printf("\n\n\n\n");
     printf("Escapaste en %d segundos.\n\n",tabLevelParam[currentIdxParam-2]- remaining_seconds);
     printf("Solo quedaban %d segundos\nantes de la explosion.\n\n",remaining_seconds);

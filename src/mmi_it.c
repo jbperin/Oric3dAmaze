@@ -20,18 +20,18 @@ void credits(){
     sprintf (0xBB80, "\012\001  --== I sentieri di Galdeon ==--     ");
     printf ("\033J\033A--== I sentieri di Galdeon ==--    "
     "\n                            v 1.0\n"
-    "    Creato e sviluppato da: \n\n"
+    "\033B   Creato e sviluppato da: \n\n"
     "       Jean-Baptiste PERIN (JiBe)\n\n"
-    "    consigliato da: \n\n"
+    "\033B   consigliato da: \n\n"
     "        Mickael POINTIER (Dbug)\n\n"
     "        Vincent BILLET (Xaratheus)\n");
-    printf("\ncon la partecipazione di:\n"
+    printf("\n\033Bcon la partecipazione di:\n"
 "Chema, Dbug, Twiligthe (keyboard)\n"
-"\ne l'incoraggiamento benevolo di:\n"
+"\n\033Be l'incoraggiamento benevolo di:\n"
 "Badger, didierV, gotcha, ibisum, iss, jede, kenneth, Magoric,  Neotenien,\nrax, sam, SteveM, Symoon, ThomH,\nxahmol\n"
     );
     printf("\nQuesto gioco utilizza castoric per il 3D\n\n"
-    "\033Dgithub.com/oric-software/castoric\033G\n"
+    "\033Dgithub.com/oric-software/castoric\033B\n"
     " ---------------------------------\n"
     );
     get();
@@ -47,18 +47,18 @@ sprintf (0xBB80, "\012\001     --== IMPOSTAZIONI TASTERIA ==--  ");
         "  tastiera preferita premendo \n"
         "    sul tasto 1, 2 o 3:\n");
 
-        printf ("\n\033D[1]\033G: \n\n"
+        printf ("\n\033D[1]\033B: \n\n"
         "  LEFT/RIGHT: girare a sinistra/destra"
         "  UP/DOWN   : avanti / indietro\n"
         "  X / C     : decaler sinistra/destra\n");
 
-        printf ("\n\033D[2]\033G: \n\n"
+        printf ("\n\033D[2]\033B: \n\n"
 
         "  Q / E : girare a sinistra / destra\n"
         "  W / S : avanti / indietro\n"
         "  Z / D : decaler sinistra / destra\n");
 
-        printf ("\n\033D[3]\033G: \n\n"
+        printf ("\n\033D[3]\033B: \n\n"
         "  T / U : girare a sinistra / destra\n"
         "  Y / H : avanti / indietro\n"
         "  G / J : decaler sinistra / destra\n"        );
@@ -74,8 +74,8 @@ void setSound(){
     sprintf (0xBB80, "\012\001     --== IMPOSTAZIONI AUDIO ==--  ");
     printf ("\033J\033A   --== IMPOSTAZIONI AUDIO ==--  "
         "\n\n"
-        " \033D[1]\033G: Suona spento\n\n"
-        " \033D[2]\033G: Suoni attivati\n\n"
+        " \033D[1]\033B: Suona spento\n\n"
+        " \033D[2]\033B: Suoni attivati\n\n"
         );
     } while (((c=get()) != '1') && (c != '2'));
     soundenabled = c-'1';
@@ -103,30 +103,30 @@ void welcome(){
 "Il tempo sta per scadere per sfuggire\n"
 "ai sentieri di Galdeon ...\n\n");
     printf ("Premere :\n\n"
-"-\033D1\033G per giocare a livello Facile\n"
-"-\033D2\033G per giocare a livello Medio\n"
-"-\033D3\033G per giocare a livello Difficile\n"
-"-\033DC\033G per visualizzare i crediti\n"
-"-\033DO\033G per configurare le opzioni\n\n");
+"-\033D1\033B per giocare a livello Facile\n"
+"-\033D2\033B per giocare a livello Medio\n"
+"-\033D3\033B per giocare a livello Difficile\n"
+"-\033DC\033B per visualizzare i crediti\n"
+"-\033DO\033B per configurare le opzioni\n\n");
 setKeyboardConfig();
 if (keybconfig==0) {
     printf ("Controlli di gioco:\n\n"
-"\033DUP / DOWN \033G: avanti / indietro\n"
-"\033DLEFT/RIGHT\033G: girare a sinistra/destra"
-"\033DX / C     \033G: decaler sinistra/destra\n"
-"\033DESC       \033G: Lasciare");
+"\033DUP / DOWN \033B: avanti / indietro\n"
+"\033DLEFT/RIGHT\033B: girare a sinistra/destra"
+"\033DX / C     \033B: decaler sinistra/destra\n"
+"\033DESC       \033B: Lasciare");
 } else if (keybconfig==1){
     printf ("Controlli di gioco:\n\n"
-"\033DW / S\033G: avanti / indietro\n"
-"\033DQ / E\033G: girare a sinistra/destra\n"
-"\033DZ / D\033G: decaler sinistra/destra\n"
-"\033DESC  \033G: Lasciare");
+"\033DW / S\033B: avanti / indietro\n"
+"\033DQ / E\033B: girare a sinistra/destra\n"
+"\033DZ / D\033B: decaler sinistra/destra\n"
+"\033DESC  \033B: Lasciare");
 } else if (keybconfig==2){
     printf ("Controlli di gioco:\n\n"
-"\033DY / H\033G: avanti / indietro\n"
-"\033DT / U\033G: girare a sinistra/destra\n"
-"\033DG / J\033G: decaler sinistra/destra\n"
-"\033DESC  \033G: Lasciare");
+"\033DY / H\033B: avanti / indietro\n"
+"\033DT / U\033B: girare a sinistra/destra\n"
+"\033DG / J\033B: decaler sinistra/destra\n"
+"\033DESC  \033B: Lasciare");
 
     // poke(0xbbd1,10);
     // poke(0xbbf9,10);
@@ -135,8 +135,8 @@ if (keybconfig==0) {
 }
 void wanaContinue(){
     printf("Premere :\n\n");
-    printf ("-\033DC\033G per continuare,\n\n");
-    printf ("-\033DESC\033G per lasciare.");
+    printf ("-\033DC\033B per continuare,\n\n");
+    printf ("-\033DESC\033B per lasciare.");
 }
 void bye() {
     text();cls();paper(7); ink(0);
@@ -157,8 +157,8 @@ char  retry() {
         printf("Ti sei assopito e hai sognato di\nessere rimasto bloccato\nnell'esplosione\n\n");
         printf("Fortunatamente, tutto questo era solo un brutto sogno.\n\n");
         printf("Prendetevi il tempo per venire\nai vostri sensi e quindi premere\n\n");
-        printf ("-\033DR\033G per ricominciare l'avventura,\n\n");
-        printf ("-\033DESC\033G per lasciare.");
+        printf ("-\033DR\033B per ricominciare l'avventura,\n\n");
+        printf ("-\033DESC\033B per lasciare.");
         c=get();
     } while ((c != 'R') && (c!= KEY_ESCAPE)); //&& (c!= KEY_ESCAPE)
     return c;
