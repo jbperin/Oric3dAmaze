@@ -10,9 +10,6 @@
 
 #include "config.h"
 
-
-
-
 #include "raycast.c"
 #include "scene.c"
 
@@ -118,8 +115,6 @@ void lsys(){
 	}
 }
 
-
-
 void maze(){
 
     hires();
@@ -204,136 +199,7 @@ void playLab(signed char init_0x[], signed char scene_0x[], unsigned char *textu
         }
 }
 
-// void intro()
-// {
-//     int i;
-// 	paper(6);ink(4);
-
-// 	// scrolling hybrid graphics mode : Text & Hires
-// 	poke(0xbb80+40,30); 
-// 	for (i=8;i<16;i++)
-// 		poke(0xA000+(40*i)+2,26);
-
-// 	// Scrolling Text colors
-// 	*(unsigned char*)(0xA000+(40*8)+1)=1&7;
-// 	*(unsigned char*)(0xA000+(40*9)+1)=5&7;
-// 	*(unsigned char*)(0xA000+(40*10)+1)=3&7;
-// 	*(unsigned char*)(0xA000+(40*11)+1)=7&7;
-// 	*(unsigned char*)(0xA000+(40*12)+1)=3&7;
-// 	*(unsigned char*)(0xA000+(40*13)+1)=5&7;
-// 	*(unsigned char*)(0xA000+(40*14)+1)=1&7;
-// 	*(unsigned char*)(0xA000+(40*15)+1)=0&7;
-	
-//     AdvancedPrint(0,0,"                                        ");
-// 	AdvancedPrint(2,1,"                                      ");
-// 	// clear background
-// 	for (i=16;i<28;i++)
-// 	{
-// 		AdvancedPrint(2,i,"mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
-// 		poke(0xBB80+1+(i*40),4);
-// 	}
-	
-// 	// screen of menu page
-// 	AdvancedPrint(2,2,"mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
-// 	AdvancedPrint(2,3,"mmmmmmm     mmmm    mmm mm mmmm mmmmmm");
-// 	AdvancedPrint(2,4,"mmmmmm! !!!! mm !!!! m!mm!  mm! mmmmmm");
-// 	AdvancedPrint(2,5,"mmmmmm! mmm! m! mmm! mm m! ! m! mmmmmm");
-// 	AdvancedPrint(2,6,"mmmmmm!     mm!      m! m! m! ! mmmmmm");
-// 	AdvancedPrint(2,7,"mmmmmm! !!! mm! !!!! m! m! mm!  mmmmmm");
-// 	AdvancedPrint(2,8,"mmmmmm! mm!! m! mmm! m! m! mmm! mmmmmm");
-// 	AdvancedPrint(2,9,"mmmmmm!mmmm!mm!mmmm!mm!mm!mmmm!mmmmmmm");
-// 	AdvancedPrint(2,10,"mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
-// 	AdvancedPrint(2,11, "mmm     mmmm    mmm mmmm mm mmm    mmm");
-// 	AdvancedPrint(2,12,"mm! !!!! mm !!!! m!  mm! m!mmm !!!! mm");
-// 	AdvancedPrint(2,13,"mm! mmm! m! mmm! m! ! m! mm m! mmm!mmm");
-// 	AdvancedPrint(2,14,"mm!     mm!      m! m! ! m! m! mmmmmmm");
-// 	AdvancedPrint(2,15,"mm! !!!mmm! !!!! m! mm!  m! m! mmmm mm");
-// 	AdvancedPrint(2,16,"mm! mmmmmm! mmm! m! mmm! m! mm!    mmm");
-// 	AdvancedPrint(2,17,"mm!mmmmmmm!mmmm!mm!mmmm!mm!mmmm!!!mmmm");
-// 	AdvancedPrint(6,21,"\23\4DIRECTION : ARROWS KEY < > \4\26");
-// 	AdvancedPrint(13,23,"\23\4SPACE TO JUMP\4\26");
-// 	AdvancedPrint(10,25,"\23\4PRESS SPACE TO PLAY\4\26");
-//     // text color   // 12 = blink
-
-// 	// color_inverse_menu();
-	
-// 	poke(0xBB80+(25*40)+9,12);
-// 	poke(0xBB80+(25*40)+31,8);
-	 
-	 
-// 	// to debbug
-// 	// gotoxy(20,0);printf("CODE=%d IDX=%d",rain[index_raindrop],index_raindrop);
-// }
-// unsigned char charset[] = {
-//         85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85
-//         , 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85
-//         , 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85
-//         , 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85
-//         , 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85
-//         , 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85
-//         , 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85
-//         , 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85
-//         , 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85
-//         , 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85
-//         , 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85
-//         , 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85
-//         , 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85
-//         , 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85
-//         , 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85
-//         , 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85
-//         , 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 8, 8, 8, 0, 8, 0
-//         , 20, 20, 20, 0, 0, 0, 0, 0, 20, 20, 62, 20, 62, 20, 20, 0
-//         , 8, 30, 40, 28, 10, 60, 8, 0, 48, 50, 4, 8, 16, 38, 6, 0
-//         , 16, 40, 40, 16, 42, 36, 26, 0, 12, 12, 24, 0, 0, 0, 0, 0
-//         , 8, 24, 48, 48, 48, 24, 8, 0, 8, 12, 6, 6, 6, 12, 8, 0
-//         , 8, 42, 28, 8, 28, 42, 8, 0, 8, 8, 8, 62, 8, 8, 8, 0
-//         , 0, 0, 0, 0, 0, 24, 24, 48, 0, 0, 0, 0, 62, 0, 0, 0
-//         , 0, 0, 0, 0, 0, 24, 24, 0, 0, 2, 4, 8, 16, 32, 0, 0
-//         , 28, 62, 54, 54, 54, 62, 28, 0, 12, 28, 28, 12, 12, 62, 62, 0
-//         , 60, 62, 6, 28, 48, 62, 30, 0, 28, 62, 6, 12, 6, 62, 28, 0
-//         , 54, 54, 62, 62, 6, 6, 6, 0, 62, 62, 48, 60, 6, 62, 28, 0
-//         , 12, 24, 48, 60, 54, 62, 28, 0, 62, 62, 6, 12, 24, 24, 24, 0
-//         , 28, 62, 54, 28, 54, 62, 28, 0, 28, 54, 54, 30, 6, 28, 24, 0
-//         , 0, 0, 8, 0, 0, 8, 0, 0, 0, 0, 8, 0, 0, 8, 8, 16
-//         , 4, 8, 16, 32, 16, 8, 4, 0, 0, 0, 62, 0, 62, 0, 0, 0
-//         , 16, 8, 4, 2, 4, 8, 16, 0, 28, 34, 4, 8, 8, 0, 8, 0
-//         , 30, 34, 42, 46, 44, 32, 30, 0, 28, 62, 54, 62, 62, 54, 54, 0
-//         , 60, 54, 54, 60, 54, 54, 60, 0, 28, 62, 54, 48, 54, 62, 28, 0
-//         , 60, 62, 54, 54, 54, 62, 60, 0, 62, 62, 48, 60, 48, 62, 62, 0
-//         , 62, 62, 48, 60, 60, 48, 48, 0, 30, 62, 48, 54, 54, 62, 26, 0
-//         , 54, 54, 54, 62, 54, 54, 54, 0, 62, 62, 8, 8, 8, 62, 62, 0
-//         , 6, 6, 6, 6, 54, 62, 28, 0, 50, 54, 60, 56, 60, 54, 50, 0
-//         , 56, 56, 56, 56, 56, 62, 62, 0, 34, 54, 62, 62, 62, 54, 54, 0
-//         , 38, 54, 62, 62, 62, 54, 50, 0, 28, 62, 54, 54, 54, 62, 28, 0
-//         , 60, 54, 54, 60, 48, 48, 48, 0, 28, 54, 54, 54, 62, 60, 26, 0
-//         , 60, 54, 54, 60, 56, 60, 54, 0, 28, 54, 48, 28, 6, 54, 28, 0
-//         , 62, 62, 8, 8, 8, 8, 8, 0, 54, 54, 54, 54, 54, 62, 28, 0
-//         , 54, 54, 54, 62, 28, 28, 8, 0, 54, 54, 54, 62, 62, 54, 34, 0
-//         , 54, 54, 28, 8, 28, 54, 54, 0, 54, 54, 54, 28, 8, 8, 8, 0
-//         , 62, 62, 4, 8, 16, 62, 62, 0, 30, 30, 24, 24, 24, 30, 30, 0
-//         , 0, 32, 16, 8, 4, 2, 0, 0, 60, 60, 12, 12, 12, 60, 60, 0
-//         , 28, 28, 28, 28, 28, 28, 0, 0, 14, 16, 16, 60, 16, 16, 62, 0
-//         , 12, 18, 45, 41, 45, 18, 12, 0, 0, 0, 28, 6, 30, 54, 30, 0
-//         , 48, 48, 60, 62, 54, 62, 60, 0, 0, 0, 30, 62, 48, 62, 30, 0
-//         , 6, 6, 30, 62, 54, 62, 30, 0, 0, 0, 28, 54, 62, 48, 30, 0
-//         , 12, 30, 24, 60, 24, 24, 24, 0, 0, 0, 28, 54, 54, 30, 6, 60
-//         , 48, 48, 60, 62, 54, 54, 54, 0, 24, 0, 56, 24, 24, 24, 60, 0
-//         , 12, 0, 28, 12, 44, 60, 24, 0, 48, 48, 50, 52, 56, 52, 50, 0
-//         , 56, 24, 24, 24, 24, 24, 60, 0, 0, 0, 34, 54, 62, 54, 54, 0
-//         , 0, 0, 60, 62, 54, 54, 54, 0, 0, 0, 28, 54, 54, 54, 28, 0
-//         , 0, 0, 60, 54, 54, 60, 48, 48, 0, 0, 30, 54, 54, 30, 6, 6
-//         , 0, 0, 54, 56, 48, 48, 48, 0, 0, 0, 30, 48, 28, 6, 60, 0
-//         , 24, 24, 62, 24, 26, 30, 12, 0, 0, 0, 54, 54, 54, 62, 26, 0
-//         , 0, 0, 54, 54, 54, 28, 8, 0, 0, 0, 54, 54, 62, 54, 34, 0
-//         , 0, 0, 34, 54, 28, 54, 34, 0, 0, 0, 54, 54, 54, 30, 6, 28
-//         , 0, 0, 62, 4, 8, 16, 62, 0, 0, 0, 1, 1, 3, 2, 36, 24
-//         , 28, 34, 0, 0, 57, 1, 2, 4, 0, 0, 0, 32, 25, 2, 4, 7
-//         , 0, 0, 0, 0, 48, 9, 18, 36, 0, 0, 0, 0, 54, 9, 17, 2
-//         };
-
 #include "myHires.c"
-extern unsigned char charset[];
-
 
 void main(){
 
@@ -343,11 +209,6 @@ void main(){
     mode0 = peek(0x26A);
     
     poke(0x26A, (mode0 | 0x08) & 0xFE);
-
-    // intro();
-    // get();
-    //memcpy ((void*)(0xB400),(void*)(charset),1024);
-    // printf ("Coucou :-)"); get();
 
     myHires();
     poke(0xBF68, 16); poke(0xBF69, 7);
@@ -369,13 +230,9 @@ void main(){
         remaining_seconds       = tabLevelParam[currentIdxParam++]; // game_level * 35 ; // 35 = Difficile
         idxTempoPing            = tabLevelParam[currentIdxParam++];
 
+        background_01();
         playLab(init_04, scene_04, texture_04, 0, win_04);
-        
-        // playLab(init_07, scene_07, texture_07, 0, win_07);
-        // playLab(init_11, scene_11, texture_11, 0, win_11);
-        // playLab(init_09, scene_09, texture_09, 0, win_09);
-        // playLab(init_00, scene_00, texture_00, 0, win_00);
-
+       
         if (! maze_completed) continue;
 
         c = congrats();
@@ -388,6 +245,7 @@ void main(){
         remaining_seconds       = tabLevelParam[currentIdxParam++]; // game_level * 35 ; // 35 = Difficile
         idxTempoPing            = tabLevelParam[currentIdxParam++];
 
+        background_02();
         playLab(init_05, scene_05, texture_05, 0, win_05);
 
         if (! maze_completed) continue;
@@ -402,6 +260,7 @@ void main(){
         remaining_seconds       = tabLevelParam[currentIdxParam++]; // game_level * 35 ; // 35 = Difficile
         idxTempoPing            = tabLevelParam[currentIdxParam++];
 
+        background_03();
         playLab(init_02, scene_02, texture_02, 0, win_02);
 
         if (! maze_completed) continue;
@@ -415,6 +274,7 @@ void main(){
         remaining_seconds       = tabLevelParam[currentIdxParam++]; // game_level * 35 ; // 35 = Difficile
         idxTempoPing            = tabLevelParam[currentIdxParam++];
 
+        background_04();
         playLab(init_07, scene_07, texture_07, 0, win_07);
 
         if (! maze_completed) continue;
@@ -428,6 +288,7 @@ void main(){
         remaining_seconds       = tabLevelParam[currentIdxParam++]; // game_level * 35 ; // 35 = Difficile
         idxTempoPing            = tabLevelParam[currentIdxParam++];
 
+        background_05();
         playLab(init_09, scene_09, texture_09, 0, win_09);
 
         if (! maze_completed) continue;
@@ -445,6 +306,7 @@ void main(){
         wanna_retry             = 1;
         maze_completed          = 0;
 
+        background_06();
         playLab(init_01, scene_01, texture_01, 0, win_01);
 
         if (! maze_completed) continue;
@@ -464,16 +326,13 @@ void main(){
         wanna_retry             = 1;
         maze_completed          = 0;
 
+        background_07();
         playLab(init_11, scene_11, texture_11, 0, win_11);
 
         if (! maze_completed) continue;
 
         c = congrats();
         if (c == KEY_ESCAPE) continue ;
-
-
-
-
 
     } while (1);
 
