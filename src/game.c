@@ -49,10 +49,10 @@ unsigned char tabLevelParam[] = {
 
 void computeNewScore(){
     if (game_level == 0) {
-        current_score += (tabLevelParam[currentIdxParam-2]-remaining_seconds) ;
+        current_score += remaining_seconds/3 ; // tabLevelParam[currentIdxParam-2]-
     } else if (game_level == 1){
-        current_score += 3*(tabLevelParam[currentIdxParam-2]-remaining_seconds) ;
+        current_score += 3*remaining_seconds ;
     }else {
-        current_score += 10*(tabLevelParam[currentIdxParam-2]-remaining_seconds) ;
+        current_score += 10*remaining_seconds ;
     }
 }
